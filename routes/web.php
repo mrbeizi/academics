@@ -14,10 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('auth.login');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('fakultas','Admin\FakultasController');
+Route::get('/home', 'HomeController@index')->name('dashboard');
+
+Route::group(['middleware' => 'auth'], function(){
+    Route::resource('fakultas','Admin\FakultasController');
+});

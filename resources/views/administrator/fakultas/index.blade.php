@@ -6,7 +6,7 @@
 <nav aria-label="breadcrumb mb-0">
     <ol class="breadcrumb breadcrumb-style2">
       <li class="breadcrumb-item">
-        <a href="/">Home</a>
+        <a href="{{route('dashboard')}}">Home</a>
       </li>
       <li class="breadcrumb-item">
         <a href="{{route('fakultas.index')}}">@yield('title')</a>
@@ -31,18 +31,17 @@
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
-                        <div class="card-datatable table-responsive pt-0">
-                            <table class="table table-borderless table-hover table-sm" id="table_fakultas">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>ID Periode</th>
-                                <th>Nama Fakultas</th>
-                                <th>Arsip</th>
-                                <th>Aksi</th>
-                            </tr>
-                            </thead>
-                        </table>
+                            <table class="table table-hover table-responsive" id="table_fakultas">
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Period ID</th>
+                                  <th>Name</th>
+                                  <th>Status</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                            </table>
                         </div>
                     </div>
 
@@ -61,45 +60,37 @@
 
                                                 <input type="hidden" name="id" id="id">
 
-                                                <div class="form-group">
-                                                    <label for="name" class="col-sm-12 control-label">Nama Pengguna</label>
-                                                    <div class="col-sm-12">
-                                                        <input type="text" class="form-control" id="name" name="name" value="" required>
-                                                        <span class="text-danger" id="nameErrorMsg"></span>
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="id_periode" class="form-label">Year Period</label>
+                                                    <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example">
+                                                      <option selected>- Choose -</option>
+                                                      <option value="1">2022</option>
+                                                      <option value="2">2023</option>
+                                                      <option value="3">2024</option>
+                                                    </select>
+                                                    <span class="text-danger" id="idPeriodeErrorMsg"></span>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label for="name" class="col-sm-12 control-label">E-mail</label>
-                                                    <div class="col-sm-12">
-                                                        <input type="email" class="form-control" id="email" name="email" value="" required>
-                                                        <span class="text-danger" id="emailErrorMsg"></span>
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="nama_id" class="form-label">Name (ID)</label>
+                                                    <input type="text" class="form-control" id="nama_id" name="nama_id" value="" placeholder="John Doe" />
+                                                    <span class="text-danger" id="namaIDErrorMsg"></span>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label for="password" class="col-sm-12 control-label">Password</label>
-                                                    <div class="col-sm-12">
-                                                        <input type="password" class="form-control" id="password" name="password" value="" required>
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="nama_en" class="form-label">Name (EN)</label>
+                                                    <input type="text" class="form-control" id="nama_en" name="nama_en" value="" placeholder="John Doe" />
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label for="level" class="col-sm-12 control-label">Level</label>
-                                                    <div class="col-sm-12">
-                                                        <select name="level" id="level" class="form-control required" style="cursor:pointer;">
-                                                            <option value="">Level Pengguna</option>
-                                                            <option value="admin">Admin</option>
-                                                            <option value="user">User</option>
-                                                        </select>
-                                                        <span class="text-danger" id="levelErrorMsg"></span>
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="nama_ch" class="form-label">Name (CH)</label>
+                                                    <input type="text" class="form-control" id="nama_ch" name="nama_ch" value="" placeholder="John Doe" />
                                                 </div>
 
                                             </div>
 
                                             <div class="col-sm-offset-2 col-sm-12">
-                                                <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan" value="create">Simpan</button>
+                                                <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan" value="create">Save</button>
                                             </div>
                                         </div>
 
@@ -156,9 +147,48 @@
         $('#button-simpan').val("create-post");
         $('#id').val('');
         $('#form-tambah-edit').trigger("reset");
-        $('#modal-judul').html("Tambah User Baru");
+        $('#modal-judul').html("Add new data");
         $('#tambah-edit-modal').modal('show');
     });
+
+    // TOMBOL TAMBAH
+    if ($("#form-tambah-edit").length > 0) {
+        $("#form-tambah-edit").validate({
+            submitHandler: function (form) {
+                var actionType = $('#tombol-simpan').val();
+                $('#tombol-simpan').html('Saving..');
+
+                $.ajax({
+                    data: $('#form-tambah-edit').serialize(), 
+                    url: "{{ route('fakultas.store') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#form-tambah-edit').trigger("reset");
+                        $('#tambah-edit-modal').modal('hide');
+                        $('#tombol-simpan').html('Save');
+                        var oTable = $('#table_fakultas').dataTable();
+                        oTable.fnDraw(false);
+                        iziToast.success({
+                            title: 'Data saved succesfully',
+                            message: '{{ Session(' success ')}}',
+                            position: 'bottomRight'
+                        });
+                    },
+                    error: function(response) {
+                        $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
+                        $('#namaIDErrorMsg').text(response.responseJSON.errors.nama_id);
+                        $('#tombol-simpan').html('Save');
+                        iziToast.error({
+                            title: 'Data failed to save',
+                            message: '{{ Session('error')}}',
+                            position: 'bottomRight'
+                        });
+                    }
+                });
+            }
+        })
+    }
 
     
   </script>

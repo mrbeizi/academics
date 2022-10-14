@@ -8,6 +8,7 @@ use App\Model\Fakultas;
 use DataTables;
 use Response;
 use Session;
+use Validator;
 use Auth;
 
 class FakultasController extends Controller
@@ -29,5 +30,28 @@ class FakultasController extends Controller
                 ->make(true);
         }
         return view('administrator.fakultas.index');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'id_periode'        => 'required',
+            'nama_id'           => 'required',
+        ],[
+            'id_periode.required'    => 'Anda belum memilih periode',
+            'nama_id.required'       => 'Anda belum mamasukkan nama ID',
+
+        ]);
+
+        $post   =   Fakultas::updateOrCreate(['id' => $request->id],
+                    [
+                        'id_periode'  => $request->id_periode,
+                        'nama_id'     => $request->nama_id,
+                        'nama_en'     => $request->nama_en,
+                        'nama_ch'     => $request->nama_ch,
+                        'is_archived' => 0
+                    ]); 
+
+        return response()->json($post);
     }
 }

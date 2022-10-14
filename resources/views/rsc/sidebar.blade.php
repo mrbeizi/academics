@@ -3,7 +3,7 @@
 
                 
     <div class="app-brand demo ">
-    <a href="/" class="app-brand-link">
+    <a href="{{route('dashboard')}}" class="app-brand-link">
         <span class="app-brand-logo demo"><img src="{{asset('images/svg/Aa.svg')}}" width="32px" height="32px" alt=""></span>
         <span class="app-brand-text demo menu-text fw-bold ms-2">{{config('app.name')}}</span>
     </a>
@@ -25,7 +25,7 @@
     <ul class="menu-inner py-1">
     <!-- Dashboards -->
     <li class="menu-item">
-        <a href="/" class="menu-link">
+        <a href="{{route('dashboard')}}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-home-circle"></i>
         <div data-i18n="Dashboards">Dashboards</div>
         </a>
