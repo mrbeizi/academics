@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use App\Model\Fakultas;
+use App\Model\Periode;
 use DataTables;
 use Response;
 use Session;
@@ -16,7 +17,10 @@ class FakultasController extends Controller
 {
     public function index(Request $request)
     {
-        $dataFakultas = Fakultas::all();
+        $dataFakultas = Fakultas::leftJoin('periodes','periodes.id','=','fakultas.id_periode')
+            ->select('fakultas.id AS id','fakultas.*','periodes.tahun')
+            ->where('periodes.is_active','=',1)
+            ->get();
                 
         if($request->ajax()){
             return datatables()->of($dataFakultas)
@@ -30,7 +34,8 @@ class FakultasController extends Controller
                 ->addIndexColumn(true)
                 ->make(true);
         }
-        return view('administrator.fakultas.index');
+        $getPeriode = Periode::where('is_active','=',1)->get();
+        return view('administrator.fakultas.index', compact('getPeriode'));
     }
 
     public function store(Request $request)

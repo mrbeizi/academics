@@ -23,4 +23,5 @@ Route::get('/home', 'HomeController@index')->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::resource('fakultas','Admin\FakultasController');
+    Route::resource('periode','Admin\PeriodeController');
 });

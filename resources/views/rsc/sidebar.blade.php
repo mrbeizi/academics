@@ -51,6 +51,11 @@
             </a>
         </li>
         <li class="menu-item">
+            <a href="{{route('periode.index')}}" class="menu-link">
+            <div data-i18n="Periode">Periode</div>
+            </a>
+        </li>
+        <li class="menu-item">
             <a href="app-invoice-list.html" class="menu-link">
             <div data-i18n="Mata Kuliah">Mata Kuliah</div>
             </a>

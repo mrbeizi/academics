@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title','Fakultas')
+@section('title','Periode')
 
 @section('breadcrumbs')
 <div class="container">
@@ -9,7 +9,7 @@
         <a href="{{route('dashboard')}}">Home</a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{route('fakultas.index')}}">@yield('title')</a>
+        <a href="{{route('periode.index')}}">@yield('title')</a>
       </li>
       <li class="breadcrumb-item active">Data</li>
     </ol>
@@ -31,12 +31,11 @@
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
-                            <table class="table table-hover table-responsive" id="table_fakultas">
+                            <table class="table table-hover table-responsive" id="table_periode">
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Period ID</th>
-                                  <th>Name</th>
+                                  <th>Period</th>
                                   <th>Status</th>
                                   <th>Actions</th>
                                 </tr>
@@ -61,30 +60,9 @@
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="id_periode" class="form-label">Year Period</label>
-                                                    <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example">
-                                                      <option selected>- Choose -</option>
-                                                      @foreach($getPeriode as $data)
-                                                      <option value="{{$data->id}}">{{$data->tahun}}</option>
-                                                      @endforeach
-                                                    </select>
-                                                    <span class="text-danger" id="idPeriodeErrorMsg"></span>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="nama_id" class="form-label">Name (ID)</label>
-                                                    <input type="text" class="form-control" id="nama_id" name="nama_id" value="" placeholder="John Doe" />
-                                                    <span class="text-danger" id="namaIDErrorMsg"></span>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="nama_en" class="form-label">Name (EN)</label>
-                                                    <input type="text" class="form-control" id="nama_en" name="nama_en" value="" placeholder="John Doe" />
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="nama_ch" class="form-label">Name (CH)</label>
-                                                    <input type="text" class="form-control" id="nama_ch" name="nama_ch" value="" placeholder="John Doe" />
+                                                    <label for="tahun" class="form-label">Year</label>
+                                                    <input type="number" class="form-control" id="tahun" name="tahun" value="" placeholder="John Doe" />
+                                                    <span class="text-danger" id="tahunIDErrorMsg"></span>
                                                 </div>
 
                                             </div>
@@ -130,12 +108,11 @@
         </div>
     </section>
 </div>
-         
+
 @endsection
 @section('script')
-  
-  <!-- Core JS -->
-  <script>
+
+<script>
     $(document).ready(function () {
         $.ajaxSetup({
             headers: {
@@ -146,10 +123,10 @@
 
     // DATATABLE
     $(document).ready(function () {
-        var table = $('#table_fakultas').DataTable({
+        var table = $('#table_periode').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('fakultas.index') }}",
+            ajax: "{{ route('periode.index') }}",
             columns: [
                 {data: null,sortable:false,
                     render: function (data, type, row, meta) {
@@ -157,8 +134,7 @@
                     }
                 }, 
                 {data: 'tahun',name: 'tahun'},
-                {data: 'nama_id',name: 'nama_id'},
-                {data: 'is_archived',name: 'is_archived'},
+                {data: 'is_active',name: 'is_active'},
                 {data: 'action',name: 'action'},
             ]
         });
@@ -182,14 +158,14 @@
 
                 $.ajax({
                     data: $('#form-tambah-edit').serialize(), 
-                    url: "{{ route('fakultas.store') }}",
+                    url: "{{ route('periode.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         $('#form-tambah-edit').trigger("reset");
                         $('#tambah-edit-modal').modal('hide');
                         $('#tombol-simpan').html('Save');
-                        var oTable = $('#table_fakultas').dataTable();
+                        var oTable = $('#table_periode').dataTable();
                         oTable.fnDraw(false);
                         iziToast.success({
                             title: 'Data saved succesfully',
@@ -198,8 +174,7 @@
                         });
                     },
                     error: function(response) {
-                        $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
-                        $('#namaIDErrorMsg').text(response.responseJSON.errors.nama_id);
+                        $('#tahunIDErrorMsg').text(response.responseJSON.errors.tahun);
                         $('#tombol-simpan').html('Save');
                         iziToast.error({
                             title: 'Data failed to save',
@@ -212,58 +187,6 @@
         })
     }
 
-    // EDIT DATA
-    $('body').on('click', '.edit-post', function () {
-        var data_id = $(this).data('id');
-        $.get('fakultas/' + data_id + '/edit', function (data) {
-            $('#modal-judul').html("Edit data");
-            $('#tombol-simpan').val("edit-post");
-            $('#tambah-edit-modal').modal('show');
-              
-            $('#id').val(data.id);
-            $('#id_periode').val(data.id_periode);
-            $('#nama_id').val(data.nama_id);
-            $('#nama_en').val(data.nama_en);
-            $('#nama_ch').val(data.nama_ch);
-        })
-    });
+</script>
 
-    // TOMBOL DELETE
-    $(document).on('click', '.delete', function () {
-        dataId = $(this).attr('id');
-        $('#konfirmasi-modal').modal('show');
-    });
-
-    $('#tombol-hapus').click(function () {
-        $.ajax({
-
-            url: "fakultas/" + dataId,
-            type: 'delete',
-            beforeSend: function () {
-                $('#tombol-hapus').text('Remove Data');
-            },
-            success: function (data) {
-                setTimeout(function () {
-                    $('#konfirmasi-modal').modal('hide');
-                    var oTable = $('#table_fakultas').dataTable();
-                    oTable.fnDraw(false);
-                });
-                iziToast.warning({
-                    title: 'Removed Successfully!',
-                    message: '{{ Session(' delete ')}}',
-                    position: 'bottomRight'
-                });
-            },
-            error: function(response) {
-                iziToast.error({
-                    title: 'Oops! Data failed to removed!',
-                    message: '{{ Session('error')}}',
-                    position: 'bottomRight'
-                });
-            }
-        })
-    });
-
-    
-  </script>
 @endsection
