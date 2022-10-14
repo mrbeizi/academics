@@ -102,6 +102,28 @@
                         </div>
                     </div>
                     <!-- AKHIR MODAL -->
+
+                    <!-- MULAI MODAL KONFIRMASI DELETE-->
+                    <div class="modal fade" tabindex="-1" role="dialog" id="konfirmasi-modal" data-backdrop="false">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" style="color: red";>WARNING!</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>If you remove this data, it would be permanently gone and can't be restored, are you sure to remove?</p>
+                                </div>
+                                <div class="modal-footer bg-whitesmoke br">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-danger" name="tombol-hapus" id="tombol-hapus">Yes, remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- AKHIR MODAL KONFIRMASI DELETE-->
                     
                 </div>
             </div>
@@ -189,6 +211,58 @@
             }
         })
     }
+
+    // EDIT DATA
+    $('body').on('click', '.edit-post', function () {
+        var data_id = $(this).data('id');
+        $.get('fakultas/' + data_id + '/edit', function (data) {
+            $('#modal-judul').html("Edit data");
+            $('#tombol-simpan').val("edit-post");
+            $('#tambah-edit-modal').modal('show');
+              
+            $('#id').val(data.id);
+            $('#id_periode').val(data.id_periode);
+            $('#nama_id').val(data.nama_id);
+            $('#nama_en').val(data.nama_en);
+            $('#nama_ch').val(data.nama_ch);
+        })
+    });
+
+    // TOMBOL DELETE
+    $(document).on('click', '.delete', function () {
+        dataId = $(this).attr('id');
+        $('#konfirmasi-modal').modal('show');
+    });
+
+    $('#tombol-hapus').click(function () {
+        $.ajax({
+
+            url: "fakultas/" + dataId,
+            type: 'delete',
+            beforeSend: function () {
+                $('#tombol-hapus').text('Remove Data');
+            },
+            success: function (data) {
+                setTimeout(function () {
+                    $('#konfirmasi-modal').modal('hide');
+                    var oTable = $('#table_fakultas').dataTable();
+                    oTable.fnDraw(false);
+                });
+                iziToast.warning({
+                    title: 'Removed Successfully!',
+                    message: '{{ Session(' delete ')}}',
+                    position: 'bottomRight'
+                });
+            },
+            error: function(response) {
+                iziToast.error({
+                    title: 'Oops! Data failed to removed!',
+                    message: '{{ Session('error')}}',
+                    position: 'bottomRight'
+                });
+            }
+        })
+    });
 
     
   </script>

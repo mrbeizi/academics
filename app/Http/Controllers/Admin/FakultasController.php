@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use App\Model\Fakultas;
 use DataTables;
@@ -54,4 +55,19 @@ class FakultasController extends Controller
 
         return response()->json($post);
     }
+
+    public function edit($id)
+    {
+        $where = array('id' => $id);
+        $post  = Fakultas::where($where)->first();
+     
+        return response()->json($post);
+    }
+
+    public function destroy($id)
+    {
+        $post = Fakultas::where('id',$id)->delete();     
+        return response()->json($post);
+    }
+
 }
