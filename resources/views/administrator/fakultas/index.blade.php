@@ -19,18 +19,16 @@
 
 @section('content')
 
-<div class="container flex-grow-1 container-p-y">
+<div class="container flex-grow-1">
     <section id="basic-datatable">
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <!-- MULAI TOMBOL TAMBAH -->
-                        <div style="float: left">
-                            <a href="javascript:void(0)" class="btn btn-info btn-sm" id="tombol-tambah"><i class="fa fa-plus"></i> Add Data</a>
+                        <div class="mb-3">
+                            <a href="javascript:void(0)" class="btn btn-primary btn-md" id="tombol-tambah"><i class="fa fa-plus"></i> Add Data</a>
                         </div>
-                        <br>
-                        <br>                        
                         
                         <!-- AKHIR TOMBOL -->
                         <div class="card-datatable table-responsive pt-0">
@@ -47,6 +45,73 @@
                         </table>
                         </div>
                     </div>
+
+                    <!-- MULAI MODAL FORM TAMBAH/EDIT-->
+                    <div class="modal fade" id="tambah-edit-modal" aria-hidden="true">
+                        <div class="modal-dialog ">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modal-judul"></h5>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+
+                                                <input type="hidden" name="id" id="id">
+
+                                                <div class="form-group">
+                                                    <label for="name" class="col-sm-12 control-label">Nama Pengguna</label>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" id="name" name="name" value="" required>
+                                                        <span class="text-danger" id="nameErrorMsg"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="name" class="col-sm-12 control-label">E-mail</label>
+                                                    <div class="col-sm-12">
+                                                        <input type="email" class="form-control" id="email" name="email" value="" required>
+                                                        <span class="text-danger" id="emailErrorMsg"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="password" class="col-sm-12 control-label">Password</label>
+                                                    <div class="col-sm-12">
+                                                        <input type="password" class="form-control" id="password" name="password" value="" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="level" class="col-sm-12 control-label">Level</label>
+                                                    <div class="col-sm-12">
+                                                        <select name="level" id="level" class="form-control required" style="cursor:pointer;">
+                                                            <option value="">Level Pengguna</option>
+                                                            <option value="admin">Admin</option>
+                                                            <option value="user">User</option>
+                                                        </select>
+                                                        <span class="text-danger" id="levelErrorMsg"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-offset-2 col-sm-12">
+                                                <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan" value="create">Simpan</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- AKHIR MODAL -->
+                    
                 </div>
             </div>
         </div>
@@ -58,7 +123,7 @@
   
   <!-- Core JS -->
   <script>
-      $(document).ready(function () {
+    $(document).ready(function () {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -68,7 +133,6 @@
 
     // DATATABLE
     $(document).ready(function () {
-        $.noConflict();
         var table = $('#table_fakultas').DataTable({
             processing: true,
             serverSide: true,
@@ -85,6 +149,15 @@
                 {data: 'action',name: 'action'},
             ]
         });
+    });
+
+    //TOMBOL TAMBAH DATA
+    $('#tombol-tambah').click(function () {
+        $('#button-simpan').val("create-post");
+        $('#id').val('');
+        $('#form-tambah-edit').trigger("reset");
+        $('#modal-judul').html("Tambah User Baru");
+        $('#tambah-edit-modal').modal('show');
     });
 
     
