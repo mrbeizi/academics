@@ -34,7 +34,7 @@
     <!-- Apps & Pages -->
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Datas</span></li>
     <li class="menu-item">
-        <a href="#" class="menu-link">
+        <a href="{{route('kurikulum.index')}}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-calendar"></i>
         <div data-i18n="Kurikulum">Kurikulum</div>
         </a>
@@ -61,7 +61,7 @@
             </a>
         </li>
         <li class="menu-item">
-            <a href="app-invoice-preview.html" class="menu-link">
+            <a href="{{route('prodi.index')}}" class="menu-link">
             <div data-i18n="Prodi">Prodi</div>
             </a>
         </li>

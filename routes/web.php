@@ -22,6 +22,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function(){
+    Route::resource('prodi','Admin\ProdiController');
+    Route::resource('kurikulum','Admin\KurikulumController');
     Route::resource('fakultas','Admin\FakultasController');
     Route::resource('periode','Admin\PeriodeController');
+
+    Route::post('archived-faculty','Admin\FakultasController@archiveFaculty')->name('archiveFaculty');
 });
