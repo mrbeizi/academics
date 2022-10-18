@@ -49,10 +49,24 @@ class PeriodeController extends Controller
         return response()->json($post);
     }
 
+    public function edit($id)
+    {
+        $where = array('id' => $id);
+        $post  = Periode::where($where)->first();
+     
+        return response()->json($post);
+    }
+
     public function switchPeriode(Request $request)
     {
         $req    = $request->is_active == '1' ? 0 : 1;
         $post   = Periode::updateOrCreate(['id' => $request->id],['is_active' => $req]); 
+        return response()->json($post);
+    }
+
+    public function destroy($id)
+    {
+        $post = Periode::where('id',$id)->delete();     
         return response()->json($post);
     }
 }

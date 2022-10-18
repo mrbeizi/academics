@@ -187,6 +187,19 @@
         })
     }
 
+    // EDIT DATA
+    $('body').on('click', '.edit-post', function () {
+        var data_id = $(this).data('id');
+        $.get('periode/' + data_id + '/edit', function (data) {
+            $('#modal-judul').html("Edit data");
+            $('#tombol-simpan').val("edit-post");
+            $('#tambah-edit-modal').modal('show');
+              
+            $('#id').val(data.id);
+            $('#tahun').val(data.tahun);
+        })
+    });
+
     /* UNTUK TOGGLE STATUS */
     function PeriodeStatus(id,is_active){
         $.ajax({
@@ -203,6 +216,42 @@
             });
         })
     }
+
+    // TOMBOL DELETE
+    $(document).on('click', '.delete', function () {
+        dataId = $(this).attr('id');
+        $('#konfirmasi-modal').modal('show');
+    });
+
+    $('#tombol-hapus').click(function () {
+        $.ajax({
+
+            url: "periode/" + dataId,
+            type: 'delete',
+            beforeSend: function () {
+                $('#tombol-hapus').text('Remove Data');
+            },
+            success: function (data) {
+                setTimeout(function () {
+                    $('#konfirmasi-modal').modal('hide');
+                    var oTable = $('#table_periode').dataTable();
+                    oTable.fnDraw(false);
+                });
+                iziToast.warning({
+                    title: 'Removed Successfully!',
+                    message: '{{ Session(' delete ')}}',
+                    position: 'bottomRight'
+                });
+            },
+            error: function(response) {
+                iziToast.error({
+                    title: 'Oops! Data failed to removed!',
+                    message: '{{ Session('error')}}',
+                    position: 'bottomRight'
+                });
+            }
+        })
+    });
 
 </script>
 
