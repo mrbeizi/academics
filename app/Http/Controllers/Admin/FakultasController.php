@@ -7,7 +7,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use App\Model\Fakultas;
 use App\Model\Periode;
-use DataTables;
+// use DataTables;
 use Response;
 use Session;
 use Validator;

@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\MatakuliahKurikulum;
+use App\Model\Matakuliah;
 
-class MatakuliahKurikulumController extends Controller
+class MatakuliahController extends Controller
 {
     public function index(Request $request)
     {
-        return view('administrator.mk-kurikulum.index');
+        return view('administrator.matakuliah.index');
     }
 }

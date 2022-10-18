@@ -2,7 +2,7 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
                 
-    <div class="app-brand demo ">
+    <div class="app-brand demo mt-3">
     <a href="{{route('dashboard')}}" class="app-brand-link">
         <span class="app-brand-logo demo"><img src="{{asset('images/svg/Aa.svg')}}" width="32px" height="32px" alt=""></span>
         <span class="app-brand-text demo menu-text fw-bold ms-2">{{config('app.name')}}</span>
@@ -56,8 +56,13 @@
             </a>
         </li>
         <li class="menu-item">
-            <a href="app-invoice-list.html" class="menu-link">
-            <div data-i18n="Mata Kuliah">Mata Kuliah</div>
+            <a href="{{route('matakuliah.index')}}" class="menu-link">
+            <div data-i18n="Matakuliah">Matakuliah</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="{{route('mk-kurikulum.index')}}" class="menu-link">
+            <div data-i18n="Matakuliah Kurikulum">Matakuliah Kurikulum</div>
             </a>
         </li>
         <li class="menu-item">
