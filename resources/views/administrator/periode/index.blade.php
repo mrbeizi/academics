@@ -134,7 +134,7 @@
                     }
                 }, 
                 {data: 'tahun',name: 'tahun'},
-                {data: 'is_active',name: 'is_active'},
+                {data: 'status',name: 'status'},
                 {data: 'action',name: 'action'},
             ]
         });
@@ -184,6 +184,23 @@
                     }
                 });
             }
+        })
+    }
+
+    /* UNTUK TOGGLE STATUS */
+    function PeriodeStatus(id,is_active){
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "{{ Route('change-period-status') }}",
+            id: $('.ta-status'+id+'').val(),
+            data:{'is_active':is_active,'id':id},
+        }).done(function(data, response) {
+            iziToast.success({ 
+                title: 'Status has been changed',
+                message: '{{ Session('delete ')}}',
+                position: 'bottomRight'
+            });
         })
     }
 

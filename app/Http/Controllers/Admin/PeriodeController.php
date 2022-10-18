@@ -19,8 +19,13 @@ class PeriodeController extends Controller
                         $button .= '&nbsp;&nbsp;';
                         $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i></button>';
                         return $button;
+                })->addColumn('status', function($data){
+                    return '<div class="custom-control">
+                    <label class="switch switch-primary" for="'.$data->id.'">
+                    <input type="checkbox" class="switch-input PeriodeStatus" onclick="changeStatus('.$data->id.','.$data->is_active.')" name="period-status" id="'.$data->id.'" '.(($data->is_active=='1')?'checked':"").'>
+                    <span class="switch-toggle-slider"><span class="switch-on"><i class="bx bx-check"></i></span><span class="switch-off"><i class="bx bx-x"></i></span></span></label></div>';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action','status'])
                 ->addIndexColumn(true)
                 ->make(true);
         }
