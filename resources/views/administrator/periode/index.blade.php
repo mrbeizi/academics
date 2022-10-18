@@ -193,7 +193,7 @@
             type: "POST",
             dataType: "json",
             url: "{{ Route('change-period-status') }}",
-            id: $('.ta-status'+id+'').val(),
+            id: $('.period-status'+id+'').val(),
             data:{'is_active':is_active,'id':id},
         }).done(function(data, response) {
             iziToast.success({ 

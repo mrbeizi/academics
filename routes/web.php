@@ -30,5 +30,5 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('mk-kurikulum','Admin\MatakuliahKurikulumController');
 
     Route::post('archived-faculty','Admin\FakultasController@archiveFaculty')->name('archiveFaculty');
-    Route::post('switch-period','Admin\PeriodeController@changeStatus')->name('change-period-status');
+    Route::post('switch-period','Admin\PeriodeController@switchPeriode')->name('change-period-status');
 });
