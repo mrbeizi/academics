@@ -17,8 +17,8 @@ class CreateMatakuliahsTable extends Migration
             $table->increments('id');
             $table->string('kode',50);
             $table->string('nama_id',200);
-            $table->string('nama_en',200);
-            $table->string('nama_ch',200);
+            $table->string('nama_en',200)->nullable();
+            $table->string('nama_ch',200)->nullable();
             $table->integer('sks_teori');
             $table->integer('sks_praktek');
             $table->integer('golongan_fakultas');
