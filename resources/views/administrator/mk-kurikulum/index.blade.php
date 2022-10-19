@@ -37,7 +37,6 @@
                                   <th>#</th>
                                   <th>Name</th>
                                   <th>Subject ID</th>
-                                  <th>Status</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -120,24 +119,6 @@
                         </div>
                     </div>
                     <!-- AKHIR MODAL KONFIRMASI DELETE-->
-
-                    <!-- MULAI MODAL VIEW DETAIL-->
-                    <div class="modal fade" tabindex="-1" role="dialog" id="view_detail" data-backdrop="false">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Details</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div id="table" class="col-sm-12 table-responsive"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- AKHIR MODAL VIEW DETAIL-->
                     
                 </div>
             </div>
@@ -171,7 +152,6 @@
                 }, 
                 {data: 'nama',name: 'nama'},
                 {data: 'kode_matakuliah',name: 'kode_matakuliah'},
-                {data: 'status',name: 'status'},
                 {data: 'action',name: 'action'},
             ]
         });
@@ -290,20 +270,6 @@
                 });
             }
         })
-    });
-
-    // TOMBOL VIEW
-    $(document).on('click', '.view_detail', function () {
-        dataId = $(this).attr('id');
-        $.ajax({
-			url: "{{route('view-detail-matakuliah')}}",
-			method: "GET",
-			data: {dataId: dataId},
-			success: function(response, data){
-                $('#view_detail').modal('show');
-                $("#table").html(response.table)
-			}
-		})
     });
 
 </script>
