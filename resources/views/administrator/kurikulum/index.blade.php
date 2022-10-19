@@ -62,15 +62,38 @@
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="tahun" class="form-label">Year</label>
-                                                    <input type="number" class="form-control" id="tahun" name="tahun" value="" placeholder="John Doe" />
-                                                    <span class="text-danger" id="tahunIDErrorMsg"></span>
+                                                    <label for="nama" class="form-label">Name</label>
+                                                    <input type="text" class="form-control" id="nama" name="nama" value="" placeholder="e.g Kampus Merdeka" />
+                                                    <span class="text-danger" id="namaIDErrorMsg"></span>
                                                 </div>
 
+                                                <div class="mb-3">
+                                                    <label for="id_prodi" class="form-label">Prodi</label>
+                                                    <select class="form-select" id="id_prodi" name="id_prodi" aria-label="Default select example">
+                                                        <option selected>- Choose -</option>
+                                                        @foreach($getProdi as $prodi)
+                                                        <option value="{{$prodi->id}}">{{$prodi->nama_in}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="text-danger" id="idProdiErrorMsg"></span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="id_periode" class="form-label">Year Period</label>
+                                                    <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example">
+                                                        <option selected>- Choose -</option>
+                                                        @foreach($getPeriode as $data)
+                                                        <option value="{{$data->id}}">{{$data->tahun}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="text-danger" id="idPeriodeErrorMsg"></span>
+                                                </div>
+
+                                                <hr class="mt-2">
                                             </div>
 
                                             <div class="col-sm-offset-2 col-sm-12">
-                                                <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan" value="create">Save</button>
+                                                <button type="submit" class="btn btn-primary btn-block float-sm-end" id="tombol-simpan" value="create">Save</button>
                                             </div>
                                         </div>
 
@@ -135,10 +158,10 @@
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'name',name: 'name'},
-                {data: 'name',name: 'name'},
-                {data: 'name',name: 'name'},
-                {data: 'is_active',name: 'is_active'},
+                {data: 'nama',name: 'nama'},
+                {data: 'nama_prodi',name: 'nama_prodi'},
+                {data: 'tahun',name: 'tahun'},
+                {data: 'status',name: 'status'},
                 {data: 'action',name: 'action'},
             ]
         });
@@ -190,6 +213,74 @@
             }
         })
     }
+
+    // EDIT DATA
+    $('body').on('click', '.edit-post', function () {
+        var data_id = $(this).data('id');
+        $.get('kurikulum/' + data_id + '/edit', function (data) {
+            $('#modal-judul').html("Edit data");
+            $('#tombol-simpan').val("edit-post");
+            $('#tambah-edit-modal').modal('show');
+              
+            $('#id').val(data.id);
+            $('#nama').val(data.nama);
+            $('#id_prodi').val(data.id_prodi);
+            $('#id_periode').val(data.id_periode);
+        })
+    });
+
+    /* UNTUK TOGGLE STATUS */
+    function KurikulumStatus(id,is_active){
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "{{ Route('change-kurikulum-status') }}",
+            id: $('.kurikulum-status'+id+'').val(),
+            data:{'is_active':is_active,'id':id},
+        }).done(function(data, response) {
+            iziToast.success({ 
+                title: 'Status has been changed',
+                message: '{{ Session('delete ')}}',
+                position: 'bottomRight'
+            });
+        })
+    }
+
+    // TOMBOL DELETE
+    $(document).on('click', '.delete', function () {
+        dataId = $(this).attr('id');
+        $('#konfirmasi-modal').modal('show');
+    });
+
+    $('#tombol-hapus').click(function () {
+        $.ajax({
+
+            url: "kurikulum/" + dataId,
+            type: 'delete',
+            beforeSend: function () {
+                $('#tombol-hapus').text('Remove Data');
+            },
+            success: function (data) {
+                setTimeout(function () {
+                    $('#konfirmasi-modal').modal('hide');
+                    var oTable = $('#table_kurikulum').dataTable();
+                    oTable.fnDraw(false);
+                });
+                iziToast.warning({
+                    title: 'Removed Successfully!',
+                    message: '{{ Session(' delete ')}}',
+                    position: 'bottomRight'
+                });
+            },
+            error: function(response) {
+                iziToast.error({
+                    title: 'Oops! Data failed to removed!',
+                    message: '{{ Session('error')}}',
+                    position: 'bottomRight'
+                });
+            }
+        })
+    });
 
 </script>
 

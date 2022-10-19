@@ -37,8 +37,9 @@
                                   <th>#</th>
                                   <th>Faculty ID</th>
                                   <th>Dikti ID</th>
+                                  <th>Name</th>
+                                  <th>Faculty</th>
                                   <th>Period</th>
-                                  <th>Status</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -57,20 +58,64 @@
                                 <div class="modal-body">
                                     <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
                                         <div class="row">
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-6">
 
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="tahun" class="form-label">Year</label>
-                                                    <input type="number" class="form-control" id="tahun" name="tahun" value="" placeholder="John Doe" />
-                                                    <span class="text-danger" id="tahunIDErrorMsg"></span>
+                                                    <label for="kode_prodi" class="form-label">Prodi ID</label>
+                                                    <input type="text" class="form-control" id="kode_prodi" name="kode_prodi" value="" placeholder="e.g 54001" />
+                                                    <span class="text-danger" id="kodeProdiErrorMsg"></span>
                                                 </div>
 
-                                            </div>
+                                                <div class="mb-3">
+                                                    <label for="kode_dikti" class="form-label">Dikti ID</label>
+                                                    <input type="text" class="form-control" id="kode_dikti" name="kode_dikti" value="" placeholder="e.g 54001" />
+                                                    <span class="text-danger" id="kodeDiktiErrorMsg"></span>
+                                                </div>
 
+                                                <div class="mb-3">
+                                                    <label for="id_fakultas" class="form-label">Faculty</label>
+                                                    <select class="form-select" id="id_fakultas" name="id_fakultas" aria-label="Default select example">
+                                                        <option selected>- Choose -</option>
+                                                        @foreach($getFaculty as $faculty)
+                                                        <option value="{{$faculty->id}}">{{$faculty->nama_id}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="text-danger" id="idFakultasErrorMsg"></span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="id_periode" class="form-label">Year Period</label>
+                                                    <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example">
+                                                        <option selected>- Choose -</option>
+                                                        @foreach($getPeriode as $data)
+                                                        <option value="{{$data->id}}">{{$data->tahun}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="text-danger" id="idPeriodeErrorMsg"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="nama_in" class="form-label">Name (ID)</label>
+                                                    <input type="text" class="form-control" id="nama_in" name="nama_in" value="" placeholder="John Doe" />
+                                                    <span class="text-danger" id="namaINErrorMsg"></span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="nama_en" class="form-label">Name (EN)</label>
+                                                    <input type="text" class="form-control" id="nama_en" name="nama_en" value="" placeholder="John Doe" />
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="nama_ch" class="form-label">Name (CH)</label>
+                                                    <input type="text" class="form-control" id="nama_ch" name="nama_ch" value="" placeholder="John Doe" />
+                                                </div>
+                                            </div>
+                                            <hr class="mt-2">
                                             <div class="col-sm-offset-2 col-sm-12">
-                                                <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan" value="create">Save</button>
+                                                <button type="submit" class="btn btn-primary btn-block float-sm-end" id="tombol-simpan" value="create">Save</button>
                                             </div>
                                         </div>
 
@@ -135,10 +180,11 @@
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'name',name: 'name'},
-                {data: 'name',name: 'name'},
-                {data: 'name',name: 'name'},
-                {data: 'is_active',name: 'is_active'},
+                {data: 'kode_prodi',name: 'kode_prodi'},
+                {data: 'kode_dikti',name: 'kode_dikti'},
+                {data: 'nama_in',name: 'nama_in'},
+                {data: 'nama_fakultas',name: 'nama_fakultas'},
+                {data: 'tahun',name: 'tahun'},
                 {data: 'action',name: 'action'},
             ]
         });
@@ -190,6 +236,61 @@
             }
         })
     }
+
+    // EDIT DATA
+    $('body').on('click', '.edit-post', function () {
+        var data_id = $(this).data('id');
+        $.get('prodi/' + data_id + '/edit', function (data) {
+            $('#modal-judul').html("Edit data");
+            $('#tombol-simpan').val("edit-post");
+            $('#tambah-edit-modal').modal('show');
+              
+            $('#id').val(data.id);
+            $('#kode_prodi').val(data.kode_prodi);
+            $('#kode_dikti').val(data.kode_dikti);
+            $('#id_fakultas').val(data.id_fakultas);
+            $('#id_periode').val(data.id_periode);
+            $('#nama_in').val(data.nama_in);
+            $('#nama_en').val(data.nama_en);
+            $('#nama_ch').val(data.nama_ch);
+        })
+    });
+
+    // TOMBOL DELETE
+    $(document).on('click', '.delete', function () {
+        dataId = $(this).attr('id');
+        $('#konfirmasi-modal').modal('show');
+    });
+
+    $('#tombol-hapus').click(function () {
+        $.ajax({
+
+            url: "prodi/" + dataId,
+            type: 'delete',
+            beforeSend: function () {
+                $('#tombol-hapus').text('Remove Data');
+            },
+            success: function (data) {
+                setTimeout(function () {
+                    $('#konfirmasi-modal').modal('hide');
+                    var oTable = $('#table_prodi').dataTable();
+                    oTable.fnDraw(false);
+                });
+                iziToast.warning({
+                    title: 'Removed Successfully!',
+                    message: '{{ Session(' delete ')}}',
+                    position: 'bottomRight'
+                });
+            },
+            error: function(response) {
+                iziToast.error({
+                    title: 'Oops! Data failed to removed!',
+                    message: '{{ Session('error')}}',
+                    position: 'bottomRight'
+                });
+            }
+        })
+    });
 
 </script>
 
