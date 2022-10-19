@@ -1,5 +1,5 @@
 <?php // Code within app\Helpers\Helper.php
-namespace App\Helpers;
+namespace app\Helpers;
 use Config;
 use Illuminate\Support\Str;
 
