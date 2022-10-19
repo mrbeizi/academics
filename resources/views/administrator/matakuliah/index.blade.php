@@ -65,7 +65,7 @@
                                                 <div class="mb-3">
                                                     <label for="kode" class="form-label">Subject ID</label>
                                                     <input type="text" class="form-control" id="kode" name="kode" value="" placeholder="Kode Matakuliah" />
-                                                    <span class="text-danger" id="kodeIDErrorMsg"></span>
+                                                    <span class="text-danger" id="kodeErrorMsg"></span>
                                                 </div>
 
                                                 <div class="mb-3">
