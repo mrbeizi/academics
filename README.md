@@ -1,6 +1,7 @@
 # About This Projects
 
 First of all, please leave a Star to this repo. Big Thanks!
+If you guys want to collaborate, feel free to tell me.
 
 <ol>
   <li>Clone this project yourself</li>
