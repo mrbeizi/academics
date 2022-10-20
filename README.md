@@ -9,9 +9,10 @@ If you guys want to collaborate, feel free to tell me.
   <li>cp the .env.example and rename it .env</li>
   <li>setup your own database</li>
   <li>php artisan migrate</li>
+  <li>php artisan db:seed</li>
 </ol>
 
-NB\* I didn't provide the seeder, so create it yourself. Enjoyy your coding time.
+NB\* Login with username: admin@gmail.com, password: 123456. Enjoyy your coding time.
 Cheers!
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
