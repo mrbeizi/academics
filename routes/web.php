@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('periode','Admin\PeriodeController');
     Route::resource('matakuliah','Admin\MatakuliahController');
     Route::resource('mk-kurikulum','Admin\MatakuliahKurikulumController');
+    Route::resource('user','Admin\UserController');
 
     Route::post('archived-faculty','Admin\FakultasController@archiveFaculty')->name('archiveFaculty');
     Route::post('switch-period','Admin\PeriodeController@switchPeriode')->name('change-period-status');
