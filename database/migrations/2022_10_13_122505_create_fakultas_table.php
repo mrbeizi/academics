@@ -15,7 +15,8 @@ class CreateFakultasTable extends Migration
     {
         Schema::create('fakultas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_periode');
+            $table->unsignedInteger('id_periode');
+            $table->foreign('id_periode')->references('id')->on('periodes');
             $table->string('nama_id',100);
             $table->string('nama_en',100)->nullable();
             $table->string('nama_ch',100)->nullable();

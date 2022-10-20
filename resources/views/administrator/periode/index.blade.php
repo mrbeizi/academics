@@ -35,8 +35,11 @@
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Period</th>
-                                  <th>Status</th>
+                                  <th>Code</th>
+                                  <th>Period Name</th>
+                                  <th>Open</th>
+                                  <th>Close</th>
+                                  <th>State</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -60,15 +63,40 @@
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="tahun" class="form-label">Year</label>
-                                                    <input type="number" class="form-control" id="tahun" name="tahun" value="" placeholder="John Doe" />
-                                                    <span class="text-danger" id="tahunIDErrorMsg"></span>
+                                                    <label for="kode" class="form-label">Period ID</label>
+                                                    <input type="text" class="form-control" id="kode" name="kode" value="" placeholder="UV001" />
+                                                    <span class="text-danger" id="kodeErrorMsg"></span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="nama_periode" class="form-label">Period Name</label>
+                                                    <input type="text" class="form-control" id="nama_periode" name="nama_periode" value="" placeholder="e.g Ganjil" />
+                                                    <span class="text-danger" id="namaPeriodeErrorMsg"></span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="input_nilai" class="form-label">Value</label>
+                                                    <input type="number" class="form-control" id="input_nilai" name="input_nilai" value="" placeholder="0" />
+                                                    <span class="text-danger" id="inputNilaiErrorMsg"></span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="temp_open" class="form-label">Temp. Open</label>
+                                                    <input type="number" class="form-control" id="temp_open" name="temp_open" value="" placeholder="0" />
+                                                    <span class="text-danger" id="tempOpenErrorMsg"></span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="finish" class="form-label">Finish</label>
+                                                    <input type="number" class="form-control" id="finish" name="finish" value="" placeholder="0" />
+                                                    <span class="text-danger" id="finishErrorMsg"></span>
                                                 </div>
 
                                             </div>
 
                                             <div class="col-sm-offset-2 col-sm-12">
-                                                <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan" value="create">Save</button>
+                                                <hr class="mt-2">
+                                                <button type="submit" class="btn btn-primary btn-block float-sm-end" id="tombol-simpan" value="create">Save</button>
                                             </div>
                                         </div>
 
@@ -111,7 +139,10 @@
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'tahun',name: 'tahun'},
+                {data: 'kode',name: 'kode'},
+                {data: 'nama_periode',name: 'nama_periode'},
+                {data: 'temp_open',name: 'temp_open'},
+                {data: 'finish',name: 'finish'},
                 {data: 'status',name: 'status'},
                 {data: 'action',name: 'action'},
             ]
@@ -157,7 +188,11 @@
                         })
                     },
                     error: function(response) {
-                        $('#tahunIDErrorMsg').text(response.responseJSON.errors.tahun);
+                        $('#kodeErrorMsg').text(response.responseJSON.errors.kode);
+                        $('#namaPeriodeErrorMsg').text(response.responseJSON.errors.nama_periode);
+                        $('#inputNilaiErrorMsg').text(response.responseJSON.errors.input_nilai);
+                        $('#tempOpenErrorMsg').text(response.responseJSON.errors.temp_open);
+                        $('#finishErrorMsg').text(response.responseJSON.errors.finish);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',
@@ -184,7 +219,11 @@
             $('#tambah-edit-modal').modal('show');
               
             $('#id').val(data.id);
-            $('#tahun').val(data.tahun);
+            $('#kode').val(data.kode);
+            $('#nama_periode').val(data.nama_periode);
+            $('#input_nilai').val(data.input_nilai);
+            $('#temp_open').val(data.temp_open);
+            $('#finish').val(data.finish);
         })
     });
 

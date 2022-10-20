@@ -41,15 +41,18 @@ class MatakuliahKurikulumController extends Controller
         $request->validate([
             'id_kurikulum'              => 'required',
             'kode_matakuliah'           => 'required',
+            'semester'                  => 'required',
         ],[
             'id_kurikulum.required'     => 'Anda belum memilih kurikulum',
-            'kode_matakuliah.required'  => 'Anda belum memilih matakuliah'
+            'kode_matakuliah.required'  => 'Anda belum memilih matakuliah',
+            'semester.required'         => 'Anda belum mengisi kolom semester'
         ]);
 
         $post = MatakuliahKurikulum::updateOrCreate(['id' => $request->id],
                 [
                     'id_kurikulum'      => $request->id_kurikulum,
-                    'kode_matakuliah'   => $request->kode_matakuliah
+                    'kode_matakuliah'   => $request->kode_matakuliah,
+                    'semester'          => $request->semester
                 ]); 
 
         return response()->json($post);

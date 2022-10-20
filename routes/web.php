@@ -35,4 +35,5 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('switch-matakuliah','Admin\MatakuliahController@switchMatakuliah')->name('change-matakuliah-status');
     Route::post('switch-kurikulum','Admin\KurikulumController@switchKurikulum')->name('change-kurikulum-status');
     Route::get('matakuliah-view','Admin\MatakuliahController@view')->name('view-detail-matakuliah');
+    Route::get('profile','Admin\UserController@profile')->name('profile');
 });

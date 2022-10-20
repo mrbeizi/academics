@@ -42,13 +42,13 @@ class ProdiController extends Controller
             'kode_dikti'    => 'required',
             'id_fakultas'   => 'required',
             'id_periode'    => 'required',
-            'nama_in'       => 'required',
+            'nama_id'       => 'required',
         ],[
             'kode_prodi.required'    => 'Anda belum menginputkan kode prodi',
             'kode_dikti.required'    => 'Anda belum menginputkan kode dikti',
             'id_fakultas.required'   => 'Anda belum memilih fakultas',
             'id_periode.required'    => 'Anda belum memilih periode',
-            'nama_in.required'       => 'Anda belum menginputkan nama'
+            'nama_id.required'       => 'Anda belum menginputkan nama'
         ]);
 
         $post = Prodi::updateOrCreate(['id' => $request->id],
@@ -57,7 +57,7 @@ class ProdiController extends Controller
                     'kode_dikti'        => $request->kode_dikti,
                     'id_fakultas'       => $request->id_fakultas,
                     'id_periode'        => $request->id_periode,
-                    'nama_in'           => $request->nama_in,
+                    'nama_id'           => $request->nama_id,
                     'nama_en'           => $request->nama_en,
                     'nama_ch'           => $request->nama_ch,
                     'is_archived'       => 0

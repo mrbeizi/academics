@@ -34,42 +34,57 @@
     <!-- Apps & Pages -->
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Datas</span></li>
     <li class="menu-item">
-        <a href="{{route('kurikulum.index')}}" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-calendar"></i>
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class='menu-icon tf-icons bx bx-bookmark'></i>
         <div data-i18n="Kurikulum">Kurikulum</div>
         </a>
+        <ul class="menu-sub">
+        <li class="menu-item">
+            <a href="{{route('matakuliah.index')}}" class="menu-link">
+            <div data-i18n="Daftar Matakuliah">Daftar Matakuliah</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="{{route('kurikulum.index')}}" class="menu-link">
+            <div data-i18n="Daftar Kurikulum">Daftar Kurikulum</div>
+            </a>
+        </li>
+        </ul>
     </li>
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class='menu-icon tf-icons bx bx-food-menu'></i>
-        <div data-i18n="Setting">Setting</div>
+        <i class='menu-icon tf-icons bx bx-buildings'></i>
+        <div data-i18n="Universitas">Universitas</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
             <a href="{{route('fakultas.index')}}" class="menu-link">
-            <div data-i18n="Fakultas">Fakultas</div>
+            <div data-i18n="Daftar Fakultas">Daftar Fakultas</div>
             </a>
         </li>
+        <li class="menu-item">
+            <a href="{{route('prodi.index')}}" class="menu-link">
+            <div data-i18n="Daftar Prodi">Daftar Prodi</div>
+            </a>
+        </li>       
+        </ul>
+    </li>
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class='menu-icon tf-icons bx bx-cog'></i>
+        <div data-i18n="Settings">Settings</div>
+        </a>
+        <ul class="menu-sub">
         <li class="menu-item">
             <a href="{{route('periode.index')}}" class="menu-link">
             <div data-i18n="Periode">Periode</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="{{route('matakuliah.index')}}" class="menu-link">
-            <div data-i18n="Matakuliah">Matakuliah</div>
-            </a>
-        </li>
-        <li class="menu-item">
             <a href="{{route('mk-kurikulum.index')}}" class="menu-link">
             <div data-i18n="Matakuliah Kurikulum">Matakuliah Kurikulum</div>
             </a>
-        </li>
-        <li class="menu-item">
-            <a href="{{route('prodi.index')}}" class="menu-link">
-            <div data-i18n="Prodi">Prodi</div>
-            </a>
-        </li>
+        </li>        
         </ul>
     </li>
     <li class="menu-item">
@@ -79,7 +94,7 @@
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
-            <a href="" class="menu-link">
+            <a href="{{route('profile')}}" class="menu-link">
             <div data-i18n="Profile">Profile</div>
             </a>
         </li>

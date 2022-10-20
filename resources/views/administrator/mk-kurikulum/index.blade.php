@@ -37,6 +37,7 @@
                                   <th>#</th>
                                   <th>Name</th>
                                   <th>Subject ID</th>
+                                  <th>Semester</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -79,6 +80,12 @@
                                                         @endforeach
                                                     </select>
                                                     <span class="text-danger" id="kodeMatakuliahErrorMsg"></span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="semester" class="form-label">Semester</label>
+                                                    <input type="number" class="form-control" id="semester" name="semester" value="" placeholder="0" />
+                                                    <span class="text-danger" id="semesterErrorMsg"></span>
                                                 </div>
                                                                                     
                                                 <hr class="mt-2">
@@ -130,6 +137,7 @@
                 }, 
                 {data: 'nama',name: 'nama'},
                 {data: 'kode_matakuliah',name: 'kode_matakuliah'},
+                {data: 'semester',name: 'semester'},
                 {data: 'action',name: 'action'},
             ]
         });
@@ -176,6 +184,7 @@
                     error: function(response) {
                         $('#idKurikulumErrorMsg').text(response.responseJSON.errors.id_kurikulum);
                         $('#kodeMatakuliahErrorMsg').text(response.responseJSON.errors.kode_matakuliah);
+                        $('#semesterErrorMsg').text(response.responseJSON.errors.semester);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',
@@ -204,6 +213,7 @@
             $('#id').val(data.id);
             $('#id_kurikulum').val(data.id_kurikulum);
             $('#kode_matakuliah').val(data.kode_matakuliah);
+            $('#semester').val(data.semester);
         })
     });
 

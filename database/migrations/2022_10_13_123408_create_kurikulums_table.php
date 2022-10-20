@@ -17,7 +17,8 @@ class CreateKurikulumsTable extends Migration
             $table->increments('id');
             $table->string('nama',100);
             $table->integer('id_prodi');
-            $table->integer('id_periode');
+            $table->unsignedInteger('id_periode');
+            $table->foreign('id_periode')->references('id')->on('periodes');
             $table->integer('is_active');
             $table->integer('is_archived');
             $table->datetime('archived_at')->nullable();

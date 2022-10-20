@@ -15,10 +15,12 @@ class CreatePeriodesTable extends Migration
     {
         Schema::create('periodes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tahun');
+            $table->string('kode');
+            $table->string('nama_periode',30);
             $table->integer('is_active');
-            $table->integer('is_archived');
-            $table->datetime('archived_at')->nullable();
+            $table->string('input_nilai',1);
+            $table->integer('temp_open')->nullable();
+            $table->integer('finish')->nullable();
             $table->timestamps();
         });
     }

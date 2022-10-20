@@ -98,9 +98,9 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="nama_in" class="form-label">Name (ID)</label>
-                                                    <input type="text" class="form-control" id="nama_in" name="nama_in" value="" placeholder="John Doe" />
-                                                    <span class="text-danger" id="namaINErrorMsg"></span>
+                                                    <label for="nama_id" class="form-label">Name (ID)</label>
+                                                    <input type="text" class="form-control" id="nama_id" name="nama_id" value="" placeholder="John Doe" />
+                                                    <span class="text-danger" id="namaIDErrorMsg"></span>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -160,7 +160,7 @@
                 }, 
                 {data: 'kode_prodi',name: 'kode_prodi'},
                 {data: 'kode_dikti',name: 'kode_dikti'},
-                {data: 'nama_in',name: 'nama_in'},
+                {data: 'nama_id',name: 'nama_id'},
                 {data: 'nama_fakultas',name: 'nama_fakultas'},
                 {data: 'tahun',name: 'tahun'},
                 {data: 'action',name: 'action'},
@@ -207,7 +207,11 @@
                         })
                     },
                     error: function(response) {
-                        $('#tahunIDErrorMsg').text(response.responseJSON.errors.tahun);
+                        $('#kodeProdiErrorMsg').text(response.responseJSON.errors.kode_prodi);
+                        $('#kodeDiktiErrorMsg').text(response.responseJSON.errors.kode_dikti);
+                        $('#idFakultasErrorMsg').text(response.responseJSON.errors.id_fakultas);
+                        $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
+                        $('#namaIDErrorMsg').text(response.responseJSON.errors.nama_id);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',
@@ -238,7 +242,7 @@
             $('#kode_dikti').val(data.kode_dikti);
             $('#id_fakultas').val(data.id_fakultas);
             $('#id_periode').val(data.id_periode);
-            $('#nama_in').val(data.nama_in);
+            $('#nama_id').val(data.nama_id);
             $('#nama_en').val(data.nama_en);
             $('#nama_ch').val(data.nama_ch);
         })

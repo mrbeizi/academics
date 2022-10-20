@@ -34,16 +34,28 @@ class PeriodeController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(
-            ['tahun' => 'required',],
-            ['tahun.required' => 'Anda belum menginputkan tahun',]
-        );
+        $request->validate([
+            'kode'         => 'required',
+            'nama_periode' => 'required',
+            'input_nilai'  => 'required',
+            'temp_open'    => 'required',
+            'finish'       => 'required',
+        ],[
+            'kode.required'         => 'Anda belum menginputkan kode',
+            'nama_periode.required' => 'Anda belum menginputkan nama periode',
+            'input_nilai.required'  => 'Anda belum menginputkan nilai',
+            'temp_open.required'    => 'Anda belum menginputkan temp open',
+            'finish.required'       => 'Anda belum menginputkan finish',
+        ]);
 
         $post = Periode::updateOrCreate(['id' => $request->id],
                 [
-                    'tahun'       => $request->tahun,
-                    'is_active'   => 1,
-                    'is_archived' => 0
+                    'kode'          => $request->kode,
+                    'nama_periode'  => $request->nama_periode,
+                    'input_nilai'   => $request->input_nilai,
+                    'temp_open'     => $request->temp_open,
+                    'finish'        => $request->finish,
+                    'is_active'     => 1,
                 ]); 
 
         return response()->json($post);

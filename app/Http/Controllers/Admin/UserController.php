@@ -57,4 +57,9 @@ class UserController extends Controller
         $post = User::where('id',$id)->delete();     
         return response()->json($post);
     }
+
+    public function profile()
+    {
+        return view('administrator.user.profile');
+    }
 }

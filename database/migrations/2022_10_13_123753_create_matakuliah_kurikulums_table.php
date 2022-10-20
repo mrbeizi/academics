@@ -17,6 +17,7 @@ class CreateMatakuliahKurikulumsTable extends Migration
             $table->increments('id');
             $table->integer('id_kurikulum');
             $table->string('kode_matakuliah',50);
+            $table->string('semester',2);
             $table->timestamps();
         });
     }

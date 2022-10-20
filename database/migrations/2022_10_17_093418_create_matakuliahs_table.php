@@ -23,7 +23,8 @@ class CreateMatakuliahsTable extends Migration
             $table->integer('sks_praktek');
             $table->integer('golongan_fakultas');
             $table->integer('golongan_prodi');
-            $table->integer('id_periode');
+            $table->unsignedInteger('id_periode');
+            $table->foreign('id_periode')->references('id')->on('periodes');
             $table->integer('is_active');
             $table->integer('is_archived');
             $table->datetime('archived_at')->nullable();
