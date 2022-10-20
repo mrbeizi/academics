@@ -46,18 +46,13 @@ Cheers!
 
 The composition that forms the basis for building this application is:
 
-<h4>Server Side</h4>
-[![LinkServerSide](https://img.shields.io/badge/Link-ServerSideFolder-blue.svg)]
-
 <ol>
   <li>The Programming Language is PHP</li>
   <li>Using Laravel 7.3 as PHP Framework</li>
-</ol>
-
-<ol>
   <li>Built using HTML, CSS</li>
   <li>Javascript for data presentation</li>
   <li>Using JQuery as a Javascript Library</li>
+  <li>Using Serverside - Yajra Datatable</li>
 </ol>
 
 Databases
