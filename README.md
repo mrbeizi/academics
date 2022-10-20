@@ -44,16 +44,6 @@ Cheers!
 
 [![MySql](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 
-# Description
-
-The folder above is some preview code that I wrote myself to see, because I didn't include the entire resource, for security reasons. I hope what I have attached is clear and can be taken into consideration. Thank You 😄
-The education staff application is a supporting application for company needs, features made according to existing requests and needs,
-in 1 application there are other applications in it that are connected to each other in 1 data.
-
-<ol>
-  <li>Job appraisal</li><li>Employment Assignment</li><li>Honorarium</li><li>Employee Leave</li><li>Academic Assignment Letter</li><li>Academic Invitation Letter</li><li>Staffing</li><li>Application Setup</li>
-</ol>
-
 The composition that forms the basis for building this application is:
 
 <h4>Server Side</h4>
