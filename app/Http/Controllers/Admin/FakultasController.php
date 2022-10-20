@@ -18,7 +18,7 @@ class FakultasController extends Controller
     public function index(Request $request)
     {
         $dataFakultas = Fakultas::leftJoin('periodes','periodes.id','=','fakultas.id_periode')
-            ->select('fakultas.id AS id','fakultas.*','periodes.tahun')
+            ->select('fakultas.id AS id','fakultas.*','periodes.nama_periode')
             ->where([['periodes.is_active','=',1],['fakultas.is_archived','=',0]])
             ->get();
                 

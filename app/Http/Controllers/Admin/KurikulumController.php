@@ -14,7 +14,7 @@ class KurikulumController extends Controller
     {
         $dataKurikulum = Kurikulum::leftJoin('prodis','prodis.id','=','kurikulums.id_prodi')
             ->leftJoin('periodes','periodes.id','=','kurikulums.id_periode')
-            ->select('kurikulums.id AS id','kurikulums.*','prodis.nama_in AS nama_prodi','periodes.tahun','kurikulums.is_active AS is_active')
+            ->select('kurikulums.id AS id','kurikulums.*','prodis.nama_id AS nama_prodi','periodes.nama_periode','kurikulums.is_active AS is_active')
             ->where('periodes.is_active','=',1)
             ->get();
                 

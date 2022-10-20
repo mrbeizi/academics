@@ -90,7 +90,7 @@
                                                     <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example">
                                                         <option selected>- Choose -</option>
                                                         @foreach($getPeriode as $data)
-                                                        <option value="{{$data->id}}">{{$data->tahun}}</option>
+                                                        <option value="{{$data->id}}">{{$data->nama_periode}}</option>
                                                         @endforeach
                                                     </select>
                                                     <span class="text-danger" id="idPeriodeErrorMsg"></span>
@@ -162,7 +162,7 @@
                 {data: 'kode_dikti',name: 'kode_dikti'},
                 {data: 'nama_id',name: 'nama_id'},
                 {data: 'nama_fakultas',name: 'nama_fakultas'},
-                {data: 'tahun',name: 'tahun'},
+                {data: 'nama_periode',name: 'nama_periode'},
                 {data: 'action',name: 'action'},
             ]
         });

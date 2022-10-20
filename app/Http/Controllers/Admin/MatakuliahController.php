@@ -12,7 +12,7 @@ class MatakuliahController extends Controller
     public function index(Request $request)
     {
         $dataMatakuliah = Matakuliah::leftJoin('periodes','periodes.id','=','matakuliahs.id_periode')
-            ->select('matakuliahs.id AS id','matakuliahs.*','periodes.tahun')
+            ->select('matakuliahs.id AS id','matakuliahs.*','periodes.nama_periode')
             ->where('periodes.is_active','=',1)
             ->get();
                 
