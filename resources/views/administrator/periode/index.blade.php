@@ -161,7 +161,7 @@
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',
-                            text: ' Data failed to save!',
+                            text: 'Data failed to save!',
                             type: 'error',
                             customClass: {
                             confirmButton: 'btn btn-primary'
@@ -199,7 +199,7 @@
         }).done(function(data, response) {
             Swal.fire({
                 title: 'Success!',
-                text: 'Data changed successfully!',
+                text: 'State changed successfully!',
                 type: 'success',
                 customClass: {
                 confirmButton: 'btn btn-primary'

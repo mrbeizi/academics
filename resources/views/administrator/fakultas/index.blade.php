@@ -104,28 +104,6 @@
                         </div>
                     </div>
                     <!-- AKHIR MODAL -->
-
-                    <!-- MULAI MODAL KONFIRMASI DELETE-->
-                    <div class="modal fade" tabindex="-1" role="dialog" id="konfirmasi-modal" data-backdrop="false">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" style="color: red";>WARNING!</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>If you remove this data, it would be permanently gone and can't be restored, are you sure to remove?</p>
-                                </div>
-                                <div class="modal-footer bg-whitesmoke br">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-danger" name="tombol-hapus" id="tombol-hapus">Yes, remove</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- AKHIR MODAL KONFIRMASI DELETE-->
                     
                 </div>
             </div>
@@ -194,21 +172,31 @@
                         $('#tombol-simpan').html('Save');
                         var oTable = $('#table_fakultas').dataTable();
                         oTable.fnDraw(false);
-                        iziToast.success({
-                            title: 'Data saved succesfully',
-                            message: '{{ Session(' success ')}}',
-                            position: 'bottomRight'
-                        });
+                        Swal.fire({
+                            title: 'Good job!',
+                            text: 'Data saved successfully!',
+                            type: 'success',
+                            customClass: {
+                            confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false,
+                            timer: 2000
+                        })
                     },
                     error: function(response) {
                         $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
                         $('#namaIDErrorMsg').text(response.responseJSON.errors.nama_id);
                         $('#tombol-simpan').html('Save');
-                        iziToast.error({
-                            title: 'Data failed to save',
-                            message: '{{ Session('error')}}',
-                            position: 'bottomRight'
-                        });
+                        Swal.fire({
+                            title: 'Error!',
+                            text: ' Data failed to save!',
+                            type: 'error',
+                            customClass: {
+                            confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false,
+                            timer: 2000
+                        })
                     }
                 });
             }
@@ -234,37 +222,41 @@
     // TOMBOL DELETE
     $(document).on('click', '.delete', function () {
         dataId = $(this).attr('id');
-        $('#konfirmasi-modal').modal('show');
-    });
-
-    $('#tombol-hapus').click(function () {
-        $.ajax({
-
-            url: "fakultas/" + dataId,
-            type: 'delete',
-            beforeSend: function () {
-                $('#tombol-hapus').text('Remove Data');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "It will be deleted permanently!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+                return new Promise(function(resolve) {
+                    $.ajax({
+                        url: "fakultas/" + dataId,
+                        type: 'DELETE',
+                        data: {id:dataId},
+                        dataType: 'json'
+                    }).done(function(response) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Your data has been deleted.',
+                            type: 'success',
+                            timer: 2000
+                        })
+                        $('#table_fakultas').DataTable().ajax.reload(null, true);
+                    }).fail(function() {
+                        Swal.fire({
+                            title: 'Oops!',
+                            text: 'Something went wrong with ajax!',
+                            type: 'error',
+                            timer: 2000
+                        })
+                    });
+                });
             },
-            success: function (data) {
-                setTimeout(function () {
-                    $('#konfirmasi-modal').modal('hide');
-                    var oTable = $('#table_fakultas').dataTable();
-                    oTable.fnDraw(false);
-                });
-                iziToast.warning({
-                    title: 'Removed Successfully!',
-                    message: '{{ Session(' delete ')}}',
-                    position: 'bottomRight'
-                });
-            },
-            error: function(response) {
-                iziToast.error({
-                    title: 'Oops! Data failed to removed!',
-                    message: '{{ Session('error')}}',
-                    position: 'bottomRight'
-                });
-            }
-        })
+        });
     });
 
     /* UNTUK TOGGLE STATUS */
@@ -276,13 +268,18 @@
             id: $('.archive-faculty'+id+'').val(),
             data:{'is_archived':is_archived,'id':id},
         }).done(function(data, response) {
-            var oTable = $('#table-inbox').dataTable();
+            var oTable = $('#table_fakultas').dataTable();
             oTable.fnDraw(false);
-            iziToast.success({ 
-                title: 'Status telah berubah',
-                message: '{{ Session('delete ')}}',
-                position: 'bottomRight'
-            });
+            Swal.fire({
+                title: 'Success!',
+                text: 'State changed successfully!',
+                type: 'success',
+                customClass: {
+                confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false,
+                timer: 2000
+            })
         })
     }
 
