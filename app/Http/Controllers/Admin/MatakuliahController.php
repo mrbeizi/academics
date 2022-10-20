@@ -102,7 +102,7 @@ class MatakuliahController extends Controller
     {
         $where = array('matakuliahs.id' => $request->dataId);
         $getDatas  = Matakuliah::leftJoin('periodes','periodes.id','=','matakuliahs.id_periode')
-            ->select('matakuliahs.id AS id','matakuliahs.*','matakuliahs.is_active AS is_active','periodes.id AS id_periode','periodes.is_active AS status_periode','periodes.tahun')
+            ->select('matakuliahs.id AS id','matakuliahs.*','matakuliahs.is_active AS is_active','periodes.id AS id_periode','periodes.is_active AS status_periode','periodes.nama_periode')
             ->where($where)
             ->get(); 
         foreach($getDatas as $data){
@@ -116,7 +116,7 @@ class MatakuliahController extends Controller
                             <tr><td>Practice Weight</td><td>:</td><td>'.$data->sks_praktek.'</td></tr>
                             <tr><td>Fac. Group</td><td>:</td><td>'.$data->golongan_fakultas.'</td></tr>
                             <tr><td>Prodi Group</td><td>:</td><td>'.$data->golongan_prodi.'</td></tr>
-                            <tr><td>Period</td><td>:</td><td>'.$data->tahun.'</td></tr>
+                            <tr><td>Period</td><td>:</td><td>'.$data->nama_periode.'</td></tr>
                             <tr><td>State</td><td>:</td><td>'.(($data->is_active == 1) ? "Active <div class='spinner-grow spinner-grow-sm text-success' role='status'>" : "Non-active").'</td>
                             </tr>
                         </tbody>

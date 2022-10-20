@@ -136,7 +136,7 @@
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'nama_periodenama_periode',name: 'nama_periodenama_periode'},
+                {data: 'nama_periode',name: 'nama_periode'},
                 {data: 'nama_id',name: 'nama_id'},
                 {data: 'nama_en',name: 'nama_en'},
                 {data: 'nama_ch',name: 'nama_ch'},

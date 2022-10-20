@@ -72,7 +72,7 @@
                                                     <select class="form-select" id="id_prodi" name="id_prodi" aria-label="Default select example">
                                                         <option selected>- Choose -</option>
                                                         @foreach($getProdi as $prodi)
-                                                        <option value="{{$prodi->id}}">{{$prodi->nama_in}}</option>
+                                                        <option value="{{$prodi->id}}">{{$prodi->nama_id}}</option>
                                                         @endforeach
                                                     </select>
                                                     <span class="text-danger" id="idProdiErrorMsg"></span>
