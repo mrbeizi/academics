@@ -47,49 +47,49 @@
                 <div class="row row-bordered overflow-visible g-0">
                 <div class="dropdown-shortcuts-item col">
                     <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
-                    <i class="bx bx-calendar fs-4"></i>
+                    <i class="bx bx-list-ul fs-4"></i>
                     </span>
-                    <a href="app-calendar.html" class="stretched-link">Calendar</a>
-                    <small class="text-muted mb-0">Appointments</small>
+                    <a href="{{route('matakuliah.index')}}" class="stretched-link">Matakuliah</a>
+                    <small class="text-muted mb-0">Manage Subjects</small>
                 </div>
                 <div class="dropdown-shortcuts-item col">
                     <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
                     <i class="bx bx-food-menu fs-4"></i>
                     </span>
-                    <a href="app-invoice-list.html" class="stretched-link">Invoice App</a>
-                    <small class="text-muted mb-0">Manage Accounts</small>
+                    <a href="{{route('kurikulum.index')}}" class="stretched-link">Kurikulum</a>
+                    <small class="text-muted mb-0">Manage List</small>
                 </div>
                 </div>
                 <div class="row row-bordered overflow-visible g-0">
                 <div class="dropdown-shortcuts-item col">
                     <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
-                    <i class="bx bx-user fs-4"></i>
+                    <i class="bx bx-user-plus fs-4"></i>
                     </span>
-                    <a href="app-user-list.html" class="stretched-link">User App</a>
+                    <a href="{{route('user.index')}}" class="stretched-link">User App</a>
                     <small class="text-muted mb-0">Manage Users</small>
                 </div>
                 <div class="dropdown-shortcuts-item col">
                     <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
-                    <i class="bx bx-check-shield fs-4"></i>
+                    <i class="bx bx-buildings fs-4"></i>
                     </span>
-                    <a href="app-access-roles.html" class="stretched-link">Role Management</a>
-                    <small class="text-muted mb-0">Permission</small>
+                    <a href="{{route('fakultas.index')}}" class="stretched-link">Faculty</a>
+                    <small class="text-muted mb-0">Manage Faculty</small>
                 </div>
                 </div>
                 <div class="row row-bordered overflow-visible g-0">
                 <div class="dropdown-shortcuts-item col">
                     <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
-                    <i class="bx bx-pie-chart-alt-2 fs-4"></i>
+                    <i class="bx bx-user-check fs-4"></i>
                     </span>
-                    <a href="index.html" class="stretched-link">Dashboard</a>
+                    <a href="{{route('profile')}}" class="stretched-link">Profile</a>
                     <small class="text-muted mb-0">User Profile</small>
                 </div>
                 <div class="dropdown-shortcuts-item col">
                     <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
-                    <i class="bx bx-cog fs-4"></i>
+                    <i class="bx bx-time fs-4"></i>
                     </span>
-                    <a href="pages-account-settings-account.html" class="stretched-link">Setting</a>
-                    <small class="text-muted mb-0">Account Settings</small>
+                    <a href="{{route('periode.index')}}" class="stretched-link">Setting</a>
+                    <small class="text-muted mb-0">Period Settings</small>
                 </div>
                 </div>
                 <div class="row row-bordered overflow-visible g-0">
