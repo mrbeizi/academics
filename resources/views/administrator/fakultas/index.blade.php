@@ -87,12 +87,15 @@
                                                     <label for="nama_ch" class="form-label">Name (CH)</label>
                                                     <input type="text" class="form-control" id="nama_ch" name="nama_ch" value="" placeholder="John Doe" />
                                                 </div>
-                                                <hr class="mt-2">
-
+                                                
                                             </div>
-
+                                            
                                             <div class="col-sm-offset-2 col-sm-12">
-                                                <button type="submit" class="btn btn-primary btn-block float-sm-end" id="tombol-simpan" value="create">Save</button>
+                                                <hr class="mt-2">
+                                                <div class="float-sm-end">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan" value="create">Save</button>
+                                                </div>
                                             </div>
                                         </div>
 

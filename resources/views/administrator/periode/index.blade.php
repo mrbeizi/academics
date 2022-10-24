@@ -96,7 +96,10 @@
 
                                             <div class="col-sm-offset-2 col-sm-12">
                                                 <hr class="mt-2">
-                                                <button type="submit" class="btn btn-primary btn-block float-sm-end" id="tombol-simpan" value="create">Save</button>
+                                                <div class="float-sm-end">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan" value="create">Save</button>
+                                                </div>
                                             </div>
                                         </div>
 
