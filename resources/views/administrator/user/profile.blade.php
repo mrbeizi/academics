@@ -58,15 +58,12 @@
                   <div class="tab-pane fade" id="changePassword" role="tabpanel">
                     <form method="POST" action="{{ route('change-password') }}">
                       @csrf 
-                        @foreach ($errors->all() as $error)
-                            <p class="text-danger">{{ $error }}</p>
-                         @endforeach 
                       <div class="form-group row mb-3">
                           <label for="password" class="col-sm-3 col-form-label text-md-right">Current Password</label>
                           <div class="col-md-4">
                               <input id="password" type="password" class="form-control {{$errors->has('current_password') ? 'has-error' : ''}}" name="current_password" autocomplete="current-password" value="{{ old('current_password') }}">
                               @error('current_password')
-                                <div class="alert-danger">{{$errors->first('current_password') }} </div>
+                                <div class="alert-danger mt-2">{{$errors->first('current_password') }} </div>
                               @enderror
                           </div>
                       </div>
@@ -77,7 +74,7 @@
                           <div class="col-md-4">
                               <input id="new_password" type="password" class="form-control {{$errors->has('new_password') ? 'has-error' : ''}}" name="new_password" autocomplete="current-password" value="{{ old('new_password') }}">
                               @error('new_password')
-                                <div class="alert-danger">{{$errors->first('new_password') }} </div>
+                                <div class="alert-danger mt-2">{{$errors->first('new_password') }} </div>
                               @enderror
                           </div>
                       </div>
@@ -88,7 +85,7 @@
                           <div class="col-md-4">
                               <input id="new_confirm_password" type="password" class="form-control {{$errors->has('new_confirm_password') ? 'has-error' : ''}}" name="new_confirm_password" autocomplete="current-password" value="{{ old('new_confirm_password') }}">
                               @error('new_confirm_password')
-                                <div class="alert-danger">{{$errors->first('new_confirm_password') }} </div>
+                                <div class="alert-danger mt-2">{{$errors->first('new_confirm_password') }} </div>
                               @enderror
                           </div>
                       </div>
