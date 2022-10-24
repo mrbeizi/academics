@@ -79,7 +79,6 @@ class UserController extends Controller
         ]);
    
         User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-        // return redirect()->route('profile')->with('success','Password has changed successfully!');
-        return redirect()->back()->with('success', 'Created successfully!');
+        return redirect()->route('profile')->with('success','Password has changed successfully!');
     }
 }
