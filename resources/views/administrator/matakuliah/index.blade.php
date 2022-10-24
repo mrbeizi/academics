@@ -63,13 +63,13 @@
 
                                                 <input type="hidden" name="id" id="id">
                                                 <div class="mb-3">
-                                                    <label for="kode" class="form-label">Subject ID</label>
+                                                    <label for="kode" class="form-label">Subject ID*</label>
                                                     <input type="text" class="form-control" id="kode" name="kode" value="" placeholder="Kode Matakuliah" />
                                                     <span class="text-danger" id="kodeErrorMsg"></span>
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="nama_id" class="form-label">Name (ID)</label>
+                                                    <label for="nama_id" class="form-label">Name (ID)*</label>
                                                     <input type="text" class="form-control" id="nama_id" name="nama_id" value="" placeholder="Nama ID" />
                                                     <span class="text-danger" id="namaIDErrorMsg"></span>
                                                 </div>
@@ -88,14 +88,14 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="mb-3">
-                                                            <label for="sks_teori" class="form-label">Theory Weight</label>
+                                                            <label for="sks_teori" class="form-label">Theory Weight*</label>
                                                             <input type="number" class="form-control" id="sks_teori" name="sks_teori" value="" placeholder="0" />
                                                             <span class="text-danger" id="sksTeoriErrorMsg"></span>
                                                         </div>                                                                                                
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="mb-3">
-                                                            <label for="sks_praktek" class="form-label">Practice Weight</label>
+                                                            <label for="sks_praktek" class="form-label">Practice Weight*</label>
                                                             <input type="number" class="form-control" id="sks_praktek" name="sks_praktek" value="" placeholder="0" />
                                                             <span class="text-danger" id="sksPraktekErrorMsg"></span>
                                                         </div>
@@ -103,9 +103,9 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="mb-3">
-                                                        <label for="golongan_fakultas" class="form-label">Faculty Group</label>
+                                                        <label for="golongan_fakultas" class="form-label">Faculty Group*</label>
                                                         <select class="form-select" id="golongan_fakultas" name="golongan_fakultas" aria-label="Default select example">
-                                                            <option selected>- Choose -</option>
+                                                            <option value="">- Choose -</option>
                                                             <option value="1">Bussiness & Finance</option>
                                                             <option value="2">Technology</option>
                                                             <option value="3">Computer Science</option>
@@ -115,9 +115,9 @@
                                                     </div>
     
                                                     <div class="mb-3">
-                                                        <label for="golongan_prodi" class="form-label">Prodi Group</label>
+                                                        <label for="golongan_prodi" class="form-label">Prodi Group*</label>
                                                         <select class="form-select" id="golongan_prodi" name="golongan_prodi" aria-label="Default select example">
-                                                            <option selected>- Choose -</option>
+                                                            <option value="">- Choose -</option>
                                                             <option value="1">Bussiness & Finance</option>
                                                             <option value="2">Technology</option>
                                                             <option value="3">Computer Science</option>
@@ -127,9 +127,9 @@
                                                     </div>                                                
     
                                                     <div class="mb-3">
-                                                        <label for="id_periode" class="form-label">Year Period</label>
+                                                        <label for="id_periode" class="form-label">Year Period*</label>
                                                         <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example">
-                                                            <option selected>- Choose -</option>
+                                                            <option value="">- Choose -</option>
                                                             @foreach($getPeriode as $data)
                                                             <option value="{{$data->id}}">{{$data->nama_periode}}</option>
                                                             @endforeach

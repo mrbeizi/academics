@@ -61,9 +61,9 @@
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="id_kurikulum" class="form-label">Kurikulum</label>
+                                                    <label for="id_kurikulum" class="form-label">Kurikulum*</label>
                                                     <select class="form-select" id="id_kurikulum" name="id_kurikulum" aria-label="Default select example">
-                                                        <option selected>- Choose -</option>
+                                                        <option value="">- Choose -</option>
                                                         @foreach($getKurikulum as $kurikulum)
                                                         <option value="{{$kurikulum->id}}">{{$kurikulum->nama}}</option>
                                                         @endforeach
@@ -72,9 +72,9 @@
                                                 </div>                                                
 
                                                 <div class="mb-3">
-                                                    <label for="kode_matakuliah" class="form-label">Subjects</label>
+                                                    <label for="kode_matakuliah" class="form-label">Subjects*</label>
                                                     <select class="form-select" id="kode_matakuliah" name="kode_matakuliah" aria-label="Default select example">
-                                                        <option selected>- Choose -</option>
+                                                        <option value="">- Choose -</option>
                                                         @foreach($getMatakuliah as $data)
                                                         <option value="{{$data->kode}}">{{$data->nama_id}}</option>
                                                         @endforeach
@@ -83,7 +83,7 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="semester" class="form-label">Semester</label>
+                                                    <label for="semester" class="form-label">Semester*</label>
                                                     <input type="number" class="form-control" id="semester" name="semester" value="" placeholder="0" />
                                                     <span class="text-danger" id="semesterErrorMsg"></span>
                                                 </div>

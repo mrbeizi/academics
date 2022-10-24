@@ -72,7 +72,7 @@
                           <label for="password" class="col-sm-3 col-form-label text-md-right">New Password</label>
 
                           <div class="col-md-4">
-                              <input id="new_password" type="password" class="form-control {{$errors->has('new_password') ? 'has-error' : ''}}" name="new_password" autocomplete="current-password" value="{{ old('new_password') }}">
+                              <input id="new_password" minlength="6" type="password" class="form-control {{$errors->has('new_password') ? 'has-error' : ''}}" name="new_password" autocomplete="current-password" value="{{ old('new_password') }}">
                               @error('new_password')
                                 <div class="alert-danger mt-2">{{$errors->first('new_password') }} </div>
                               @enderror

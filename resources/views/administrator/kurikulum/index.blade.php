@@ -62,15 +62,15 @@
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="nama" class="form-label">Name</label>
+                                                    <label for="nama" class="form-label">Name*</label>
                                                     <input type="text" class="form-control" id="nama" name="nama" value="" placeholder="e.g Kampus Merdeka" />
                                                     <span class="text-danger" id="namaIDErrorMsg"></span>
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="id_prodi" class="form-label">Prodi</label>
+                                                    <label for="id_prodi" class="form-label">Prodi*</label>
                                                     <select class="form-select" id="id_prodi" name="id_prodi" aria-label="Default select example">
-                                                        <option selected>- Choose -</option>
+                                                        <option value="">- Choose -</option>
                                                         @foreach($getProdi as $prodi)
                                                         <option value="{{$prodi->id}}">{{$prodi->nama_id}}</option>
                                                         @endforeach
@@ -79,9 +79,9 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="id_periode" class="form-label">Year Period</label>
+                                                    <label for="id_periode" class="form-label">Year Period*</label>
                                                     <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example">
-                                                        <option selected>- Choose -</option>
+                                                        <option value="">- Choose -</option>
                                                         @foreach($getPeriode as $data)
                                                         <option value="{{$data->id}}">{{$data->nama_periode}}</option>
                                                         @endforeach
@@ -187,7 +187,9 @@
                         })
                     },
                     error: function(response) {
-                        $('#tahunIDErrorMsg').text(response.responseJSON.errors.tahun);
+                        $('#namaIDErrorMsg').text(response.responseJSON.errors.nama);
+                        $('#idProdiErrorMsg').text(response.responseJSON.errors.id_prodi);
+                        $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',

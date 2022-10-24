@@ -62,9 +62,9 @@
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="id_periode" class="form-label">Year Period</label>
+                                                    <label for="id_periode" class="form-label">Year Period*</label>
                                                     <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example">
-                                                      <option selected>- Choose -</option>
+                                                      <option value="">- Choose -</option>
                                                       @foreach($getPeriode as $data)
                                                       <option value="{{$data->id}}">{{$data->nama_periode}}</option>
                                                       @endforeach
@@ -73,7 +73,7 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="nama_id" class="form-label">Name (ID)</label>
+                                                    <label for="nama_id" class="form-label">Name (ID)*</label>
                                                     <input type="text" class="form-control" id="nama_id" name="nama_id" value="" placeholder="John Doe" />
                                                     <span class="text-danger" id="namaIDErrorMsg"></span>
                                                 </div>
