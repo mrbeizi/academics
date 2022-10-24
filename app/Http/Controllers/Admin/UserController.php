@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
+use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -61,5 +63,23 @@ class UserController extends Controller
     public function profile()
     {
         return view('administrator.user.profile');
+    }
+
+    public function getPass()
+    {
+        return redirect()->route('change-password');
+    }
+
+    public function postPass(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+   
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+        // return redirect()->route('profile')->with('success','Password has changed successfully!');
+        return redirect()->back()->with('success', 'Created successfully!');
     }
 }

@@ -36,4 +36,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('switch-kurikulum','Admin\KurikulumController@switchKurikulum')->name('change-kurikulum-status');
     Route::get('matakuliah-view','Admin\MatakuliahController@view')->name('view-detail-matakuliah');
     Route::get('profile','Admin\UserController@profile')->name('profile');
+
+    Route::get('change-password', 'Admin\UserController@getPass');
+    Route::post('change-password', 'Admin\UserController@postPass')->name('change-password');
 });

@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="card text-center">
-                <img src="{{asset('assets/img/avatars/1.png')}}" class="card-img-top rounded-circle mx-auto d-block mt-4" alt="user-image" style="width: 15rem;">
+                <img src="{{asset('assets/img/avatars/1.png')}}" class="card-img-top rounded-circle mx-auto d-block mt-4 img-fluid img-thumbnail" alt="user-image" style="width: 10rem;">
                 <div class="card-body">
                   <h5 class="card-title mb-0">{{Auth::user()->name}}</h5>
                   <p class="card-text">{{Auth::user()->email}}</p>
@@ -32,42 +32,77 @@
         </div>
         <div class="col-sm-9">
             <div class="nav-align-top">
-                <ul class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-tabs" role="tablist" id="tabMenu">
                   <li class="nav-item">
-                    <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-home" aria-controls="navs-top-home" aria-selected="true">Home</button>
+                    <a class="nav-link active" role="tab" data-toggle="tab" href="#home" aria-selected="true">Info</a>
                   </li>
                   <li class="nav-item">
-                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-profile" aria-controls="navs-top-profile" aria-selected="false">Profile</button>
+                    <a class="nav-link" role="tab" data-toggle="tab" href="#changePassword" aria-selected="false">Change Password</a>
                   </li>
                   <li class="nav-item">
-                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-messages" aria-controls="navs-top-messages" aria-selected="false">Messages</button>
+                    <a class="nav-link" role="tab" data-toggle="tab" href="#messages" aria-selected="false">Messages</a>
                   </li>
                 </ul>
+
                 <div class="tab-content">
-                  <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
+                  <div class="tab-pane fade show active" id="home" role="tabpanel">
                     <p>
-                      Icing pastry pudding oat cake. Lemon drops cotton candy caramels cake caramels sesame snaps powder. Bear
-                      claw
-                      candy topping.
+                      Hallo I'm <b>{{Auth::user()->name}}</b>,
                     </p>
                     <p class="mb-0">
-                      Tootsie roll fruitcake cookie. Dessert topping pie. Jujubes wafer carrot cake jelly. Bonbon jelly-o
+                      Here are my fave tootsie roll fruitcake cookie. Dessert topping pie. Jujubes wafer carrot cake jelly. Bonbon jelly-o
                       jelly-o ice
                       cream jelly beans candy canes cake bonbon. Cookie jelly beans marshmallow jujubes sweet.
                     </p>
                   </div>
-                  <div class="tab-pane fade" id="navs-top-profile" role="tabpanel">
-                    <p>
-                      Donut dragée jelly pie halvah. Danish gingerbread bonbon cookie wafer candy oat cake ice cream. Gummies
-                      halvah
-                      tootsie roll muffin biscuit icing dessert gingerbread. Pastry ice cream cheesecake fruitcake.
-                    </p>
-                    <p class="mb-0">
-                      Jelly-o jelly beans icing pastry cake cake lemon drops. Muffin muffin pie tiramisu halvah cotton candy
-                      liquorice caramels.
-                    </p>
+                  <div class="tab-pane fade" id="changePassword" role="tabpanel">
+                    <form method="POST" action="{{ route('change-password') }}">
+                      @csrf 
+                        @foreach ($errors->all() as $error)
+                            <p class="text-danger">{{ $error }}</p>
+                         @endforeach 
+                      <div class="form-group row mb-3">
+                          <label for="password" class="col-sm-3 col-form-label text-md-right">Current Password</label>
+                          <div class="col-md-4">
+                              <input id="password" type="password" class="form-control {{$errors->has('current_password') ? 'has-error' : ''}}" name="current_password" autocomplete="current-password" value="{{ old('current_password') }}">
+                              @error('current_password')
+                                <div class="alert-danger">{{$errors->first('current_password') }} </div>
+                              @enderror
+                          </div>
+                      </div>
+
+                      <div class="form-group row mb-3">
+                          <label for="password" class="col-sm-3 col-form-label text-md-right">New Password</label>
+
+                          <div class="col-md-4">
+                              <input id="new_password" type="password" class="form-control {{$errors->has('new_password') ? 'has-error' : ''}}" name="new_password" autocomplete="current-password" value="{{ old('new_password') }}">
+                              @error('new_password')
+                                <div class="alert-danger">{{$errors->first('new_password') }} </div>
+                              @enderror
+                          </div>
+                      </div>
+
+                      <div class="form-group row mb-3">
+                          <label for="password" class="col-sm-3 col-form-label text-md-right">New Confirm Password</label>
+  
+                          <div class="col-md-4">
+                              <input id="new_confirm_password" type="password" class="form-control {{$errors->has('new_confirm_password') ? 'has-error' : ''}}" name="new_confirm_password" autocomplete="current-password" value="{{ old('new_confirm_password') }}">
+                              @error('new_confirm_password')
+                                <div class="alert-danger">{{$errors->first('new_confirm_password') }} </div>
+                              @enderror
+                          </div>
+                      </div>
+ 
+                      <div class="form-group row mb-0">
+                          <div class="col-md-8 offset-sm-3">
+                              <button type="submit" class="btn btn-primary">
+                                  Update
+                              </button>
+                          </div>
+                      </div>
+                  </form>
                   </div>
-                  <div class="tab-pane fade" id="navs-top-messages" role="tabpanel">
+                  <div class="tab-pane fade" id="messages" role="tabpanel">
                     <p>
                       Oat cake chupa chups dragée donut toffee. Sweet cotton candy jelly beans macaroon gummies cupcake gummi
                       bears
@@ -95,6 +130,16 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+    });
+
+    $(document).ready(function(){
+      $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+          localStorage.setItem('activeTab', $(e.target).attr('href'));
+      });
+      var activeTab = localStorage.getItem('activeTab');
+      if(activeTab){
+          $('#tabMenu a[href="' + activeTab + '"]').tab('show');
+      }
     });
 
 </script>
