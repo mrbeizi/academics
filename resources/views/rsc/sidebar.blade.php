@@ -25,7 +25,7 @@
     <ul class="menu-inner py-1">
     <!-- Dashboards -->
     <li class="menu-item">
-        <a href="{{route('dashboard')}}" class="menu-link">
+        <a href="{{route('dashboard')}}" class="menu-link {{set_active('dashboard')}}">
         <i class="menu-icon tf-icons bx bx-home-circle bx-tada-hover"></i>
         <div data-i18n="Dashboards">Dashboards</div>
         </a>
@@ -34,72 +34,72 @@
     <!-- Apps & Pages -->
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Datas</span></li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('matakuliah.index')}} OR {{set_active('kurikulum.index')}}">
         <i class='menu-icon tf-icons bx bx-bookmark bx-tada-hover'></i>
         <div data-i18n="Kurikulum">Kurikulum</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
-            <a href="{{route('matakuliah.index')}}" class="menu-link">
+            <a href="{{route('matakuliah.index')}}" class="menu-link {{set_active('matakuliah.index')}}">
             <div data-i18n="Daftar Matakuliah">Daftar Matakuliah</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="{{route('kurikulum.index')}}" class="menu-link">
+            <a href="{{route('kurikulum.index')}}" class="menu-link {{set_active('kurikulum.index')}}">
             <div data-i18n="Daftar Kurikulum">Daftar Kurikulum</div>
             </a>
         </li>
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('fakultas.index')}} OR {{set_active('prodi.index')}}">
         <i class='menu-icon tf-icons bx bx-buildings bx-tada-hover'></i>
         <div data-i18n="Universitas">Universitas</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
-            <a href="{{route('fakultas.index')}}" class="menu-link">
+            <a href="{{route('fakultas.index')}}" class="menu-link {{set_active('fakultas.index')}}">
             <div data-i18n="Daftar Fakultas">Daftar Fakultas</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="{{route('prodi.index')}}" class="menu-link">
+            <a href="{{route('prodi.index')}}" class="menu-link {{set_active('prodi.index')}}">
             <div data-i18n="Daftar Prodi">Daftar Prodi</div>
             </a>
         </li>       
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('mk-kurikulum.index')}} OR {{set_active('periode.index')}}">
         <i class='menu-icon tf-icons bx bx-cog bx-spin-hover'></i>
         <div data-i18n="Settings">Settings</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
-            <a href="{{route('periode.index')}}" class="menu-link">
+            <a href="{{route('periode.index')}}" class="menu-link {{set_active('periode.index')}}">
             <div data-i18n="Periode">Periode</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="{{route('mk-kurikulum.index')}}" class="menu-link">
+            <a href="{{route('mk-kurikulum.index')}}" class="menu-link {{set_active('mk-kurikulum.index')}}">
             <div data-i18n="Matakuliah Kurikulum">Matakuliah Kurikulum</div>
             </a>
         </li>        
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('profile')}} OR {{set_active('user.index')}}">
         <i class="menu-icon tf-icons bx bx-user bx-tada-hover"></i>
         <div data-i18n="Users">Users</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
-            <a href="{{route('profile')}}" class="menu-link">
+            <a href="{{route('profile')}}" class="menu-link {{set_active('profile')}}">
             <div data-i18n="Profile">Profile</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="{{route('user.index')}}" class="menu-link">
+            <a href="{{route('user.index')}}" class="menu-link {{set_active('user.index')}}">
             <div data-i18n="All Users">All Users</div>
             </a>
         </li>
