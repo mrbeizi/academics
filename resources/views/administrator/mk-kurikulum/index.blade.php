@@ -139,7 +139,11 @@
                     }
                 }, 
                 {data: 'nama',name: 'nama'},
-                {data: 'kode_matakuliah',name: 'kode_matakuliah'},
+                {data: 'kode_matakuliah',name: 'kode_matakuliah',
+                    render: function ( data, type, row ) {
+                        return row.kode_matakuliah + ' > ' + row.nama_id;
+                    },
+                },
                 {data: 'semester',name: 'semester'},
                 {data: 'action',name: 'action'},
             ]

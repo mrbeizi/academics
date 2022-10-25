@@ -15,7 +15,8 @@ class MatakuliahKurikulumController extends Controller
     {
         $dataMatakuliah = MatakuliahKurikulum::leftJoin('kurikulums','kurikulums.id','=','matakuliah_kurikulums.id_kurikulum')
             ->leftJoin('periodes','periodes.id','=','kurikulums.id_periode')
-            ->select('matakuliah_kurikulums.id AS id','matakuliah_kurikulums.*','kurikulums.nama')
+            ->leftJoin('matakuliahs','matakuliahs.kode','=','matakuliah_kurikulums.kode_matakuliah')
+            ->select('matakuliah_kurikulums.id AS id','matakuliah_kurikulums.*','kurikulums.nama','matakuliahs.nama_id')
             ->where('periodes.is_active','=',1)
             ->get();
                 
