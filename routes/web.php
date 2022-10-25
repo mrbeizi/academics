@@ -31,6 +31,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('user','Admin\UserController');
 
     Route::post('archived-faculty','Admin\FakultasController@archiveFaculty')->name('archiveFaculty');
+    Route::post('archived-kurikulum','Admin\KurikulumController@archiveKurikulum')->name('archiveKurikulum');
+    Route::post('archived-matakuliah','Admin\MatakuliahController@archiveMatakuliah')->name('archiveMatakuliah');
+    Route::post('archived-prodi','Admin\ProdiController@archiveProdi')->name('archiveProdi');
+
     Route::post('switch-period','Admin\PeriodeController@switchPeriode')->name('change-period-status');
     Route::post('switch-matakuliah','Admin\MatakuliahController@switchMatakuliah')->name('change-matakuliah-status');
     Route::post('switch-kurikulum','Admin\KurikulumController@switchKurikulum')->name('change-kurikulum-status');

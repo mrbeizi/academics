@@ -291,6 +291,30 @@
         });
     });
 
+    /* Archive */
+    function archiveProdi(id,is_archived){
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "{{ Route('archiveProdi') }}",
+            id: $('.archive-prodi'+id+'').val(),
+            data:{'is_archived':is_archived,'id':id},
+        }).done(function(data, response) {
+            var oTable = $('#table_prodi').dataTable();
+            oTable.fnDraw(false);
+            Swal.fire({
+                title: 'Success!',
+                text: 'Data archived successfully!',
+                type: 'success',
+                customClass: {
+                confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false,
+                timer: 2000
+            })
+        })
+    }
+
 </script>
 
 @endsection

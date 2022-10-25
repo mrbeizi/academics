@@ -262,7 +262,7 @@
         });
     });
 
-    /* UNTUK TOGGLE STATUS */
+    /* Archive */
     function archiveFaculty(id,is_archived){
         $.ajax({
             type: "POST",

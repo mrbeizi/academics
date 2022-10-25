@@ -15,13 +15,15 @@ class KurikulumController extends Controller
         $dataKurikulum = Kurikulum::leftJoin('prodis','prodis.id','=','kurikulums.id_prodi')
             ->leftJoin('periodes','periodes.id','=','kurikulums.id_periode')
             ->select('kurikulums.id AS id','kurikulums.*','prodis.nama_id AS nama_prodi','periodes.nama_periode','kurikulums.is_active AS is_active')
-            ->where('periodes.is_active','=',1)
+            ->where([['periodes.is_active','=',1],['kurikulums.is_archived','=',0]])
             ->get();
                 
         if($request->ajax()){
             return datatables()->of($dataKurikulum)
                 ->addColumn('action', function($data){
-                        $button = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Edit" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
+                        $button = '<a href="javascript:void(0)" name="archive-kurikulum" data-toggle="tooltip" data-placement="bottom" title="Archive" onclick="archiveKurikulum('.$data->id.','.$data->is_archived.')" data-id="'.$data->id.'" data-placement="bottom" data-original-title="archivekurikulum" class="archivekurikulum btn btn-warning btn-xs archive-post"><i class="bx bx-xs bx-archive"></i></a>';
+                        $button .= '&nbsp;&nbsp;';
+                        $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Edit" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
                         $button .= '&nbsp;&nbsp;';
                         $button .= '<button type="button" name="delete" id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Delete" class="delete btn btn-danger btn-xs"><i class="bx bx-xs bx-trash"></i></button>';
                         return $button;
@@ -84,6 +86,13 @@ class KurikulumController extends Controller
     public function destroy($id)
     {
         $post = Kurikulum::where('id',$id)->delete();     
+        return response()->json($post);
+    }
+
+    public function archiveKurikulum(Request $request)
+    {
+        $req    = $request->is_archived == '1' ? 0 : 1;
+        $post   = Kurikulum::updateOrCreate(['id' => $request->id],['is_archived' => $req],['archived_at' => now()]); 
         return response()->json($post);
     }
 }
