@@ -39,4 +39,8 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::get('change-password', 'Admin\UserController@getPass');
     Route::post('change-password', 'Admin\UserController@postPass')->name('change-password');
+
+    Route::get('/add-matakuliah-kurikulum/{id}','Admin\MatakuliahKurikulumController@index')->name('setting.mkkurikulum');
+    Route::get('/add-matakuliah-kurikulums/{id}','Admin\MatakuliahKurikulumController@listMK')->name('list.mkkurikulum');
+    Route::delete('/del-matakuliah-kurikulum/{id}','Admin\MatakuliahKurikulumController@destroy')->name('del.mkkurikulum');
 });

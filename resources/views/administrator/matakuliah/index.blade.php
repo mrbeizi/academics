@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <!-- MULAI TOMBOL TAMBAH -->
                         <div class="mb-3">
-                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
+                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
@@ -95,7 +95,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="mb-3">
-                                                            <label for="sks_praktek" class="form-label">Practice Weight*</label>
+                                                            <label for="sks_praktek" class="form-label">Prac. Weight*</label>
                                                             <input type="number" class="form-control" id="sks_praktek" name="sks_praktek" value="" placeholder="0" />
                                                             <span class="text-danger" id="sksPraktekErrorMsg"></span>
                                                         </div>
@@ -162,9 +162,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Details</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div id="table" class="col-sm-12 table-responsive"></div>

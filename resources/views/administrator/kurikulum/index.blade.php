@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <!-- MULAI TOMBOL TAMBAH -->
                         <div class="mb-3">
-                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
+                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
@@ -39,6 +39,7 @@
                                   <th>Faculty</th>
                                   <th>Period</th>
                                   <th>Status</th>
+                                  <th>Setting</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -143,6 +144,7 @@
                 {data: 'nama_prodi',name: 'nama_prodi'},
                 {data: 'nama_periode',name: 'nama_periode'},
                 {data: 'status',name: 'status'},
+                {data: 'setting',name: 'setting'},
                 {data: 'action',name: 'action'},
             ]
         });
@@ -282,7 +284,7 @@
                 });
             },
         });
-    });nama_periode
+    });
 
 </script>
 

@@ -11,7 +11,7 @@ use App\Model\Periode;
 
 class MatakuliahKurikulumController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $id)
     {
         $dataMatakuliah = MatakuliahKurikulum::leftJoin('kurikulums','kurikulums.id','=','matakuliah_kurikulums.id_kurikulum')
             ->leftJoin('periodes','periodes.id','=','kurikulums.id_periode')
@@ -19,22 +19,37 @@ class MatakuliahKurikulumController extends Controller
             ->select('matakuliah_kurikulums.id AS id','matakuliah_kurikulums.*','kurikulums.nama','matakuliahs.nama_id')
             ->where('periodes.is_active','=',1)
             ->get();
-                
+
+        $dataKurikulum = Kurikulum::leftJoin('periodes','periodes.id','=','kurikulums.id_periode')
+            ->select('kurikulums.id AS id_kur','kurikulums.*','periodes.nama_periode')
+            ->where([['kurikulums.id','=',$id],['periodes.is_active','=',1]])
+            ->get();
+
+        $getMatakuliah = Matakuliah::where('is_active','=',1)->get();
+        $getKurikulum = Kurikulum::where('is_active','=',1)->get();
+
+        return view('administrator.mk-kurikulum.index', ['id' => $id, 'dataMatakuliah' => $dataMatakuliah, 'dataKurikulum' => $dataKurikulum, 'getMatakuliah' => $getMatakuliah,'getKurikulum' => $getKurikulum]);
+    }
+
+    public function listMK(Request $request, $id)
+    {            
+        $getData = MatakuliahKurikulum::leftJoin('kurikulums','kurikulums.id','=','matakuliah_kurikulums.id_kurikulum')
+        ->leftJoin('periodes','periodes.id','=','kurikulums.id_periode')
+        ->leftJoin('matakuliahs','matakuliahs.kode','=','matakuliah_kurikulums.kode_matakuliah')
+        ->select('matakuliah_kurikulums.id AS id','matakuliah_kurikulums.*','kurikulums.nama','matakuliahs.nama_id')
+        ->where([['kurikulums.id','=',$id],['periodes.is_active','=',1]])
+        ->get();
+
         if($request->ajax()){
-            return datatables()->of($dataMatakuliah)
+            return datatables()->of($getData)
                 ->addColumn('action', function($data){
-                        $button = '<a href="javascript:void(0)" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="fa fa-pen"></i></a>';
-                        $button .= '&nbsp;&nbsp;';
-                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></button>';
-                        return $button;
+                   return '<button type="button" name="delete" id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Delete" class="delete btn btn-danger btn-xs"><i class="bx bx-xs bx-trash"></i></button>';
                 })
                 ->rawColumns(['action'])
                 ->addIndexColumn(true)
                 ->make(true);
         }
-        $getMatakuliah = Matakuliah::where('is_active','=',1)->get();
-        $getKurikulum = Kurikulum::where('is_active','=',1)->get();
-        return view('administrator.mk-kurikulum.index', compact('getMatakuliah','getKurikulum'));
+        return view('administrator.mk-kurikulum.index');
     }
 
     public function store(Request $request)

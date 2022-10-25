@@ -27,7 +27,8 @@
                     <div class="card-body">
                         <!-- MULAI TOMBOL TAMBAH -->
                         <div class="mb-3">
-                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
+                            <a href="{{route('kurikulum.index')}}" class="dropdown-shortcuts-add text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="Back to Kurikulum"><i class="bx bx-sm bx-left-arrow-circle bx-tada-hover"></i></a>
+                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
@@ -35,7 +36,6 @@
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Name</th>
                                   <th>Subject ID</th>
                                   <th>Semester</th>
                                   <th>Actions</th>
@@ -61,14 +61,10 @@
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="id_kurikulum" class="form-label">Kurikulum*</label>
-                                                    <select class="form-select" id="id_kurikulum" name="id_kurikulum" aria-label="Default select example">
-                                                        <option value="">- Choose -</option>
-                                                        @foreach($getKurikulum as $kurikulum)
-                                                        <option value="{{$kurikulum->id}}">{{$kurikulum->nama}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <span class="text-danger" id="idKurikulumErrorMsg"></span>
+                                                    @foreach($dataKurikulum as $data)                                                
+                                                    <p>Kurikulum <b>{{$data->nama}}</b></p>
+                                                    <input type="hidden" class="form-control" id="id_kurikulum" name="id_kurikulum" value="{{$data->id}}" readonly />
+                                                    @endforeach
                                                 </div>                                                
 
                                                 <div class="mb-3">
@@ -114,6 +110,10 @@
     </section>
 </div>
 
+<div>
+    <input type="hidden" value="{{ $id }}">
+</div>
+
 @endsection
 @section('script')
 
@@ -131,14 +131,13 @@
         var table = $('#table_mk_kurikulum').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('mk-kurikulum.index') }}",
+            ajax: "{{ route('list.mkkurikulum',['id' => $id]) }}",
             columns: [
                 {data: null,sortable:false,
                     render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'nama',name: 'nama'},
                 {data: 'kode_matakuliah',name: 'kode_matakuliah',
                     render: function ( data, type, row ) {
                         return row.kode_matakuliah + ' > ' + row.nama_id;
@@ -261,7 +260,7 @@
             preConfirm: function() {
                 return new Promise(function(resolve) {
                     $.ajax({
-                        url: "mk-kurikulum/" + dataId,
+                        url: '{{route("del.mkkurikulum", ":id_mkkurikulum")}}'.replace(":id_mkkurikulum", dataId),
                         type: 'DELETE',
                         data: {id:dataId},
                         dataType: 'json'

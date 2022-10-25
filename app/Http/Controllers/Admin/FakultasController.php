@@ -25,11 +25,11 @@ class FakultasController extends Controller
         if($request->ajax()){
             return datatables()->of($dataFakultas)
                 ->addColumn('action', function($data){
-                        $button = '<a href="javascript:void(0)" name="archive-faculty" data-toggle="tooltip" data-placement="bottom" title="Archive" onclick="archiveFaculty('.$data->id.','.$data->is_archived.')" data-id="'.$data->id.'" data-placement="bottom" data-original-title="archivefaculty" class="archivefaculty btn btn-warning btn-xs archive-post"><i class="fa fa-archive"></i></a>';
+                        $button = '<a href="javascript:void(0)" name="archive-faculty" data-toggle="tooltip" data-placement="bottom" title="Archive" onclick="archiveFaculty('.$data->id.','.$data->is_archived.')" data-id="'.$data->id.'" data-placement="bottom" data-original-title="archivefaculty" class="archivefaculty btn btn-warning btn-xs archive-post"><i class="bx bx-xs bx-archive"></i></a>';
                         $button .= '&nbsp;&nbsp;';
-                        $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Edit" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="fa fa-pen"></i></a>';
+                        $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Edit" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
                         $button .= '&nbsp;&nbsp;';
-                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></button>';
+                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="bx bx-xs bx-trash"></i></button>';
                         return $button;
                 })
                 ->rawColumns(['action'])

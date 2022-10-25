@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <!-- MULAI TOMBOL TAMBAH -->
                         <div class="mb-3">
-                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
+                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
