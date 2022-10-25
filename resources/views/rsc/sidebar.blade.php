@@ -26,7 +26,7 @@
     <!-- Dashboards -->
     <li class="menu-item">
         <a href="{{route('dashboard')}}" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+        <i class="menu-icon tf-icons bx bx-home-circle bx-tada-hover"></i>
         <div data-i18n="Dashboards">Dashboards</div>
         </a>
     </li>
@@ -35,7 +35,7 @@
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Datas</span></li>
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class='menu-icon tf-icons bx bx-bookmark'></i>
+        <i class='menu-icon tf-icons bx bx-bookmark bx-tada-hover'></i>
         <div data-i18n="Kurikulum">Kurikulum</div>
         </a>
         <ul class="menu-sub">
@@ -53,7 +53,7 @@
     </li>
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class='menu-icon tf-icons bx bx-buildings'></i>
+        <i class='menu-icon tf-icons bx bx-buildings bx-tada-hover'></i>
         <div data-i18n="Universitas">Universitas</div>
         </a>
         <ul class="menu-sub">
@@ -71,7 +71,7 @@
     </li>
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class='menu-icon tf-icons bx bx-cog'></i>
+        <i class='menu-icon tf-icons bx bx-cog bx-spin-hover'></i>
         <div data-i18n="Settings">Settings</div>
         </a>
         <ul class="menu-sub">
@@ -89,7 +89,7 @@
     </li>
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class="menu-icon tf-icons bx bx-user"></i>
+        <i class="menu-icon tf-icons bx bx-user bx-tada-hover"></i>
         <div data-i18n="Users">Users</div>
         </a>
         <ul class="menu-sub">
