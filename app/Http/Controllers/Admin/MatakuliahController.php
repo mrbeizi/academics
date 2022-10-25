@@ -20,11 +20,11 @@ class MatakuliahController extends Controller
             return datatables()->of($dataMatakuliah)
                 ->addColumn('action', function($data){
                         $button = '<button type="button" name="view_detail" id="'.$data->id.'" class="view_detail btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View Details"><i class="bx bx-xs bx-show"></i></button>';
-                        $button .= '&nbsp;&nbsp;';
+                        $button .= '&nbsp;';
                         $button .= '<a href="javascript:void(0)" name="archive-matakuliah" data-toggle="tooltip" data-placement="bottom" title="Archive" onclick="archiveMatakuliah('.$data->id.','.$data->is_archived.')" data-id="'.$data->id.'" data-placement="bottom" data-original-title="archivematakuliah" class="archivematakuliah btn btn-warning btn-xs archive-post"><i class="bx bx-xs bx-archive"></i></a>';
-                        $button .= '&nbsp;&nbsp;';
+                        $button .= '&nbsp;';
                         $button .= '<a href="javascript:void(0)" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
-                        $button .= '&nbsp;&nbsp;';
+                        $button .= '&nbsp;';
                         $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="bx bx-xs bx-trash"></i></button>';
                         return $button;
                 })->addColumn('status', function($data){
@@ -132,6 +132,33 @@ class MatakuliahController extends Controller
     {
         $req    = $request->is_archived == '1' ? 0 : 1;
         $post   = Matakuliah::updateOrCreate(['id' => $request->id],['is_archived' => $req],['archived_at' => now()]); 
+        return response()->json($post);
+    }
+
+    public function show(Request $request)
+    {
+        $dataMatakuliah = Matakuliah::leftJoin('periodes','periodes.id','=','matakuliahs.id_periode')
+            ->select('matakuliahs.id AS id','matakuliahs.*','periodes.nama_periode')
+            ->where('matakuliahs.is_archived','=',1)
+            ->get();
+        
+        if($request->ajax()){
+            return datatables()->of($dataMatakuliah)
+                ->addColumn('action', function($data){
+                        return '<a href="javascript:void(0)" name="unarchive-matakuliah" data-toggle="tooltip" data-placement="bottom" title="Unarchive" onclick="unarchiveMatakuliah('.$data->id.','.$data->is_archived.')" data-id="'.$data->id.'" data-placement="bottom" data-original-title="unarchivematakuliah" class="archivematakuliah unarchive-post"><i class="bx bx-sm bx-archive-out"></i></a>';
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn(true)
+                ->make(true);
+        }
+        $getPeriode = Periode::where('is_active','=',1)->get();
+        return view('administrator.matakuliah.index', compact('getPeriode'));
+    }
+
+    public function unarchiveMatakuliah(Request $request)
+    {
+        $req    = $request->is_archived == '1' ? 0 : 1;
+        $post   = Matakuliah::updateOrCreate(['id' => $request->id],['is_archived' => $req]); 
         return response()->json($post);
     }
 }
