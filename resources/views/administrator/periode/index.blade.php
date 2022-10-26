@@ -37,6 +37,7 @@
                                   <th>#</th>
                                   <th>Code</th>
                                   <th>Period Name</th>
+                                  <th>Input Nilai</th>
                                   <th>Open</th>
                                   <th>Close</th>
                                   <th>State</th>
@@ -72,26 +73,44 @@
                                                     <label for="nama_periode" class="form-label">Period Name</label>
                                                     <input type="text" class="form-control" id="nama_periode" name="nama_periode" value="" placeholder="e.g Ganjil" />
                                                     <span class="text-danger" id="namaPeriodeErrorMsg"></span>
+                                                </div>                                                
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="mb-3">
+                                                            <label for="input_nilai" class="form-label">Value</label>
+                                                            <select class="form-select" id="input_nilai" name="input_nilai" aria-label="Default select example">
+                                                                <option value="">- Choose -</option>
+                                                                <option value="1">Active</option>
+                                                                <option value="0">Inactive</option>
+                                                            </select>
+                                                            <span class="text-danger" id="inputNilaiErrorMsg"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="mb-3">
+                                                            <label for="temp_open" class="form-label">Temp. Open</label>
+                                                            <select class="form-select" id="temp_open" name="temp_open" aria-label="Default select example">
+                                                                <option value="">- Choose -</option>
+                                                                <option value="1">Open</option>
+                                                                <option value="0">Closed</option>
+                                                            </select>
+                                                            <span class="text-danger" id="tempOpenErrorMsg"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="mb-3">
+                                                            <label for="finish" class="form-label">Finish</label>
+                                                            <select class="form-select" id="finish" name="finish" aria-label="Default select example">
+                                                                <option value="">- Choose -</option>
+                                                                <option value="1">Done</option>
+                                                                <option value="0">In progress</option>
+                                                            </select>
+                                                            <span class="text-danger" id="finishErrorMsg"></span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-
-                                                <div class="mb-3">
-                                                    <label for="input_nilai" class="form-label">Value</label>
-                                                    <input type="number" class="form-control" id="input_nilai" name="input_nilai" value="" placeholder="0" />
-                                                    <span class="text-danger" id="inputNilaiErrorMsg"></span>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="temp_open" class="form-label">Temp. Open</label>
-                                                    <input type="number" class="form-control" id="temp_open" name="temp_open" value="" placeholder="0" />
-                                                    <span class="text-danger" id="tempOpenErrorMsg"></span>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="finish" class="form-label">Finish</label>
-                                                    <input type="number" class="form-control" id="finish" name="finish" value="" placeholder="0" />
-                                                    <span class="text-danger" id="finishErrorMsg"></span>
-                                                </div>
-
                                             </div>
 
                                             <div class="col-sm-offset-2 col-sm-12">
@@ -144,8 +163,9 @@
                 }, 
                 {data: 'kode',name: 'kode'},
                 {data: 'nama_periode',name: 'nama_periode'},
-                {data: 'temp_open',name: 'temp_open'},
-                {data: 'finish',name: 'finish'},
+                {data: 'input_nilai',name: 'input_nilai', render: function(type,data,row){ return (row.input_nilai == 1) ? 'Active' : 'Inactive';}},
+                {data: 'temp_open',name: 'temp_open', render: function(type,data,row){ return (row.temp_open == 1) ? 'Yes' : 'No';}},
+                {data: 'finish',name: 'finish', render: function(type,data,row){ return (row.finish == 1) ? "Done" : 'In progress <div class="spinner-grow spinner-grow-sm text-success" role="status"></div>';}},
                 {data: 'status',name: 'status'},
                 {data: 'action',name: 'action'},
             ]

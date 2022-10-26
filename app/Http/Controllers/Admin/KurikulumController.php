@@ -108,9 +108,6 @@ class KurikulumController extends Controller
             ->select(DB::raw('sum(matakuliahs.sks_teori + matakuliahs.sks_praktek) as total'))
             ->where('kurikulums.id','=',$id_kurikulum)
             ->first();
-        if($datas){
-            return $datas->total;
-        }
-        return $datas;
+        return $datas->total;
     }
 }
