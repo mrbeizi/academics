@@ -110,4 +110,31 @@ class KurikulumController extends Controller
             ->first();
         return $datas->total;
     }
+
+    public function show(Request $request)
+    {
+        $dataKurikulum = Kurikulum::leftJoin('prodis','prodis.id','=','kurikulums.id_prodi')
+            ->leftJoin('periodes','periodes.id','=','kurikulums.id_periode')
+            ->select('kurikulums.id AS id','kurikulums.*','prodis.nama_id AS nama_prodi','periodes.nama_periode')
+            ->where('kurikulums.is_archived','=',1)
+            ->get();
+        
+        if($request->ajax()){
+            return datatables()->of($dataKurikulum)
+                ->addColumn('action', function($data){
+                        return '<a href="javascript:void(0)" name="unarchive-kurikulum" data-toggle="tooltip" data-placement="bottom" title="Unarchive" onclick="unarchiveKurikulum('.$data->id.','.$data->is_archived.')" data-id="'.$data->id.'" data-placement="bottom" data-original-title="unarchivekurikulum" class="archivekurikulum unarchive-post"><i class="bx bx-sm bx-archive-out"></i></a>';
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn(true)
+                ->make(true);
+        }
+        return view('administrator.kurikulum.index');
+    }
+
+    public function unarchiveKurikulum(Request $request)
+    {
+        $req    = $request->is_archived == '1' ? 0 : 1;
+        $post   = Kurikulum::updateOrCreate(['id' => $request->id],['is_archived' => $req]); 
+        return response()->json($post);
+    }
 }

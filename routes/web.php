@@ -49,5 +49,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::delete('/del-matakuliah-kurikulum/{id}','Admin\MatakuliahKurikulumController@destroy')->name('del.mkkurikulum');
 
     Route::get('show-archived-matakuliah','Admin\MatakuliahController@show')->name('show.archived.matakuliah');
+    Route::get('show-archived-kurikulum','Admin\KurikulumController@show')->name('show.archived.kurikulum');
+    
     Route::post('unarchived-matakuliah','Admin\MatakuliahController@unarchiveMatakuliah')->name('unarchiveMatakuliah');
+    Route::post('unarchived-kurikulum','Admin\KurikulumController@unarchiveKurikulum')->name('unarchiveKurikulum');
 });

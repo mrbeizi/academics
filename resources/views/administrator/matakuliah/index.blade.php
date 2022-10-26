@@ -462,7 +462,7 @@
             $('#table_matakuliah').DataTable().ajax.reload(null, true);
             Swal.fire({
                 title: 'Success!',
-                text: 'Data archived successfully!',
+                text: 'Data unarchived successfully!',
                 type: 'success',
                 customClass: {
                 confirmButton: 'btn btn-primary'
