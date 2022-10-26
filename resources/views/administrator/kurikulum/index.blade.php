@@ -40,6 +40,7 @@
                                   <th>Period</th>
                                   <th>Status</th>
                                   <th>Setting</th>
+                                  <th>Total SKS</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -145,6 +146,7 @@
                 {data: 'nama_periode',name: 'nama_periode'},
                 {data: 'status',name: 'status'},
                 {data: 'setting',name: 'setting'},
+                {data: 'total_sks',name: 'total_sks'},
                 {data: 'action',name: 'action'},
             ]
         });

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Kurikulum;
+use App\Model\MatakuliahKurikulum;
 use App\Model\Periode;
 use App\Model\Prodi;
+use DB;
 
 class KurikulumController extends Controller
 {
@@ -34,8 +36,18 @@ class KurikulumController extends Controller
                     <span class="switch-toggle-slider"><span class="switch-on"><i class="bx bx-check"></i></span><span class="switch-off"><i class="bx bx-x"></i></span></span></label></div>';
                 })->addColumn('setting', function($data){
                     return '<a href="'.Route('setting.mkkurikulum',['id' => $data->id]).'" name="setting" class="dropdown-shortcuts-add text-body setting" data-id="'.$data->id.'" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add MK Kurikulum"><i class="bx bx-sm bx-bell-plus bx-tada"></i> Update</a>';
+                })->addColumn('total_sks', function($data){
+                    $total = $this->countWeight($data->id);
+
+                    // Ternary
+                    return ($total == null) ? '0 SKS' : $total .' SKS';
+                    // if($total == null){
+                    //     return "0 SKS";
+                    // }else{
+                    //     return $total .' SKS';
+                    // }
                 })
-                ->rawColumns(['action','status','setting'])
+                ->rawColumns(['action','status','setting','total_sks'])
                 ->addIndexColumn(true)
                 ->make(true);
         }
@@ -94,5 +106,18 @@ class KurikulumController extends Controller
         $req    = $request->is_archived == '1' ? 0 : 1;
         $post   = Kurikulum::updateOrCreate(['id' => $request->id],['is_archived' => $req],['archived_at' => now()]); 
         return response()->json($post);
+    }
+
+    protected function countWeight($id_kurikulum)
+    {
+        $datas = MatakuliahKurikulum::leftJoin('matakuliahs','matakuliahs.kode','=','matakuliah_kurikulums.kode_matakuliah')
+            ->leftJoin('kurikulums','kurikulums.id','=','matakuliah_kurikulums.id_kurikulum')
+            ->select(DB::raw('sum(matakuliahs.sks_teori + matakuliahs.sks_praktek) as total'))
+            ->where('kurikulums.id','=',$id_kurikulum)
+            ->first();
+        if($datas){
+            return $datas->total;
+        }
+        return $datas;
     }
 }
