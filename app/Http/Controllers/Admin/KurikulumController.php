@@ -38,14 +38,7 @@ class KurikulumController extends Controller
                     return '<a href="'.Route('setting.mkkurikulum',['id' => $data->id]).'" name="setting" class="dropdown-shortcuts-add text-body setting" data-id="'.$data->id.'" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add MK Kurikulum"><i class="bx bx-sm bx-bell-plus bx-tada"></i> Update</a>';
                 })->addColumn('total_sks', function($data){
                     $total = $this->countWeight($data->id);
-
-                    // Ternary
                     return ($total == null) ? '0 SKS' : $total .' SKS';
-                    // if($total == null){
-                    //     return "0 SKS";
-                    // }else{
-                    //     return $total .' SKS';
-                    // }
                 })
                 ->rawColumns(['action','status','setting','total_sks'])
                 ->addIndexColumn(true)
