@@ -51,8 +51,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('show-archived-matakuliah','Admin\MatakuliahController@show')->name('show.archived.matakuliah');
     Route::get('show-archived-kurikulum','Admin\KurikulumController@show')->name('show.archived.kurikulum');
     Route::get('show-archived-fakultas','Admin\FakultasController@show')->name('show.archived.fakultas');
+    Route::get('show-archived-prodi','Admin\ProdiController@show')->name('show.archived.prodi');
     
     Route::post('unarchived-matakuliah','Admin\MatakuliahController@unarchiveMatakuliah')->name('unarchiveMatakuliah');
     Route::post('unarchived-kurikulum','Admin\KurikulumController@unarchiveKurikulum')->name('unarchiveKurikulum');
     Route::post('unarchived-fakultas','Admin\FakultasController@unarchiveFakultas')->name('unarchiveFakultas');
+    Route::post('unarchived-prodi','Admin\ProdiController@unarchiveProdi')->name('unarchiveProdi');
 });

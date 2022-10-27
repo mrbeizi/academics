@@ -87,4 +87,31 @@ class ProdiController extends Controller
         $post   = Prodi::updateOrCreate(['id' => $request->id],['is_archived' => $req],['archived_at' => now()]); 
         return response()->json($post);
     }
+
+    public function show(Request $request)
+    {
+        $dataProdi = Prodi::leftJoin('periodes','periodes.id','=','prodis.id_periode')
+            ->leftJoin('fakultas','fakultas.id','=','prodis.id_fakultas')
+            ->select('prodis.id AS id','prodis.*','periodes.nama_periode','fakultas.nama_id AS nama_fakultas')
+            ->where('prodis.is_archived','=',1)
+            ->get();
+        
+        if($request->ajax()){
+            return datatables()->of($dataProdi)
+                ->addColumn('action', function($data){
+                        return '<a href="javascript:void(0)" name="unarchive-prodi" data-toggle="tooltip" data-placement="bottom" title="Unarchive" onclick="unarchiveProdi('.$data->id.','.$data->is_archived.')" data-id="'.$data->id.'" data-placement="bottom" data-original-title="unarchiveprodi" class="archiveprodi unarchive-post"><i class="bx bx-sm bx-archive-out"></i></a>';
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn(true)
+                ->make(true);
+        }
+        return view('administrator.prodi.index');
+    }
+
+    public function unarchiveProdi(Request $request)
+    {
+        $req    = $request->is_archived == '1' ? 0 : 1;
+        $post   = Prodi::updateOrCreate(['id' => $request->id],['is_archived' => $req]); 
+        return response()->json($post);
+    }
 }

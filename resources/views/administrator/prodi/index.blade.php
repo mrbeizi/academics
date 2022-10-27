@@ -28,6 +28,7 @@
                         <!-- MULAI TOMBOL TAMBAH -->
                         <div class="mb-3">
                             <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
+                            <button type="button" id="show-archived" data-bs-toggle="tooltip" data-bs-placement="top" title="Show archived" class="btn btn-outline-warning btn-xs float-end"><i class="bx bx-xs bx-archive"></i></button>
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
@@ -130,6 +131,31 @@
                         </div>
                     </div>
                     <!-- AKHIR MODAL -->
+
+                    <!-- SHOW ARCHIVED MODAL-->
+                    <div class="modal fade" tabindex="-1" role="dialog" id="show-archived-modal" data-backdrop="false">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Archived Datas</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-hover table-responsive" id="table_show_archived" width="100%">
+                                        <thead>
+                                          <tr>
+                                            <th>#</th>
+                                            <th>Faculty</th>
+                                            <th>Name</th>
+                                            <th>Actions</th>
+                                          </tr>
+                                        </thead>
+                                      </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- AKHIR SHOW ARCHIVED MODAL-->
                     
                 </div>
             </div>
@@ -305,6 +331,53 @@
             Swal.fire({
                 title: 'Success!',
                 text: 'Data archived successfully!',
+                type: 'success',
+                customClass: {
+                confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false,
+                timer: 2000
+            })
+        })
+    }
+
+    // show archived
+    $('#show-archived').click(function () {
+        $('#show-archived-modal').modal('show');
+    });
+
+    $(document).ready(function () {
+        var table = $('#table_show_archived').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('show.archived.prodi') }}",
+            columns: [
+                {data: null,sortable:false,
+                    render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                }, 
+                {data: 'nama_fakultas',name: 'nama_fakultas'},
+                {data: 'nama_id',name: 'nama_id'},
+                {data: 'action',name: 'action'},
+            ]
+        });
+    });
+
+    /* Unarchive */
+    function unarchiveProdi(id,is_archived){
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "{{ Route('unarchiveProdi') }}",
+            id: $('.unarchive-prodi'+id+'').val(),
+            data:{'is_archived':is_archived,'id':id},
+        }).done(function(data, response) {
+            $('#table_show_archived').DataTable().ajax.reload(null, true);
+            $('#table_prodi').DataTable().ajax.reload(null, true);
+            Swal.fire({
+                title: 'Success!',
+                text: 'Data unarchived successfully!',
                 type: 'success',
                 customClass: {
                 confirmButton: 'btn btn-primary'
