@@ -84,4 +84,30 @@ class FakultasController extends Controller
         return response()->json($post);
     }
 
+    public function show(Request $request)
+    {
+        $dataFakultas = Fakultas::leftJoin('periodes','periodes.id','=','fakultas.id_periode')
+            ->select('fakultas.id AS id','fakultas.*','periodes.nama_periode')
+            ->where('fakultas.is_archived','=',1)
+            ->get();
+        
+        if($request->ajax()){
+            return datatables()->of($dataFakultas)
+                ->addColumn('action', function($data){
+                        return '<a href="javascript:void(0)" name="unarchive-fakultas" data-toggle="tooltip" data-placement="bottom" title="Unarchive" onclick="unarchiveFakultas('.$data->id.','.$data->is_archived.')" data-id="'.$data->id.'" data-placement="bottom" data-original-title="unarchivefakultas" class="archivefakultas unarchive-post"><i class="bx bx-sm bx-archive-out"></i></a>';
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn(true)
+                ->make(true);
+        }
+        return view('administrator.fakultas.index');
+    }
+
+    public function unarchiveFakultas(Request $request)
+    {
+        $req    = $request->is_archived == '1' ? 0 : 1;
+        $post   = Fakultas::updateOrCreate(['id' => $request->id],['is_archived' => $req]); 
+        return response()->json($post);
+    }
+
 }

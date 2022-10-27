@@ -37,7 +37,7 @@
                                 <tr>
                                   <th>#</th>
                                   <th>Name</th>
-                                  <th>Faculty</th>
+                                  <th>Prodi</th>
                                   <th>Period</th>
                                   <th>Status</th>
                                   <th>Setting</th>

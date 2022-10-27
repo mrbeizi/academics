@@ -37,6 +37,8 @@
                                 <tr>
                                   <th>#</th>
                                   <th>Subject ID</th>
+                                  <th>SKS Teori</th>
+                                  <th>SKS Praktek</th>
                                   <th>Semester</th>
                                   <th>Actions</th>
                                 </tr>
@@ -143,6 +145,8 @@
                         return row.kode_matakuliah + ' > ' + row.nama_id;
                     },
                 },
+                {data: 'sks_teori',name: 'sks_teori'},
+                {data: 'sks_praktek',name: 'sks_praktek'},
                 {data: 'semester',name: 'semester'},
                 {data: 'action',name: 'action'},
             ]
