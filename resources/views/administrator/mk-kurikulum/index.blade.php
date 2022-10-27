@@ -178,8 +178,7 @@
                         $('#form-tambah-edit').trigger("reset");
                         $('#tambah-edit-modal').modal('hide');
                         $('#tombol-simpan').html('Save');
-                        var oTable = $('#table_mk_kurikulum').dataTable();
-                        oTable.fnDraw(false);
+                        $('#table_mk_kurikulum').DataTable().ajax.reload(null, true);
                         Swal.fire({
                             title: 'Good job!',
                             text: 'Data saved successfully!',

@@ -297,8 +297,8 @@
             id: $('.archive-faculty'+id+'').val(),
             data:{'is_archived':is_archived,'id':id},
         }).done(function(data, response) {
-            var oTable = $('#table_fakultas').dataTable();
-            oTable.fnDraw(false);
+            $('#table_fakultas').DataTable().ajax.reload(null, true);
+            $('#table_show_archived').DataTable().ajax.reload(null, true);
             Swal.fire({
                 title: 'Success!',
                 text: 'Data archived successfully!',

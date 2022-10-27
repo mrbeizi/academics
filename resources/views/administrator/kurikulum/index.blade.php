@@ -324,8 +324,8 @@
             id: $('.archive-kurikulum'+id+'').val(),
             data:{'is_archived':is_archived,'id':id},
         }).done(function(data, response) {
-            var oTable = $('#table_kurikulum').dataTable();
-            oTable.fnDraw(false);
+            $('#table_kurikulum').DataTable().ajax.reload(null, true);
+            $('#table_show_archived').DataTable().ajax.reload(null, true);
             Swal.fire({
                 title: 'Success!',
                 text: 'Data archived successfully!',
