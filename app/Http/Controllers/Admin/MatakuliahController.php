@@ -136,14 +136,9 @@ class MatakuliahController extends Controller
     }
 
     public function show(Request $request)
-    {
-        $dataMatakuliah = Matakuliah::leftJoin('periodes','periodes.id','=','matakuliahs.id_periode')
-            ->select('matakuliahs.id AS id','matakuliahs.*','periodes.nama_periode')
-            ->where('matakuliahs.is_archived','=',1)
-            ->get();
-        
+    {       
         if($request->ajax()){
-            return datatables()->of($dataMatakuliah)
+            return datatables()->of(Matakuliah::getArchivedMatakuliah())
                 ->addColumn('action', function($data){
                         return '<a href="javascript:void(0)" name="unarchive-matakuliah" data-toggle="tooltip" data-placement="bottom" title="Unarchive" onclick="unarchiveMatakuliah('.$data->id.','.$data->is_archived.')" data-id="'.$data->id.'" data-placement="bottom" data-original-title="unarchivematakuliah" class="archivematakuliah unarchive-post"><i class="bx bx-sm bx-archive-out"></i></a>';
                 })

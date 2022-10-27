@@ -326,6 +326,7 @@
             data:{'is_archived':is_archived,'id':id},
         }).done(function(data, response) {
             $('#table_prodi').DataTable().ajax.reload(null, true);
+            $('#table_show_archived').DataTable().ajax.reload(null, true);
             Swal.fire({
                 title: 'Success!',
                 text: 'Data archived successfully!',
