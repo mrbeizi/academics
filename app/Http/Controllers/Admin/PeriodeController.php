@@ -48,6 +48,17 @@ class PeriodeController extends Controller
             'finish.required'       => 'Anda belum menginputkan finish',
         ]);
 
+        $checkState = Periode::where('is_active','=',1)->get();
+        $isActive = $request->input('is_active');
+        foreach($checkState as $data){
+            if($isActive == null) {
+                $isActive = 0;
+            } else {
+                $data->update(['is_active' => 0]);
+                $isActive = 1;
+            }
+        }
+
         $post = Periode::updateOrCreate(['id' => $request->id],
                 [
                     'kode'          => $request->kode,
@@ -55,7 +66,7 @@ class PeriodeController extends Controller
                     'input_nilai'   => $request->input_nilai,
                     'temp_open'     => $request->temp_open,
                     'finish'        => $request->finish,
-                    'is_active'     => 1,
+                    'is_active'     => $isActive,
                 ]); 
 
         return response()->json($post);
@@ -71,7 +82,18 @@ class PeriodeController extends Controller
 
     public function switchPeriode(Request $request)
     {
+        $checkState = Periode::where('is_active','=',1)->get();
         $req    = $request->is_active == '1' ? 0 : 1;
+        foreach($checkState as $data){
+            if($req == '1'){
+                $data->update(['is_active' => 0]);
+                $req = 1;
+            } else {
+                $data->update(['is_active' => 1]);
+                $req = 0;
+            }
+        }
+
         $post   = Periode::updateOrCreate(['id' => $request->id],['is_active' => $req]); 
         return response()->json($post);
     }

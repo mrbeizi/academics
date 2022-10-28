@@ -73,13 +73,20 @@
                                                     <label for="nama_periode" class="form-label">Period Name</label>
                                                     <input type="text" class="form-control" id="nama_periode" name="nama_periode" value="" placeholder="e.g Ganjil" />
                                                     <span class="text-danger" id="namaPeriodeErrorMsg"></span>
-                                                </div>                                                
+                                                </div>  
+
+                                                <div class="mb-3">
+                                                    <input class="form-check-input" type="checkbox" value="1" id="is_active" name="is_active" />
+                                                    <span class="custom-option-header">
+                                                        <span class="fw-semibold" for="is_active"> Status Active</span>
+                                                    </span>
+                                                </div>                                              
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
-                                                            <label for="input_nilai" class="form-label">Value</label>
+                                                            <label for="input_nilai" class="form-label">Input Nilai</label>
                                                             <select class="form-select" id="input_nilai" name="input_nilai" aria-label="Default select example">
                                                                 <option value="">- Choose -</option>
                                                                 <option value="1">Active</option>
@@ -242,6 +249,7 @@
               
             $('#id').val(data.id);
             $('#kode').val(data.kode);
+            $('#is_active').val(data.is_active);
             $('#nama_periode').val(data.nama_periode);
             $('#input_nilai').val(data.input_nilai);
             $('#temp_open').val(data.temp_open);
@@ -268,6 +276,7 @@
                 buttonsStyling: false,
                 timer: 2000
             })
+            $('#table_periode').DataTable().ajax.reload(null, true);
         })
     }
 
