@@ -38,9 +38,8 @@
                                   <th>#</th>
                                   <th>Name</th>
                                   <th>Prodi</th>
-                                  <th>Period</th>
+                                  <th>Period Start</th>
                                   <th>Status</th>
-                                  <th>Setting</th>
                                   <th>Total SKS</th>
                                   <th>Actions</th>
                                 </tr>
@@ -168,11 +167,10 @@
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'nama',name: 'nama'},
+                {data: 'setting',name: 'setting'},
                 {data: 'nama_prodi',name: 'nama_prodi'},
                 {data: 'nama_periode',name: 'nama_periode'},
                 {data: 'status',name: 'status'},
-                {data: 'setting',name: 'setting'},
                 {data: 'total_sks',name: 'total_sks'},
                 {data: 'action',name: 'action'},
             ]

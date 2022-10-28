@@ -156,7 +156,7 @@
                 {data: 'sks_teori',name: 'sks_teori'},
                 {data: 'sks_praktek',name: 'sks_praktek'},
                 {data: 'semester',name: 'semester'},
-                {data: 'wajib',name: 'wajib', render: function(type,data,row){ return (row.wajib == 1) ? '<i class="bx bx-check-circle bx-sm"></i>' : '<i class="bx bx-x-circle bx-sm"></i>';}},
+                {data: 'wajib',name: 'wajib', render: function(type,data,row){ return (row.wajib == 1) ? '<button type="button" class="btn btn-outline-success btn-xs">Yes <i class="bx bx-check-circle bx-xs"></i></button>' : '<button type="button" class="btn btn-outline-danger btn-xs">No <i class="bx bx-x-circle bx-xs"></i></button>';}},
                 {data: 'action',name: 'action'},
             ]
         });

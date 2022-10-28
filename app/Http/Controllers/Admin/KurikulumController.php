@@ -35,7 +35,7 @@ class KurikulumController extends Controller
                     <input type="checkbox" class="switch-input" onclick="KurikulumStatus('.$data->id.','.$data->is_active.')" name="kurikulum-status" id="'.$data->id.'" '.(($data->is_active=='1')?'checked':"").'>
                     <span class="switch-toggle-slider"><span class="switch-on"><i class="bx bx-check"></i></span><span class="switch-off"><i class="bx bx-x"></i></span></span></label></div>';
                 })->addColumn('setting', function($data){
-                    return '<a href="'.Route('setting.mkkurikulum',['id' => $data->id]).'" name="setting" class="dropdown-shortcuts-add text-body setting" data-id="'.$data->id.'" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add MK Kurikulum"><i class="bx bx-sm bx-bell-plus bx-tada"></i> Update</a>';
+                    return '<a href="'.Route('setting.mkkurikulum',['id' => $data->id]).'" name="setting" class="dropdown-shortcuts-add text-body setting" data-id="'.$data->id.'" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add MK Kurikulum"><i class="bx bx-sm bx-plus-circle bx-tada"></i> '.$data->nama.'</a>';
                 })->addColumn('total_sks', function($data){
                     $total = $this->countWeight($data->id);
                     return ($total == null) ? '0 SKS' : $total .' SKS';
