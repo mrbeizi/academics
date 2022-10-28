@@ -170,9 +170,9 @@
                 }, 
                 {data: 'kode',name: 'kode'},
                 {data: 'nama_periode',name: 'nama_periode'},
-                {data: 'input_nilai',name: 'input_nilai', render: function(type,data,row){ return (row.input_nilai == 1) ? 'Active' : 'Inactive';}},
-                {data: 'temp_open',name: 'temp_open', render: function(type,data,row){ return (row.temp_open == 1) ? 'Yes' : 'No';}},
-                {data: 'finish',name: 'finish', render: function(type,data,row){ return (row.finish == 1) ? "Done" : 'In progress <div class="spinner-grow spinner-grow-sm text-success" role="status"></div>';}},
+                {data: 'input_nilai',name: 'input_nilai', render: function(type,data,row){ return (row.input_nilai == 1) ? '<button type="button" class="btn btn-outline-success btn-xs">Active <i class="bx bx-check-circle bx-xs"></i></button>' : '<button type="button" class="btn btn-outline-danger btn-xs">Inactive <i class="bx bx-x-circle bx-xs"></i></button>';}},
+                {data: 'temp_open',name: 'temp_open', render: function(type,data,row){ return (row.temp_open == 1) ? '<button type="button" class="btn btn-outline-success btn-xs">Yes <i class="bx bx-check-circle bx-xs"></i></button>' : '<button type="button" class="btn btn-outline-danger btn-xs">No <i class="bx bx-x-circle bx-xs"></i></button>';}},
+                {data: 'finish',name: 'finish', render: function(type,data,row){ return (row.finish == 1) ? '<button type="button" class="btn btn-outline-success btn-xs">Done</button>' : '<button type="button" class="btn btn-outline-warning btn-xs">In Progress <div class="spinner-grow spinner-grow-sm text-warning" role="status"></div></button>';}},
                 {data: 'status',name: 'status'},
                 {data: 'action',name: 'action'},
             ]
