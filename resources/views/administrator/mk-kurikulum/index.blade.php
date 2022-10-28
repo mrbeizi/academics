@@ -40,6 +40,7 @@
                                   <th>SKS Teori</th>
                                   <th>SKS Praktek</th>
                                   <th>Semester</th>
+                                  <th>Wajib</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -64,7 +65,7 @@
 
                                                 <div class="mb-3">
                                                     @foreach($dataKurikulum as $data)                                                
-                                                    <p>Kurikulum <b>{{$data->nama}}</b></p>
+                                                    <p>Kurikulum<i class="bx bx-chevrons-right bx-xs"></i><b>{{$data->nama}}</b></p>
                                                     <input type="hidden" class="form-control" id="id_kurikulum" name="id_kurikulum" value="{{$data->id}}" readonly />
                                                     @endforeach
                                                 </div>                                                
@@ -84,6 +85,13 @@
                                                     <label for="semester" class="form-label">Semester*</label>
                                                     <input type="number" class="form-control" id="semester" name="semester" value="" placeholder="0" />
                                                     <span class="text-danger" id="semesterErrorMsg"></span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <input class="form-check-input" type="checkbox" value="1" id="wajib" name="wajib" />
+                                                    <span class="custom-option-header">
+                                                        <span class="fw-semibold" for="wajib"> Wajib</span>
+                                                    </span>
                                                 </div>
                                                                                     
                                             </div>
@@ -148,6 +156,7 @@
                 {data: 'sks_teori',name: 'sks_teori'},
                 {data: 'sks_praktek',name: 'sks_praktek'},
                 {data: 'semester',name: 'semester'},
+                {data: 'wajib',name: 'wajib', render: function(type,data,row){ return (row.wajib == 1) ? '<i class="bx bx-check-circle bx-sm"></i>' : '<i class="bx bx-x-circle bx-sm"></i>';}},
                 {data: 'action',name: 'action'},
             ]
         });

@@ -64,10 +64,15 @@ class MatakuliahKurikulumController extends Controller
             'semester.required'         => 'Anda belum mengisi kolom semester'
         ]);
 
+        $isWajib = $request->input('wajib');
+        if($isWajib == null) { $isWajib = $request->input('wajib') ?? 0; } 
+        else { $isWajib = $request->input('wajib') ?? 1; }
+
         $post = MatakuliahKurikulum::updateOrCreate(['id' => $request->id],
                 [
                     'id_kurikulum'      => $request->id_kurikulum,
                     'kode_matakuliah'   => $request->kode_matakuliah,
+                    'wajib'             => $isWajib,
                     'semester'          => $request->semester
                 ]); 
 
