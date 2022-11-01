@@ -25,7 +25,8 @@ class MatakuliahKurikulumController extends Controller
             ->where([['kurikulums.id','=',$id],['periodes.is_active','=',1]])
             ->get();
 
-        $getMatakuliah = Matakuliah::where('is_active','=',1)->get();
+        $getS = MatakuliahKurikulum::select('kode_matakuliah')->where('id_kurikulum','=',$id)->get();
+        $getMatakuliah = Matakuliah::whereNotIn('kode',$getS)->where('is_active','=',1)->get();        
         $getKurikulum = Kurikulum::where('is_active','=',1)->get();
 
         return view('administrator.mk-kurikulum.index', ['id' => $id, 'dataMatakuliah' => $dataMatakuliah, 'dataKurikulum' => $dataKurikulum, 'getMatakuliah' => $getMatakuliah,'getKurikulum' => $getKurikulum]);
