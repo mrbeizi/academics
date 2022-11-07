@@ -29,11 +29,13 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('matakuliah','Admin\MatakuliahController');
     Route::resource('mk-kurikulum','Admin\MatakuliahKurikulumController');
     Route::resource('user','Admin\UserController');
+    Route::resource('data-formulir','Admin\DataFormulirController');
 
     Route::post('archived-faculty','Admin\FakultasController@archiveFaculty')->name('archiveFaculty');
     Route::post('archived-kurikulum','Admin\KurikulumController@archiveKurikulum')->name('archiveKurikulum');
     Route::post('archived-matakuliah','Admin\MatakuliahController@archiveMatakuliah')->name('archiveMatakuliah');
     Route::post('archived-prodi','Admin\ProdiController@archiveProdi')->name('archiveProdi');
+    Route::post('archived-data-formulir','Admin\DataFormulirController@archiveDataFormulir')->name('archiveDataFormulir');
 
     Route::post('switch-period','Admin\PeriodeController@switchPeriode')->name('change-period-status');
     Route::post('switch-matakuliah','Admin\MatakuliahController@switchMatakuliah')->name('change-matakuliah-status');
@@ -52,9 +54,11 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('show-archived-kurikulum','Admin\KurikulumController@show')->name('show.archived.kurikulum');
     Route::get('show-archived-fakultas','Admin\FakultasController@show')->name('show.archived.fakultas');
     Route::get('show-archived-prodi','Admin\ProdiController@show')->name('show.archived.prodi');
+    Route::get('show-archived-data-formulir','Admin\DataFormulirController@show')->name('show.archived.dataformulir');
     
     Route::post('unarchived-matakuliah','Admin\MatakuliahController@unarchiveMatakuliah')->name('unarchiveMatakuliah');
     Route::post('unarchived-kurikulum','Admin\KurikulumController@unarchiveKurikulum')->name('unarchiveKurikulum');
     Route::post('unarchived-fakultas','Admin\FakultasController@unarchiveFakultas')->name('unarchiveFakultas');
     Route::post('unarchived-prodi','Admin\ProdiController@unarchiveProdi')->name('unarchiveProdi');
+    Route::post('unarchived-data-formulir','Admin\DataFormulirController@unarchiveDataFormulir')->name('unarchiveDataFormulir');
 });

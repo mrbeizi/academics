@@ -70,6 +70,19 @@
         </ul>
     </li>
     <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}}">
+        <i class='menu-icon tf-icons bx bx-cog bx-spin-hover'></i>
+        <div data-i18n="Master Data">Master Datas</div>
+        </a>
+        <ul class="menu-sub">
+        <li class="menu-item">
+            <a href="{{route('data-formulir.index')}}" class="menu-link {{set_active('data-formulir.index')}}">
+            <div data-i18n="Data Formulir">Data Formulir</div>
+            </a>
+        </li>       
+        </ul>
+    </li>
+    <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('periode.index')}}">
         <i class='menu-icon tf-icons bx bx-cog bx-spin-hover'></i>
         <div data-i18n="Settings">Settings</div>
