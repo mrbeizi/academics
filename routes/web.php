@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('user','Admin\UserController');
     Route::resource('data-formulir','Admin\DataFormulirController');
     Route::resource('pegawai','Admin\PegawaiController');
+    Route::resource('jabatan','Admin\JabatanController');
 
     Route::post('archived-faculty','Admin\FakultasController@archiveFaculty')->name('archiveFaculty');
     Route::post('archived-kurikulum','Admin\KurikulumController@archiveKurikulum')->name('archiveKurikulum');

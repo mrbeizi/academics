@@ -70,7 +70,7 @@
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}} OR {{set_active('pegawai.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}} OR {{set_active('pegawai.index')}} OR {{set_active('jabatan.index')}}">
         <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
         <div data-i18n="Setup Database">Setup Database</div>
         </a>
@@ -83,6 +83,11 @@
         <li class="menu-item">
             <a href="{{route('pegawai.index')}}" class="menu-link {{set_active('pegawai.index')}}">
             <div data-i18n="Pegawai">Pegawai</div>
+            </a>
+        </li>       
+        <li class="menu-item">
+            <a href="{{route('jabatan.index')}}" class="menu-link {{set_active('jabatan.index')}}">
+            <div data-i18n="Jabatan">Jabatan</div>
             </a>
         </li>       
         </ul>
