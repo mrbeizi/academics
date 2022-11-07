@@ -17,7 +17,7 @@ class CreatePegawaisTable extends Migration
             $table->increments('id');
             $table->string('nip',20);
             $table->string('nama_in',100);
-            $table->string('nama_ch',20);
+            $table->string('nama_ch',20)->nullable();
             $table->string('jenis_kelamin',1);
             $table->string('tempat_lahir',100);
             $table->date('tanggal_lahir');

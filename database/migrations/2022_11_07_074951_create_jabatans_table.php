@@ -18,8 +18,8 @@ class CreateJabatansTable extends Migration
             $table->integer('id_periode');
             $table->string('kode_jabatan',20);
             $table->string('nama_in',100);
-            $table->string('nama_en',100);
-            $table->string('nama_ch',100);
+            $table->string('nama_en',100)->nullable();
+            $table->string('nama_ch',100)->nullable();
             $table->integer('golongan');
             $table->timestamps();
             $table->datetime('archived_at')->nullable();

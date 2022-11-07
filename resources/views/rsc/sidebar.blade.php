@@ -70,14 +70,19 @@
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}}">
-        <i class='menu-icon tf-icons bx bx-cog bx-spin-hover'></i>
-        <div data-i18n="Master Data">Master Datas</div>
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}} OR {{set_active('pegawai.index')}}">
+        <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
+        <div data-i18n="Setup Database">Setup Database</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
             <a href="{{route('data-formulir.index')}}" class="menu-link {{set_active('data-formulir.index')}}">
             <div data-i18n="Data Formulir">Data Formulir</div>
+            </a>
+        </li>       
+        <li class="menu-item">
+            <a href="{{route('pegawai.index')}}" class="menu-link {{set_active('pegawai.index')}}">
+            <div data-i18n="Pegawai">Pegawai</div>
             </a>
         </li>       
         </ul>
