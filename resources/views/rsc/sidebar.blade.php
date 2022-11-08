@@ -70,7 +70,7 @@
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}} OR {{set_active('pegawai.index')}} OR {{set_active('jabatan.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}} OR {{set_active('pegawai.index')}} OR {{set_active('jabatan.index')}} OR {{set_active('jabatan-pegawai.index')}}">
         <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
         <div data-i18n="Setup Database">Setup Database</div>
         </a>
@@ -88,6 +88,11 @@
         <li class="menu-item">
             <a href="{{route('jabatan.index')}}" class="menu-link {{set_active('jabatan.index')}}">
             <div data-i18n="Jabatan">Jabatan</div>
+            </a>
+        </li>       
+        <li class="menu-item">
+            <a href="{{route('jabatan-pegawai.index')}}" class="menu-link {{set_active('jabatan-pegawai.index')}}">
+            <div data-i18n="Jabatan Pegawai">Jabatan Pegawai</div>
             </a>
         </li>       
         </ul>
