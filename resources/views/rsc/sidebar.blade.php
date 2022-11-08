@@ -95,6 +95,11 @@
             <div data-i18n="Jabatan Pegawai">Jabatan Pegawai</div>
             </a>
         </li>       
+        <li class="menu-item">
+            <a href="{{route('jabatan-akademik.index')}}" class="menu-link {{set_active('jabatan-akademik.index')}}">
+            <div data-i18n="Jabatan Akademik">Jabatan Akademik</div>
+            </a>
+        </li>       
         </ul>
     </li>
     <li class="menu-item">
