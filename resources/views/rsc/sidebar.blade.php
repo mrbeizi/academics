@@ -70,6 +70,12 @@
         </ul>
     </li>
     <li class="menu-item">
+        <a href="{{route('mahasiswa.index')}}" class="menu-link {{set_active('mahasiswa.index')}}">
+        <i class="menu-icon tf-icons bx bx-user bx-tada-hover"></i>
+        <div data-i18n="Mahasiswa">Mahasiswa</div>
+        </a>
+    </li>
+    <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}} OR {{set_active('pegawai.index')}} OR {{set_active('jabatan.index')}} OR {{set_active('jabatan-pegawai.index')}}">
         <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
         <div data-i18n="Setup Database">Setup Database</div>
