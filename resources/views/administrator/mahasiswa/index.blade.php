@@ -36,8 +36,7 @@
                               <tr>
                                 <th>#</th>
                                 <th>Kode Reg</th>
-                                <th>Nama Data</th>
-                                <th>Isi Data</th>
+                                <th>Nama Mahasiswa</th>
                                 <th>No HP</th>
                                 <th>Prodi</th>
                                 <th>Action</th>
@@ -45,8 +44,7 @@
                             </thead>
                         </table>
                     </div>                    
-                </div>
-                <br><br>
+                </div>            
 
                 <!-- MULAI MODAL FORM TAMBAH/EDIT-->
                 <div class="modal fade" id="tambah-edit-modal" aria-hidden="true">
@@ -64,9 +62,27 @@
                                             <input type="hidden" name="id" id="id">
 
                                             <div class="mb-3">
-                                                <label for="nama" class="form-label">Name*</label>
-                                                <input type="text" class="form-control" id="nama" name="nama" value="" placeholder="e.g Kampus Merdeka" />
-                                                <span class="text-danger" id="namaIDErrorMsg"></span>
+                                                <label for="nama_data" class="form-label">Nama Data</label>
+                                                <input type="text" class="form-control" id="nama_data" name="nama_data" value="" placeholder="" />
+                                                <span class="text-danger" id="namaDataErrorMsg"></span>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="isi_data" class="form-label">Isi Data</label>
+                                                <input type="text" class="form-control" id="isi_data" name="isi_data" value="" placeholder="" />
+                                                <span class="text-danger" id="isiDataErrorMsg"></span>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="no_hp" class="form-label">No HP</label>
+                                                <input type="text" class="form-control" id="no_hp" name="no_hp" value="" placeholder="" />
+                                                <span class="text-danger" id="noHPErrorMsg"></span>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="nama_prodi" class="form-label">Nama Prodi</label>
+                                                <input type="text" class="form-control" id="nama_prodi" name="nama_prodi" value="" placeholder="" />
+                                                <span class="text-danger" id="namaProdiErrorMsg"></span>
                                             </div>
 
                                         </div>
@@ -106,43 +122,59 @@
         });
     });
 
-    var myTable = $('#table_mahasiswa').DataTable({
-        processing: true,
-        serverSide: true,
-        paging: true,
-        lengthChange: true,
-        searching: true,
-        ordering: true,
-        info: true,
-        autoWidth: true,
-        columns: [
-            {data: null,sortable:false,
-                render: function (data, type, row, meta) {
-                return meta.row + meta.settings._iDisplayStart + 1;
-                }
-            }, 
-            {data: 'kode_registrasi',name: 'kode_registrasi'},
-            {data: 'nama_data',name: 'nama_data'},
-            {data: 'isi_data',name: 'isi_data'},
-            {data: 'no_hp',name: 'no_hp'},
-            {data: 'nama_prodi',name: 'nama_prodi'},
-            {data: 'action',name: 'action'},
-        ]
+    // DATATABLE
+    $(document).ready(function () {
+        var table = $('#table_mahasiswa').DataTable({
+            processing: true,
+            serverSide: true,
+            autoWidth: true,
+            ajax: "{{route('mahasiswa.index')}}",
+            columns: [
+                {data: null,sortable:false,
+                    render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                }, 
+                {data: "kode_registrasi",name: "kode_registrasi",
+                    render: function ( data, type, row ) {
+                        return row[1]['kode_registrasi'];
+                    },
+                },
+                {data: "isi_data",name: "isi_data",
+                    render: function ( data, type, row ) {
+                        return row[0]['isi_data'];
+                    },
+                },
+                {data: "no_hp",name: "no_hp",
+                    render: function ( data, type, row ) {
+                        return row[0]['no_hp'];
+                    },
+                },
+                {data: "nama_prodi",name: "nama_prodi",
+                    render: function ( data, type, row ) {
+                        return row[2]['nama_prodi'];
+                    },
+                },
+                {data: 'action',name: 'action'},
+            ]
+        });
     });
 
-    let url = '{{route("mahasiswa.index")}}';
-        fetch(url)
-        .then(res => res.json())
-        .then((out) => {
-            var logs = out;
-            myTable.clear();
-            $.each(logs, function (index, value) {
-            myTable.row.add(value);
-            });
-            myTable.draw();
-        }).catch(err => {
-            throw err
-        });
+    // EDIT DATA
+    $('body').on('click', '.edit-post', function () {
+        var data_id = $(this).data('id');
+        $.get('kurikulum/' + data_id + '/edit', function (data) {
+            $('#modal-judul').html("Edit data");
+            $('#tombol-simpan').val("edit-post");
+            $('#tambah-edit-modal').modal('show');
+              
+            $('#id').val(data.id);
+            $('#nama_data').val(data.nama_data);
+            $('#isi_data').val(data.isi_data);
+            $('#no_hp').val(data.no_hp);
+            $('#nama_prodi').val(data.nama_prodi);
+        })
+    });
 
 </script>
 
