@@ -44,36 +44,33 @@ class MatakuliahController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode'              => 'required',
-            'nama_id'           => 'required',
-            'sks_teori'         => 'required',
-            'sks_praktek'       => 'required',
-            'golongan_fakultas' => 'required',
-            'golongan_prodi'    => 'required',
-            'id_periode'        => 'required',
+            'kode'                => 'required',
+            'nama_id'             => 'required',
+            'sks_teori'           => 'required',
+            'sks_praktek'         => 'required',
+            'golongan_matakuliah' => 'required',
+            'id_periode'          => 'required',
         ],[
-            'kode.required'              => 'Anda belum menginputkan kode matakuliah',
-            'nama_id.required'           => 'Anda belum menginputkan nama',
-            'sks_teori.required'         => 'Anda belum menginputkan jumlah SKS teori',
-            'sks_praktek.required'       => 'Anda belum menginputkan jumlah SKS praktek',
-            'golongan_fakultas.required' => 'Anda belum memilih golongan fakultas',
-            'golongan_prodi.required'    => 'Anda belum memilih golongan prodi',
-            'id_periode.required'        => 'Anda belum memilih periode'
+            'kode.required'                 => 'Anda belum menginputkan kode matakuliah',
+            'nama_id.required'              => 'Anda belum menginputkan nama',
+            'sks_teori.required'            => 'Anda belum menginputkan jumlah SKS teori',
+            'sks_praktek.required'          => 'Anda belum menginputkan jumlah SKS praktek',
+            'golongan_matakuliah.required'  => 'Anda belum memilih golongan matakuliah',
+            'id_periode.required'           => 'Anda belum memilih periode'
         ]);
 
         $post = Matakuliah::updateOrCreate(['id' => $request->id],
                 [
-                    'kode'              => $request->kode,
-                    'nama_id'           => $request->nama_id,
-                    'nama_en'           => $request->nama_en,
-                    'nama_ch'           => $request->nama_ch,
-                    'sks_teori'         => $request->sks_teori,
-                    'sks_praktek'       => $request->sks_praktek,
-                    'golongan_fakultas' => $request->golongan_fakultas,
-                    'golongan_prodi'    => $request->golongan_prodi,
-                    'id_periode'        => $request->id_periode,
-                    'is_active'         => 1,
-                    'is_archived'       => 0
+                    'kode'                => $request->kode,
+                    'nama_id'             => $request->nama_id,
+                    'nama_en'             => $request->nama_en,
+                    'nama_ch'             => $request->nama_ch,
+                    'sks_teori'           => $request->sks_teori,
+                    'sks_praktek'         => $request->sks_praktek,
+                    'golongan_matakuliah' => $request->golongan_matakuliah,
+                    'id_periode'          => $request->id_periode,
+                    'is_active'           => 1,
+                    'is_archived'         => 0
                 ]); 
 
         return response()->json($post);
@@ -116,8 +113,7 @@ class MatakuliahController extends Controller
                             <tr><td>Name CH</td><td>:</td><td>'.$data->nama_ch.'</td></tr>
                             <tr><td>Theory Weight</td><td>:</td><td>'.$data->sks_teori.'</td></tr>
                             <tr><td>Practice Weight</td><td>:</td><td>'.$data->sks_praktek.'</td></tr>
-                            <tr><td>Fac. Group</td><td>:</td><td>'.$data->golongan_fakultas.'</td></tr>
-                            <tr><td>Prodi Group</td><td>:</td><td>'.$data->golongan_prodi.'</td></tr>
+                            <tr><td>Fac. Group</td><td>:</td><td>'.$data->golongan_matakuliah.'</td></tr>
                             <tr><td>Period</td><td>:</td><td>'.$data->nama_periode.'</td></tr>
                             <tr><td>State</td><td>:</td><td>'.(($data->is_active == 1) ? "Active <div class='spinner-grow spinner-grow-sm text-success' role='status'>" : "Non-active").'</td>
                             </tr>

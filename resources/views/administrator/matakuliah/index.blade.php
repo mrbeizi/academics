@@ -106,27 +106,15 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="mb-3">
-                                                        <label for="golongan_fakultas" class="form-label">Faculty Group*</label>
-                                                        <select class="form-select" id="golongan_fakultas" name="golongan_fakultas" aria-label="Default select example">
+                                                        <label for="golongan_matakuliah" class="form-label">Subjects Group*</label>
+                                                        <select class="form-select" id="golongan_matakuliah" name="golongan_matakuliah" aria-label="Default select example">
                                                             <option value="">- Choose -</option>
                                                             <option value="1">Bussiness & Finance</option>
                                                             <option value="2">Technology</option>
                                                             <option value="3">Computer Science</option>
                                                             <option value="4">Engineering</option>
                                                         </select>
-                                                        <span class="text-danger" id="golFakultasErrorMsg"></span>
-                                                    </div>
-    
-                                                    <div class="mb-3">
-                                                        <label for="golongan_prodi" class="form-label">Prodi Group*</label>
-                                                        <select class="form-select" id="golongan_prodi" name="golongan_prodi" aria-label="Default select example">
-                                                            <option value="">- Choose -</option>
-                                                            <option value="1">Bussiness & Finance</option>
-                                                            <option value="2">Technology</option>
-                                                            <option value="3">Computer Science</option>
-                                                            <option value="4">Engineering</option>
-                                                        </select>
-                                                        <span class="text-danger" id="golProdiErrorMsg"></span>
+                                                        <span class="text-danger" id="golMatakuliahErrorMsg"></span>
                                                     </div>                                                
     
                                                     <div class="mb-3">
@@ -284,8 +272,7 @@
                         $('#namaIDErrorMsg').text(response.responseJSON.errors.nama_id);
                         $('#sksTeoriErrorMsg').text(response.responseJSON.errors.sks_teori);
                         $('#sksPraktekErrorMsg').text(response.responseJSON.errors.sks_praktek);
-                        $('#golFakultasErrorMsg').text(response.responseJSON.errors.golongan_fakultas);
-                        $('#golProdiErrorMsg').text(response.responseJSON.errors.golongan_prodi);
+                        $('#golMatakuliahErrorMsg').text(response.responseJSON.errors.golongan_matakuliah);
                         $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
@@ -319,8 +306,7 @@
             $('#nama_ch').val(data.nama_ch);
             $('#sks_teori').val(data.sks_teori);
             $('#sks_praktek').val(data.sks_praktek);
-            $('#golongan_fakultas').val(data.golongan_fakultas);
-            $('#golongan_prodi').val(data.golongan_prodi);
+            $('#golongan_matakuliah').val(data.golongan_matakuliah);
             $('#id_periode').val(data.id_periode);
         })
     });
