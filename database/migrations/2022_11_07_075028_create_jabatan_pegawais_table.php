@@ -16,8 +16,10 @@ class CreateJabatanPegawaisTable extends Migration
         Schema::create('jabatan_pegawais', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_periode');
-            $table->string('id_pegawai',20);
-            $table->integer('id_jabatan');
+            $table->unsignedInteger('id_pegawai');
+            $table->foreign('id_pegawai')->references('id')->on('pegawais');
+            $table->unsignedInteger('id_jabatan');
+            $table->foreign('id_jabatan')->references('id')->on('jabatans');
             $table->integer('is_archived');
             $table->timestamps();
             $table->datetime('archived_at')->nullable();

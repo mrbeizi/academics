@@ -23,7 +23,7 @@ class CreatePegawaisTable extends Migration
             $table->date('tanggal_lahir');
             $table->string('agama',100);
             $table->integer('id_status_pegawai');
-            $table->datetime('tanggal_masuk');
+            $table->date('tanggal_masuk');
             $table->timestamps();
         });
     }

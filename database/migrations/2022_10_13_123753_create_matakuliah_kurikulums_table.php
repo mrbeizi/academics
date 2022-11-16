@@ -15,7 +15,8 @@ class CreateMatakuliahKurikulumsTable extends Migration
     {
         Schema::create('matakuliah_kurikulums', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_kurikulum');
+            $table->unsignedInteger('id_kurikulum');
+            $table->foreign('id_kurikulum')->references('id')->on('kurikulums');
             $table->string('kode_matakuliah',50);
             $table->string('semester',2);
             $table->timestamps();

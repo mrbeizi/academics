@@ -16,7 +16,8 @@ class CreateKurikulumsTable extends Migration
         Schema::create('kurikulums', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama',100);
-            $table->integer('id_prodi');
+            $table->unsignedInteger('id_prodi');
+            $table->foreign('id_prodi')->references('id')->on('prodis');
             $table->unsignedInteger('id_periode');
             $table->foreign('id_periode')->references('id')->on('periodes');
             $table->integer('is_active');

@@ -17,7 +17,8 @@ class CreateProdisTable extends Migration
             $table->increments('id');
             $table->string('kode_prodi',5);
             $table->string('kode_dikti',50);
-            $table->integer('id_fakultas');
+            $table->unsignedInteger('id_fakultas');
+            $table->foreign('id_fakultas')->references('id')->on('fakultas');
             $table->unsignedInteger('id_periode');
             $table->foreign('id_periode')->references('id')->on('periodes');
             $table->string('nama_id',100);
