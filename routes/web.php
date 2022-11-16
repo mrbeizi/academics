@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('archived-matakuliah','Admin\MatakuliahController@archiveMatakuliah')->name('archiveMatakuliah');
     Route::post('archived-prodi','Admin\ProdiController@archiveProdi')->name('archiveProdi');
     Route::post('archived-data-formulir','Admin\DataFormulirController@archiveDataFormulir')->name('archiveDataFormulir');
+    Route::post('archived-jabatan-pegawai','Admin\JabatanPegawaiController@archiveJabatanPegawai')->name('archiveJabatanPegawai');
 
     Route::post('switch-period','Admin\PeriodeController@switchPeriode')->name('change-period-status');
     Route::post('switch-matakuliah','Admin\MatakuliahController@switchMatakuliah')->name('change-matakuliah-status');
@@ -61,12 +62,14 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('show-archived-fakultas','Admin\FakultasController@show')->name('show.archived.fakultas');
     Route::get('show-archived-prodi','Admin\ProdiController@show')->name('show.archived.prodi');
     Route::get('show-archived-data-formulir','Admin\DataFormulirController@show')->name('show.archived.dataformulir');
+    Route::get('show-archived-jabatan-pegawai','Admin\JabatanPegawaiController@show')->name('show.archived.jabatanpegawai');
     
     Route::post('unarchived-matakuliah','Admin\MatakuliahController@unarchiveMatakuliah')->name('unarchiveMatakuliah');
     Route::post('unarchived-kurikulum','Admin\KurikulumController@unarchiveKurikulum')->name('unarchiveKurikulum');
     Route::post('unarchived-fakultas','Admin\FakultasController@unarchiveFakultas')->name('unarchiveFakultas');
     Route::post('unarchived-prodi','Admin\ProdiController@unarchiveProdi')->name('unarchiveProdi');
     Route::post('unarchived-data-formulir','Admin\DataFormulirController@unarchiveDataFormulir')->name('unarchiveDataFormulir');
+    Route::post('unarchived-jabatan-pegawai','Admin\JabatanPegawaiController@unarchiveJabatanPegawai')->name('unarchiveJabatanPegawai');
 
     Route::get('mahasiswa-view','Admin\MahasiswaController@view')->name('view-detail-mahasiswa');
 });

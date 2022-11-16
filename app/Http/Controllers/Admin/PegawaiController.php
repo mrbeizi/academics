@@ -56,12 +56,8 @@ class PegawaiController extends Controller
                     'nama_ch'           => $request->nama_ch,
                     'jenis_kelamin'     => $request->jenis_kelamin,
                     'tempat_lahir'      => $request->tempat_lahir,
-                    'tempat_lahir'      => $request->tempat_lahir,
-                    'tanggal_lahir'     => $request->tanggal_lahir,
                     'tanggal_lahir'     => $request->tanggal_lahir,
                     'agama'             => $request->agama,
-                    'agama'             => $request->agama,
-                    'id_status_pegawai' => $request->id_status_pegawai,
                     'id_status_pegawai' => $request->id_status_pegawai,
                     'tanggal_masuk'     => $request->tanggal_masuk
                 ]); 

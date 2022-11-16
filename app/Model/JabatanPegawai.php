@@ -23,4 +23,15 @@ class JabatanPegawai extends Model
             ->get();
         return $datas;
     }
+
+    static function getArchivedJabatanPegawai()
+    {
+        $datas = JabatanPegawai::leftJoin('jabatans','jabatans.id','=','jabatan_pegawais.id_jabatan')
+            ->leftJoin('pegawais','pegawais.id','=','jabatan_pegawais.id_pegawai')
+            ->leftJoin('periodes','periodes.id','=','jabatan_pegawais.id_periode')
+            ->select('jabatan_pegawais.id AS id','jabatan_pegawais.*','jabatans.kode_jabatan','jabatans.nama_in AS nama_jabatan','pegawais.nama_in AS nama_pegawai','periodes.nama_periode')
+            ->where('jabatan_pegawais.is_archived','=',1)
+            ->get();
+        return $datas;
+    }
 }
