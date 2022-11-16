@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Matakuliah;
 use App\Model\Periode;
+use App\Model\GolMatakuliah;
 
 class MatakuliahController extends Controller
 {
@@ -38,7 +39,8 @@ class MatakuliahController extends Controller
                 ->make(true);
         }
         $getPeriode = Periode::where('is_active','=',1)->get();
-        return view('administrator.matakuliah.index', compact('getPeriode'));
+        $getGolMatakuliah = GolMatakuliah::all();
+        return view('administrator.matakuliah.index', compact('getPeriode','getGolMatakuliah'));
     }
 
     public function store(Request $request)

@@ -109,7 +109,7 @@
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('periode.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('periode.index')}} OR {{set_active('gol-matakuliah.index')}}">
         <i class='menu-icon tf-icons bx bx-cog bx-spin-hover'></i>
         <div data-i18n="Settings">Settings</div>
         </a>
@@ -117,6 +117,11 @@
         <li class="menu-item">
             <a href="{{route('periode.index')}}" class="menu-link {{set_active('periode.index')}}">
             <div data-i18n="Periode">Periode</div>
+            </a>
+        </li>       
+        <li class="menu-item">
+            <a href="{{route('gol-matakuliah.index')}}" class="menu-link {{set_active('gol-matakuliah.index')}}">
+            <div data-i18n="Gol. Matakuliah">Gol. Matakuliah</div>
             </a>
         </li>       
         </ul>

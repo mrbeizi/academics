@@ -109,10 +109,9 @@
                                                         <label for="golongan_matakuliah" class="form-label">Subjects Group*</label>
                                                         <select class="form-select" id="golongan_matakuliah" name="golongan_matakuliah" aria-label="Default select example">
                                                             <option value="">- Choose -</option>
-                                                            <option value="1">Bussiness & Finance</option>
-                                                            <option value="2">Technology</option>
-                                                            <option value="3">Computer Science</option>
-                                                            <option value="4">Engineering</option>
+                                                            @foreach($getGolMatakuliah as $data)
+                                                            <option value="{{$data->id}}">{{$data->nama_golongan}}</option>
+                                                            @endforeach
                                                         </select>
                                                         <span class="text-danger" id="golMatakuliahErrorMsg"></span>
                                                     </div>                                                
