@@ -66,4 +66,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('unarchived-fakultas','Admin\FakultasController@unarchiveFakultas')->name('unarchiveFakultas');
     Route::post('unarchived-prodi','Admin\ProdiController@unarchiveProdi')->name('unarchiveProdi');
     Route::post('unarchived-data-formulir','Admin\DataFormulirController@unarchiveDataFormulir')->name('unarchiveDataFormulir');
+
+    Route::get('mahasiswa-view','Admin\MahasiswaController@view')->name('view-detail-mahasiswa');
 });
