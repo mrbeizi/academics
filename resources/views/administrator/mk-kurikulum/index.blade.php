@@ -72,7 +72,7 @@
 
                                                 <div class="mb-3">
                                                     <label for="kode_matakuliah" class="form-label">Subjects*</label>
-                                                    <select class="form-select" id="kode_matakuliah" name="kode_matakuliah" aria-label="Default select example">
+                                                    <select class="form-select" id="kode_matakuliah" name="kode_matakuliah" aria-label="Default select example" style="cursor:pointer;">
                                                         <option value="">- Choose -</option>
                                                         @foreach($getMatakuliah as $data)
                                                         <option value="{{$data->kode}}">{{$data->nama_id}}</option>

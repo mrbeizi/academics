@@ -107,7 +107,7 @@
                                                 <div class="row">
                                                     <div class="mb-3">
                                                         <label for="golongan_matakuliah" class="form-label">Subjects Group*</label>
-                                                        <select class="form-select" id="golongan_matakuliah" name="golongan_matakuliah" aria-label="Default select example">
+                                                        <select class="form-select" id="golongan_matakuliah" name="golongan_matakuliah" aria-label="Default select example" style="cursor:pointer;">
                                                             <option value="">- Choose -</option>
                                                             @foreach($getGolMatakuliah as $data)
                                                             <option value="{{$data->id}}">{{$data->nama_golongan}}</option>
@@ -118,7 +118,7 @@
     
                                                     <div class="mb-3">
                                                         <label for="id_periode" class="form-label">Year Period*</label>
-                                                        <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example">
+                                                        <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
                                                             <option value="">- Choose -</option>
                                                             @foreach($getPeriode as $data)
                                                             <option value="{{$data->id}}">{{$data->nama_periode}}</option>

@@ -62,7 +62,7 @@
 
                                                 <div class="mb-3">
                                                     <label for="id_periode" class="form-label">Year Period*</label>
-                                                    <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example">
+                                                    <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
                                                       <option value="">- Choose -</option>
                                                       @foreach($getPeriode as $data)
                                                       <option value="{{$data->id}}">{{$data->nama_periode}}</option>

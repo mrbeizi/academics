@@ -90,7 +90,7 @@
                                                     <div class="col-sm-6">
                                                         <div class="mb-3">
                                                             <label for="jenis_kelamin" class="form-label">Gender</label>
-                                                            <select class="form-select" id="jenis_kelamin" name="jenis_kelamin" aria-label="Default select example">
+                                                            <select class="form-select" id="jenis_kelamin" name="jenis_kelamin" aria-label="Default select example" style="cursor:pointer;">
                                                                 <option value="">- Choose -</option>
                                                                 <option value="1">Male</option>
                                                                 <option value="0">Female</option>
@@ -121,7 +121,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
                                                             <label for="agama" class="form-label">Religion</label>
-                                                            <select class="form-select" id="agama" name="agama" aria-label="Default select example">
+                                                            <select class="form-select" id="agama" name="agama" aria-label="Default select example" style="cursor:pointer;">
                                                                 <option value="">- Choose -</option>
                                                                 <option value="Buddha">Buddha</option>
                                                                 <option value="Buddha Maitreya">Buddha Maitreya</option>
@@ -142,7 +142,7 @@
                                                     <div class="col-sm-6">
                                                         <div class="mb-3">
                                                             <label for="id_status_pegawai" class="form-label">State</label>
-                                                            <select class="form-select" id="id_status_pegawai" name="id_status_pegawai" aria-label="Default select example">
+                                                            <select class="form-select" id="id_status_pegawai" name="id_status_pegawai" aria-label="Default select example" style="cursor:pointer;">
                                                                 <option value="">- Choose -</option>
                                                                 <option value="1">Active</option>
                                                                 <option value="0">Inactive</option>
@@ -214,11 +214,11 @@
                 {data: 'jenis_kelamin',name: 'jenis_kelamin',render: function(type,data,row){ return (row.jenis_kelamin == 1) ? 'Male' : 'Female'}},
                 {data: 'tanggal_lahir',name: 'tanggal_lahir',
                     render: function ( data, type, row ) {
-                        return row.tempat_lahir + ', ' + row.tanggal_lahir;
+                        return row.tempat_lahir + ', ' + moment(row.tanggal_lahir).format("L");
                     }
                 },
                 {data: 'agama',name: 'agama'},
-                {data: 'tanggal_masuk',name: 'tanggal_masuk'},
+                {data: 'tanggal_masuk',name: 'tanggal_masuk',render: function ( data, type, row ) {return moment(row.tanggal_masuk).format("L")},},
                 {data: 'action',name: 'action'},
             ]
         });

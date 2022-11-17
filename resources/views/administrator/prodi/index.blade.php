@@ -64,20 +64,20 @@
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="kode_prodi" class="form-label">Prodi ID*</label>
-                                                    <input type="text" class="form-control" id="kode_prodi" name="kode_prodi" value="" placeholder="e.g 54001" />
+                                                    <label for="kode_prodi" class="form-label">Prodi Code*</label>
+                                                    <input type="text" class="form-control" id="kode_prodi" name="kode_prodi" value="" placeholder="e.g 54001" onkeypress="return onlyNumeric(event)" />
                                                     <span class="text-danger" id="kodeProdiErrorMsg"></span>
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="kode_dikti" class="form-label">Dikti ID*</label>
-                                                    <input type="text" class="form-control" id="kode_dikti" name="kode_dikti" value="" placeholder="e.g 54001" />
+                                                    <label for="kode_dikti" class="form-label">Dikti Code*</label>
+                                                    <input type="text" class="form-control" id="kode_dikti" name="kode_dikti" value="" placeholder="e.g 54001" onkeypress="return onlyNumeric(event)" />
                                                     <span class="text-danger" id="kodeDiktiErrorMsg"></span>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="id_fakultas" class="form-label">Faculty*</label>
-                                                    <select class="form-select" id="id_fakultas" name="id_fakultas" aria-label="Default select example">
+                                                    <select class="form-select" id="id_fakultas" name="id_fakultas" aria-label="Default select example" style="cursor:pointer;">
                                                         <option value="">- Choose -</option>
                                                         @foreach($getFaculty as $faculty)
                                                         <option value="{{$faculty->id}}">{{$faculty->nama_id}}</option>
@@ -88,7 +88,7 @@
 
                                                 <div class="mb-3">
                                                     <label for="id_periode" class="form-label">Year Period*</label>
-                                                    <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example">
+                                                    <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
                                                         <option value="">- Choose -</option>
                                                         @foreach($getPeriode as $data)
                                                         <option value="{{$data->id}}">{{$data->nama_periode}}</option>
@@ -385,6 +385,13 @@
                 timer: 2000
             })
         })
+    }
+
+    function onlyNumeric(event) {
+        var angka = (event.which) ? event.which : event.keyCode
+        if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+            return false;
+        return true;
     }
 
 </script>

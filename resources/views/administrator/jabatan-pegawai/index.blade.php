@@ -62,7 +62,7 @@
                                                 <div class="row">
                                                     <div class="mb-3">
                                                         <label for="id_periode" class="form-label">Year Period*</label>
-                                                        <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example">
+                                                        <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
                                                             <option value="">- Choose -</option>
                                                             @foreach($getPeriode as $data)
                                                             <option value="{{$data->id}}">{{$data->nama_periode}}</option>
@@ -72,7 +72,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="id_pegawai" class="form-label">Nama Pegawai*</label>
-                                                        <select class="form-select" id="id_pegawai" name="id_pegawai" aria-label="Default select example">
+                                                        <select class="form-select" id="id_pegawai" name="id_pegawai" aria-label="Default select example" style="cursor:pointer;">
                                                             <option value="">- Choose -</option>
                                                             @foreach($getPegawai as $data)
                                                             <option value="{{$data->id}}">{{$data->nama_in}}</option>
@@ -82,7 +82,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="id_jabatan" class="form-label">Jabatan*</label>
-                                                        <select class="form-select" id="id_jabatan" name="id_jabatan" aria-label="Default select example">
+                                                        <select class="form-select" id="id_jabatan" name="id_jabatan" aria-label="Default select example" style="cursor:pointer;">
                                                             <option value="">- Choose -</option>
                                                             @foreach($getJabatan as $data)
                                                             <option value="{{$data->id}}">{{$data->nama_in}}</option>

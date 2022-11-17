@@ -55,4 +55,5 @@
 
     <!-- Page JS -->
     <script src="{{asset('assets/js/dashboards-analytics.js')}}"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
     

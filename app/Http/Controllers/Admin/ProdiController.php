@@ -40,17 +40,19 @@ class ProdiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_prodi'    => 'required',
-            'kode_dikti'    => 'required',
+            'kode_prodi'    => 'required|numeric|digits_between:5,5',
+            'kode_dikti'    => 'required|numeric|digits_between:5,5',
             'id_fakultas'   => 'required',
             'id_periode'    => 'required',
             'nama_id'       => 'required',
         ],[
-            'kode_prodi.required'    => 'Anda belum menginputkan kode prodi',
-            'kode_dikti.required'    => 'Anda belum menginputkan kode dikti',
-            'id_fakultas.required'   => 'Anda belum memilih fakultas',
-            'id_periode.required'    => 'Anda belum memilih periode',
-            'nama_id.required'       => 'Anda belum menginputkan nama'
+            'kode_prodi.required'          => 'Anda belum menginputkan kode prodi',
+            'kode_prodi.digits_between'    => 'Kode Prodi harus 5 digit',
+            'kode_dikti.required'          => 'Anda belum menginputkan kode dikti',
+            'kode_dikti.digits_between'    => 'Kode Dikti harus 5 digit',
+            'id_fakultas.required'         => 'Anda belum memilih fakultas',
+            'id_periode.required'          => 'Anda belum memilih periode',
+            'nama_id.required'             => 'Anda belum menginputkan nama'
         ]);
 
         $post = Prodi::updateOrCreate(['id' => $request->id],
