@@ -38,8 +38,8 @@
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Subject ID</th>
-                                  <th>Name ID</th>
+                                  <th>Code</th>
+                                  <th>Name</th>
                                   <th>TW</th>
                                   <th>PW</th>
                                   <th>Period</th>
@@ -176,7 +176,7 @@
                                         <thead>
                                           <tr>
                                             <th>#</th>
-                                            <th>Subject ID</th>
+                                            <th>Code</th>
                                             <th>Name ID</th>
                                             <th>Period</th>
                                             <th>Actions</th>
