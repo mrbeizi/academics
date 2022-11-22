@@ -72,4 +72,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('unarchived-jabatan-pegawai','Admin\JabatanPegawaiController@unarchiveJabatanPegawai')->name('unarchiveJabatanPegawai');
 
     Route::get('mahasiswa-view','Admin\MahasiswaController@view')->name('view-detail-mahasiswa');
+
+    // API Mahasiswa
+    Route::get('/mahasiswa/tahun','Admin\MahasiswaController@show')->name('get.mahasiswa');
 });

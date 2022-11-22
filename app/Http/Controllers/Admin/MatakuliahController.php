@@ -13,9 +13,10 @@ class MatakuliahController extends Controller
     public function index(Request $request)
     {
         $dataMatakuliah = Matakuliah::leftJoin('periodes','periodes.id','=','matakuliahs.id_periode')
-            ->select('matakuliahs.id AS id','matakuliahs.*','periodes.nama_periode')
+            ->leftJoin('gol_matakuliahs','gol_matakuliahs.id','=','matakuliahs.golongan_matakuliah')
+            ->select('matakuliahs.id AS id','matakuliahs.*','periodes.nama_periode','gol_matakuliahs.nama_golongan')
             ->where([['periodes.is_active','=',1],['matakuliahs.is_archived','=',0]])
-            ->get();
+            ->get();            
                 
         if($request->ajax()){
             return datatables()->of($dataMatakuliah)

@@ -11,26 +11,41 @@ class MahasiswaController extends Controller
 {
     public function index(Request $request)
     {
-        $getApi = 'put your api here';
-        $datas = file_get_contents($getApi);
-        $json = json_decode($datas, TRUE);
 
+        // Just for TahunAjaran
+        $getApiTahunAjaran = file_get_contents('put your api here');
+        $jsonTahunAjaran = json_decode($getApiTahunAjaran, TRUE);
+
+        return view('administrator.mahasiswa.index', compact('jsonTahunAjaran'));
+    }
+
+    public function show(Request $request)
+    {
+        if($request->tahun){
+            $getApi = 'put your api here'.$request->tahun;
+            $datas = file_get_contents($getApi);
+            $json = json_decode($datas, TRUE);
+        }else{
+            $getApi = 'put your api here';
+            $datas = file_get_contents($getApi);
+            $json = json_decode($datas, TRUE);
+        }
         if($request->ajax()){
             return datatables()->of($json)
                 ->addColumn('action', function($data){
-                        $button = '<button type="button" name="view_detail" id="'.$data[0]['kode_registrasi'].'" class="view_detail btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View Details"><i class="bx bx-xs bx-show"></i></button>';
+                        $button = '<button type="button" name="view_detail" id="'.$data['kode_registrasi'].'" class="view_detail btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View Details"><i class="bx bx-xs bx-show"></i></button>';
                         $button .= '&nbsp;&nbsp;';
-                        $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data[0]['kode_registrasi'].'" data-toggle="tooltip" data-placement="bottom" title="Edit" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
+                        $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data['kode_registrasi'].'" data-toggle="tooltip" data-placement="bottom" title="Edit" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
                         $button .= '&nbsp;&nbsp;';
-                        $button .= '<button type="button" name="delete" id="'.$data[0]['kode_registrasi'].'" data-toggle="tooltip" data-placement="bottom" title="Delete" class="delete btn btn-danger btn-xs"><i class="bx bx-xs bx-trash"></i></button>';
+                        $button .= '<button type="button" name="delete" id="'.$data['kode_registrasi'].'" data-toggle="tooltip" data-placement="bottom" title="Delete" class="delete btn btn-danger btn-xs"><i class="bx bx-xs bx-trash"></i></button>';
                         return $button;
                 })
                 ->rawColumns(['action'])
                 ->addIndexColumn(true)
                 ->make(true);
         }
-        $getPeriode = Periode::where('is_active','=',1)->get();
-        return view('administrator.mahasiswa.index', compact('json'));
+
+        return view('administrator.mahasiswa.index');
     }
 
     protected function view(Request $request)

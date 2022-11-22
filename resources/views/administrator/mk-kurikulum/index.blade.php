@@ -198,6 +198,7 @@
                             buttonsStyling: false,
                             timer: 2000
                         })
+                        location.reload();
                     },
                     error: function(response) {
                         $('#idKurikulumErrorMsg').text(response.responseJSON.errors.id_kurikulum);
@@ -284,6 +285,7 @@
                             timer: 2000
                         })
                         $('#table_mk_kurikulum').DataTable().ajax.reload(null, true);
+                        location.reload();
                     }).fail(function() {
                         Swal.fire({
                             title: 'Oops!',

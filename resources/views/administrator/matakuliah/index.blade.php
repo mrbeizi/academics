@@ -43,6 +43,7 @@
                                   <th>TW</th>
                                   <th>PW</th>
                                   <th>Period</th>
+                                  <th>Gol</th>
                                   <th>Status</th>
                                   <th>Actions</th>
                                 </tr>
@@ -223,6 +224,7 @@
                 {data: 'sks_teori',name: 'sks_teori'},
                 {data: 'sks_praktek',name: 'sks_praktek'},
                 {data: 'nama_periode',name: 'nama_periode'},
+                {data: 'nama_golongan',name: 'nama_golongan'},
                 {data: 'status',name: 'status'},
                 {data: 'action',name: 'action'},
             ]

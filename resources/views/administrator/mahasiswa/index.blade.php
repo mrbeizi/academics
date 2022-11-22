@@ -22,105 +22,47 @@
 <div class="container flex-grow-1">
     <section id="basic-datatable">
         <div class="row">
+            <div class="col-sm-12 mb-3">
+                <form class="row g-3" id="form-show" name="form-show">
+                    @csrf
+                    <div class="col-auto">
+                        <label for="inputTahun" class="col-sm-12 col-form-label">Tahun Ajaran</label>
+                    </div>
+                    <div class="col-auto">
+                      <select style="cursor:pointer;" class="form-control" id="tahun" name="tahun" required>
+                            <option value="" readonly> - Pilih Tahun -</option>
+                            <option value="all">All</option>
+                                @foreach($jsonTahunAjaran as $key => $data)
+                                <option value="{{$data['tahun']}}">{{$data['tahun']}}</option>
+                                @endforeach
+                            <span class="tahunErrorMsg"></span>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary" id="tombol-show" name="submit" type="submit">Show datas</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <!-- MULAI TOMBOL TAMBAH -->
-                        <div class="mb-3">
-                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
-                        </div>                        
-                        <!-- AKHIR TOMBOL -->
-                        
                         <table class="table table-hover table-responsive table-sm" id="table_mahasiswa">
                             <thead>
                               <tr>
                                 <th>#</th>
                                 <th>Kode Reg</th>
                                 <th>Nama Mahasiswa</th>
-                                <th>No HP</th>
                                 <th>Prodi</th>
+                                <th>No HP</th>
                                 <th>Action</th>
                               </tr>
                             </thead>
                         </table>
-                    </div>                    
-                </div>  
-                
-                <!-- MULAI MODAL VIEW DETAIL-->
-                <div class="modal fade" tabindex="-1" role="dialog" id="view_detail" data-backdrop="false">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Details</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div id="table" class="col-sm-12 table-responsive"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <!-- AKHIR MODAL VIEW DETAIL-->
-
-                <!-- MULAI MODAL FORM TAMBAH/EDIT-->
-                <div class="modal fade" id="tambah-edit-modal" aria-hidden="true">
-                    <div class="modal-dialog ">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modal-judul"></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-
-                                            <input type="hidden" name="id" id="id">
-
-                                            <div class="mb-3">
-                                                <label for="nama_data" class="form-label">Nama Data</label>
-                                                <input type="text" class="form-control" id="nama_data" name="nama_data" value="" placeholder="" />
-                                                <span class="text-danger" id="namaDataErrorMsg"></span>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="isi_data" class="form-label">Isi Data</label>
-                                                <input type="text" class="form-control" id="isi_data" name="isi_data" value="" placeholder="" />
-                                                <span class="text-danger" id="isiDataErrorMsg"></span>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="no_hp" class="form-label">No HP</label>
-                                                <input type="text" class="form-control" id="no_hp" name="no_hp" value="" placeholder="" />
-                                                <span class="text-danger" id="noHPErrorMsg"></span>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="nama_prodi" class="form-label">Nama Prodi</label>
-                                                <input type="text" class="form-control" id="nama_prodi" name="nama_prodi" value="" placeholder="" />
-                                                <span class="text-danger" id="namaProdiErrorMsg"></span>
-                                            </div>
-
-                                        </div>
-                                        
-                                        <div class="col-sm-offset-2 col-sm-12">
-                                            <hr class="mt-2">
-                                            <div class="float-sm-end">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan" value="create">Save</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- AKHIR MODAL -->
-
             </div>
         </div>
     </section>
@@ -138,13 +80,40 @@
         });
     });
 
+    // SEARCH
+    if ($("#form-show").length > 0) {
+        $("#form-show").validate({
+            submitHandler: function (form) {
+                var actionType = $('#tombol-show').val();
+                tahunSelect = document.getElementById("tahun").value;
+                $('#tombol-show').html('Processing..');
+                $.ajax({
+                    url: '{{ route("get.mahasiswa") }}',
+                    data: {'tahun':tahunSelect},
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#show-archived-modal').modal('show');
+                        console.log('Success to get datas of '+tahunSelect);                        
+                        $('#form-show').trigger("reset");
+                        $('#tombol-show').html('Show datas');
+                    },
+                    error: function(response) {
+                        console.log('Failed to get datas of '+tahunSelect);
+                        $('#tombol-show').html('Show datas');
+                    }
+                });
+            }
+        })
+    }
+
     // DATATABLE
     $(document).ready(function () {
         var table = $('#table_mahasiswa').DataTable({
             processing: true,
             serverSide: true,
             autoWidth: true,
-            ajax: "{{route('mahasiswa.index')}}",
+            ajax: "{{route('get.mahasiswa')}}",
             columns: [
                 {data: null,sortable:false,
                     render: function (data, type, row, meta) {
@@ -153,22 +122,22 @@
                 }, 
                 {data: "kode_registrasi",name: "kode_registrasi",
                     render: function ( data, type, row ) {
-                        return row[0]['kode_registrasi'];
+                        return row['kode_registrasi'];
                     },
                 },
                 {data: "isi_data",name: "isi_data",
                     render: function ( data, type, row ) {
-                        return row[0]['isi_data'];
+                        return row['isi_data'];
                     },
                 },
                 {data: "no_hp",name: "no_hp",
                     render: function ( data, type, row ) {
-                        return row[0]['no_hp'];
+                        return row['no_hp'];
                     },
                 },
                 {data: "nama_prodi",name: "nama_prodi",
                     render: function ( data, type, row ) {
-                        return row[0]['nama_prodi'];
+                        return row['nama_prodi'];
                     },
                 },
                 {data: 'action',name: 'action'},
