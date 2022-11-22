@@ -21,7 +21,7 @@
 
 <div class="container flex-grow-1">
     <section id="basic-datatable">
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-sm-12 mb-3">
                 <form class="row g-3" id="form-show" name="form-show">
                     @csrf
@@ -31,7 +31,6 @@
                     <div class="col-auto">
                       <select style="cursor:pointer;" class="form-control" id="tahun" name="tahun" required>
                             <option value="" readonly> - Pilih Tahun -</option>
-                            <option value="all">All</option>
                                 @foreach($jsonTahunAjaran as $key => $data)
                                 <option value="{{$data['tahun']}}">{{$data['tahun']}}</option>
                                 @endforeach
@@ -47,22 +46,25 @@
 
         <div class="row">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <table class="table table-hover table-responsive table-sm" id="table_mahasiswa">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Kode Reg</th>
-                                <th>Nama Mahasiswa</th>
-                                <th>Prodi</th>
-                                <th>No HP</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                        </table>
+                <div class="card" id="datatable-mahasiswa">
+                    
+                </div>
+
+                <!-- MULAI MODAL VIEW DETAIL-->
+                <div class="modal fade" tabindex="-1" role="dialog" id="view_detail" data-backdrop="false">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="table" class="col-sm-12 table-responsive"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <!-- AKHIR MODAL VIEW DETAIL-->
             </div>
         </div>
     </section>
@@ -85,65 +87,25 @@
         $("#form-show").validate({
             submitHandler: function (form) {
                 var actionType = $('#tombol-show').val();
-                tahunSelect = document.getElementById("tahun").value;
+                yearSelect = document.getElementById("tahun").value;
                 $('#tombol-show').html('Processing..');
                 $.ajax({
-                    url: '{{ route("get.mahasiswa") }}',
-                    data: {'tahun':tahunSelect},
+                    url: '{{ route("datatable-mahasiswa") }}',
+                    data: {yearSelect:yearSelect},
                     type: "GET",
                     dataType: 'json',
-                    success: function (data) {
-                        $('#show-archived-modal').modal('show');
-                        console.log('Success to get datas of '+tahunSelect);                        
-                        $('#form-show').trigger("reset");
+                    success: function(response, data){
+                        $("#datatable-mahasiswa").html(response.dataTable);
                         $('#tombol-show').html('Show datas');
                     },
                     error: function(response) {
-                        console.log('Failed to get datas of '+tahunSelect);
+                        console.log('Failed to get datas of '+yearSelect);
                         $('#tombol-show').html('Show datas');
                     }
                 });
             }
         })
     }
-
-    // DATATABLE
-    $(document).ready(function () {
-        var table = $('#table_mahasiswa').DataTable({
-            processing: true,
-            serverSide: true,
-            autoWidth: true,
-            ajax: "{{route('get.mahasiswa')}}",
-            columns: [
-                {data: null,sortable:false,
-                    render: function (data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                }, 
-                {data: "kode_registrasi",name: "kode_registrasi",
-                    render: function ( data, type, row ) {
-                        return row['kode_registrasi'];
-                    },
-                },
-                {data: "isi_data",name: "isi_data",
-                    render: function ( data, type, row ) {
-                        return row['isi_data'];
-                    },
-                },
-                {data: "no_hp",name: "no_hp",
-                    render: function ( data, type, row ) {
-                        return row['no_hp'];
-                    },
-                },
-                {data: "nama_prodi",name: "nama_prodi",
-                    render: function ( data, type, row ) {
-                        return row['nama_prodi'];
-                    },
-                },
-                {data: 'action',name: 'action'},
-            ]
-        });
-    });
 
     // TOMBOL VIEW
     $(document).on('click', '.view_detail', function () {
