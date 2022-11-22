@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\MatakuliahKurikulum;
+use App\Model\GolMatakuliah;
 use App\Model\Matakuliah;
 use App\Model\Kurikulum;
 use App\Model\Periode;
@@ -25,8 +26,18 @@ class MatakuliahKurikulumController extends Controller
             ->where([['kurikulums.id','=',$id],['periodes.is_active','=',1]])
             ->get();
 
+        // Start to get matakuliah according to id kurikulum and id prodi -- select datas where not in matakuliah kurikulum
         $getS = MatakuliahKurikulum::select('kode_matakuliah')->where('id_kurikulum','=',$id)->get();
-        $getMatakuliah = Matakuliah::whereNotIn('kode',$getS)->where('is_active','=',1)->get();        
+        $getR = Kurikulum::leftJoin('gol_matakuliahs','gol_matakuliahs.id_prodi','=','kurikulums.id_prodi')
+            ->select('gol_matakuliahs.id')
+            ->where('kurikulums.id','=',$id)
+            ->get();
+
+        foreach($getR as $data){
+            $getMatakuliah = Matakuliah::whereNotIn('kode',$getS)->where([['is_active','=',1],['golongan_matakuliah','=',$data->id]])->get();        
+        }
+        // End of get data matakuliah
+
         $getKurikulum = Kurikulum::where('is_active','=',1)->get();
 
         return view('administrator.mk-kurikulum.index', ['id' => $id, 'dataMatakuliah' => $dataMatakuliah, 'dataKurikulum' => $dataKurikulum, 'getMatakuliah' => $getMatakuliah,'getKurikulum' => $getKurikulum]);

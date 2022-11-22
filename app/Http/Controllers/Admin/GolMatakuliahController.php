@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\GolMatakuliah;
+use App\Model\Fakultas;
+use App\Model\Prodi;
 
 class GolMatakuliahController extends Controller
 {
     public function index(Request $request)
     {
-        $dataGolongan = GolMatakuliah::all();
+        $dataGolongan = GolMatakuliah::leftJoin('prodis','prodis.id','=','gol_matakuliahs.id_prodi')
+            ->leftJoin('fakultas','fakultas.id','=','gol_matakuliahs.id_fakultas')
+            ->select('gol_matakuliahs.id AS id','gol_matakuliahs.nama_golongan','gol_matakuliahs.keterangan','prodis.nama_id AS nama_prodi','fakultas.nama_id AS nama_fakultas')
+            ->get();
                 
         if($request->ajax()){
             return datatables()->of($dataGolongan)
@@ -24,7 +29,9 @@ class GolMatakuliahController extends Controller
                 ->addIndexColumn(true)
                 ->make(true);
         }
-        return view('administrator.gol-matakuliah.index');
+        $getFakultas = Fakultas::where('is_archived','=',0)->get();
+        $getProdi = Prodi::where('is_archived','=',0)->get();
+        return view('administrator.gol-matakuliah.index', compact('getFakultas','getProdi'));
     }
 
     public function store(Request $request)
@@ -37,8 +44,10 @@ class GolMatakuliahController extends Controller
 
         $post = GolMatakuliah::updateOrCreate(['id' => $request->id],
                 [
-                    'nama_golongan'     => $request->nama_golongan,
-                    'keterangan'        => $request->keterangan
+                    'nama_golongan'   => $request->nama_golongan,
+                    'id_fakultas'     => $request->id_fakultas,
+                    'id_prodi'        => $request->id_prodi,
+                    'keterangan'      => $request->keterangan
                 ]); 
 
         return response()->json($post);

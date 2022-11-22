@@ -35,8 +35,10 @@
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Group Name</th>
-                                  <th>Notes</th>
+                                  <th>Nama Golongan</th>
+                                  <th>Fakultas</th>
+                                  <th>Prodi</th>
+                                  <th>Keterangan</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -63,9 +65,29 @@
                                                     <span class="text-danger" id="namaGolonganErrorMsg"></span>
                                                 </div> 
                                                 <div class="mb-3">
+                                                    <label for="id_fakultas" class="form-label">Fakultas</label>
+                                                    <select class="form-select" id="id_fakultas" name="id_fakultas" aria-label="Default select example" style="cursor:pointer;">
+                                                        <option value="">- Choose -</option>
+                                                        @foreach($getFakultas as $data)
+                                                        <option value="{{$data->id}}">{{$data->nama_id}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="text-danger" id="idFakultasErrorMsg"></span>
+                                                </div>   
+                                                <div class="mb-3">
+                                                    <label for="id_prodi" class="form-label">Prodi</label>
+                                                    <select class="form-select" id="id_prodi" name="id_prodi" aria-label="Default select example" style="cursor:pointer;">
+                                                        <option value="">- Choose -</option>
+                                                        @foreach($getProdi as $data)
+                                                        <option value="{{$data->id}}">{{$data->nama_id}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="text-danger" id="idProdiErrorMsg"></span>
+                                                </div> 
+                                                <div class="mb-3">
                                                     <label for="keterangan" class="form-label">Keterangan</label>
                                                     <input type="text" class="form-control" id="keterangan" name="keterangan" value="" placeholder="e.g 大卫" />
-                                                </div> 
+                                                </div>                                                   
                                             </div>
 
 
@@ -118,6 +140,8 @@
                     }
                 }, 
                 {data: 'nama_golongan',name: 'nama_golongan'},
+                {data: 'nama_fakultas',name: 'nama_fakultas'},
+                {data: 'nama_prodi',name: 'nama_prodi'},
                 {data: 'keterangan',name: 'keterangan'},
                 {data: 'action',name: 'action'},
             ]
