@@ -31,8 +31,8 @@
                                 <th>#</th>
                                 <th>Kode Reg</th>
                                 <th>Name</th>
+                                <th>NIM Generated</Gen></th>
                                 <th>Prodi</th>
-                                <th>Gender</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -90,19 +90,15 @@
                         return row[0]['kode_registrasi'];
                     }
                 },
-                {data: 'isi_data',name: 'isi_data',
+                {data: 'nama_lengkap',name: 'nama_lengkap',
                     render: function ( data, type, row ) {
-                        return row[0]['isi_data'];
+                        return row[0]['nama_lengkap'];
                     }
                 },
-                {data: 'nama_prodi',name: 'nama_prodi',
+                {data: 'nim',name: 'nim'},
+                {data: 'prodi_fix',name: 'prodi_fix',
                     render: function ( data, type, row ) {
-                        return row[0]['nama_prodi'];
-                    }
-                },
-                {data: 'jenis_kelamin',name: 'jenis_kelamin',
-                    render: function ( data, type, row ) {
-                        return row[3]['isi_data'];
+                        return row[0]['prodi_fix'];
                     }
                 },
                 {data: 'action',name: 'action'},

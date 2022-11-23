@@ -70,29 +70,29 @@
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('api-mahasiswa.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('api-mahasiswa.index')}} OR {{set_active('mahasiswa.index')}} OR {{set_active('api-mahasiswa-prodi.index')}}">
         <i class='menu-icon tf-icons bx bx-shape-circle bx-tada-hover'></i>
-        <div data-i18n="Data API">Data API</div>
+        <div data-i18n="Mahasiswa API">Mahasiswa API</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
             <a href="{{route('api-mahasiswa.index')}}" class="menu-link {{set_active('api-mahasiswa.index')}}">
-            <div data-i18n="Mahasiswa API">Mahasiswa API</div>
+            <div data-i18n="All Mahasiswa">All Mahasiswa</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="#" class="menu-link">
-            <div data-i18n="Tahun Ajaran">Tahun Ajaran</div>
+            <a href="{{route('mahasiswa.index')}}" class="menu-link {{set_active('mahasiswa.index')}}">
+            <div data-i18n="Search by Year">Search by Year</div>
             </a>
-        </li>       
+        </li>
+        <li class="menu-item">
+            <a href="{{route('api-mahasiswa-prodi.index')}}" class="menu-link {{set_active('api-mahasiswa-prodi.index')}}">
+            <div data-i18n="Search by Prodi">Search by Prodi</div>
+            </a>
+        </li>      
         </ul>
     </li>
-    <li class="menu-item">
-        <a href="{{route('mahasiswa.index')}}" class="menu-link {{set_active('mahasiswa.index')}}">
-        <i class="menu-icon tf-icons bx bx-user bx-tada-hover"></i>
-        <div data-i18n="Mahasiswa">Mahasiswa</div>
-        </a>
-    </li>
+    
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}} OR {{set_active('pegawai.index')}} OR {{set_active('jabatan.index')}} OR {{set_active('jabatan-pegawai.index')}} OR {{set_active('jabatan-akademik.index')}}">
         <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
