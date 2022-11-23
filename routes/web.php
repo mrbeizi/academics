@@ -77,4 +77,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/mahasiswa/tahun','Admin\MahasiswaController@show')->name('get.mahasiswa');
     Route::get('mahasiswa-view','Admin\MahasiswaController@view')->name('view-detail-mahasiswa');
     Route::get('datatable-mahasiswa','Admin\MahasiswaController@showDataTable')->name('datatable-mahasiswa');
+
+    Route::resource('api-mahasiswa', 'Admin\ApiMahasiswaController');
+    Route::get('api-mahasiswa-view','Admin\ApiMahasiswaController@viewformdetail')->name('view-detail-form');
 });

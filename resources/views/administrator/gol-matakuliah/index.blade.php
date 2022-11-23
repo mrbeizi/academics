@@ -35,10 +35,8 @@
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Nama Golongan</th>
-                                  <th>Fakultas</th>
-                                  <th>Prodi</th>
-                                  <th>Keterangan</th>
+                                  <th>Nama Gol</th>
+                                  <th>Ket</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -140,8 +138,6 @@
                     }
                 }, 
                 {data: 'nama_golongan',name: 'nama_golongan'},
-                {data: 'nama_fakultas',name: 'nama_fakultas'},
-                {data: 'nama_prodi',name: 'nama_prodi'},
                 {data: 'keterangan',name: 'keterangan'},
                 {data: 'action',name: 'action'},
             ]
