@@ -64,13 +64,13 @@
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="kode" class="form-label">Period ID</label>
+                                                    <label for="kode" class="form-label">Period ID*</label>
                                                     <input type="text" class="form-control" id="kode" name="kode" value="" placeholder="UV001" />
                                                     <span class="text-danger" id="kodeErrorMsg"></span>
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="nama_periode" class="form-label">Period Name</label>
+                                                    <label for="nama_periode" class="form-label">Period Name*</label>
                                                     <input type="text" class="form-control" id="nama_periode" name="nama_periode" value="" placeholder="e.g Ganjil" />
                                                     <span class="text-danger" id="namaPeriodeErrorMsg"></span>
                                                 </div>  
@@ -86,7 +86,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
-                                                            <label for="input_nilai" class="form-label">Input Nilai</label>
+                                                            <label for="input_nilai" class="form-label">Input Nilai*</label>
                                                             <select class="form-select" id="input_nilai" name="input_nilai" aria-label="Default select example" style="cursor:pointer;">
                                                                 <option value="">- Choose -</option>
                                                                 <option value="1">Active</option>
@@ -97,7 +97,7 @@
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
-                                                            <label for="temp_open" class="form-label">Temp. Open</label>
+                                                            <label for="temp_open" class="form-label">Temp. Open*</label>
                                                             <select class="form-select" id="temp_open" name="temp_open" aria-label="Default select example" style="cursor:pointer;">
                                                                 <option value="">- Choose -</option>
                                                                 <option value="1">Open</option>
@@ -108,7 +108,7 @@
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
-                                                            <label for="finish" class="form-label">Finish</label>
+                                                            <label for="finish" class="form-label">Finish*</label>
                                                             <select class="form-select" id="finish" name="finish" aria-label="Default select example" style="cursor:pointer;">
                                                                 <option value="">- Choose -</option>
                                                                 <option value="1">Done</option>

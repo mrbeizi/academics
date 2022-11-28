@@ -36,8 +36,8 @@
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Faculty ID</th>
-                                  <th>Dikti ID</th>
+                                  <th>Prodi</th>
+                                  <th>Dikti Id</th>
                                   <th>Name</th>
                                   <th>Faculty</th>
                                   <th>Period</th>
@@ -189,7 +189,11 @@
                 }, 
                 {data: 'kode_prodi',name: 'kode_prodi'},
                 {data: 'kode_dikti',name: 'kode_dikti'},
-                {data: 'nama_id',name: 'nama_id'},
+                {data: 'nama_id',name: 'nama_id',
+                    render: function ( data, type, row ) {
+                        return row.nama_id + ' (' + row.jenjang + ')';
+                    },
+                },
                 {data: 'nama_fakultas',name: 'nama_fakultas'},
                 {data: 'nama_periode',name: 'nama_periode'},
                 {data: 'action',name: 'action'},

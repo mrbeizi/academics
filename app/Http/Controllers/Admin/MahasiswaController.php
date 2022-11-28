@@ -111,7 +111,7 @@ class MahasiswaController extends Controller
             }} else {
             $contents .= '
                             <tr>
-                                <td colspan="12" align="center">There is no data</td>
+                                <td colspan="12" align="center">No data available in table</td>
                             </tr>
             ';
             }

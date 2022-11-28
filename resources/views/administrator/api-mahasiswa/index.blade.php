@@ -21,6 +21,18 @@
 
 <div class="container flex-grow-1">
     <section id="basic-datatable">
+        <div class="row mb-3">
+            <div class="dropdown show">
+                <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bx bx-xs bx-search-alt bx-tada-hover"></i>
+                  Cari berdasarkan
+                </a>
+              
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <a class="dropdown-item" href="{{route('mahasiswa.index')}}"><i class="bx bx-xs bx-right-arrow-circle bx-tada-hover"></i> Tahun Ajaran</a>
+                  <a class="dropdown-item" href="{{route('api-mahasiswa-prodi.index')}}"><i class="bx bx-xs bx-right-arrow-circle bx-tada-hover"></i> Prodi</a>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card">

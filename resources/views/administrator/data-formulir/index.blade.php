@@ -72,13 +72,13 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="nama_data" class="form-label">Name Data</label>
+                                                    <label for="nama_data" class="form-label">Name Data*</label>
                                                     <input type="text" class="form-control" id="nama_data" name="nama_data" value="" placeholder="Data Name" />
                                                     <span class="text-danger" id="namaDataErrorMsg"></span>
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="no_urut" class="form-label">No Urut</label>
+                                                    <label for="no_urut" class="form-label">No Urut*</label>
                                                     <input type="number" class="form-control" id="no_urut" name="no_urut" value="" />
                                                     <span class="text-danger" id="noUrutErrorMsg"></span>
                                                 </div>

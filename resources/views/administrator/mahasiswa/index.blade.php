@@ -40,6 +40,9 @@
                     <div class="col-auto">
                         <button class="btn btn-primary" id="tombol-show" name="submit" type="submit">Show datas</button>
                     </div>
+                    <div class="col-sm">
+                        <a href="{{route('api-mahasiswa.index')}}" class="dropdown-shortcuts-add text-body float-end" data-bs-toggle="tooltip" data-bs-placement="top" title="Back to All Mahasiswa"><i class="bx bx-xs bx-left-arrow-circle bx-tada-hover"></i> Kembali</a>
+                    </div>
                 </form>
             </div>
         </div>

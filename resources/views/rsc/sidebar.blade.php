@@ -70,24 +70,14 @@
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('api-mahasiswa.index')}} OR {{set_active('mahasiswa.index')}} OR {{set_active('api-mahasiswa-prodi.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('api-mahasiswa.index')}}">
         <i class='menu-icon tf-icons bx bx-shape-circle bx-tada-hover'></i>
-        <div data-i18n="Mahasiswa API">Mahasiswa API</div>
+        <div data-i18n="Data API">Data API</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
             <a href="{{route('api-mahasiswa.index')}}" class="menu-link {{set_active('api-mahasiswa.index')}}">
             <div data-i18n="All Mahasiswa">All Mahasiswa</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="{{route('mahasiswa.index')}}" class="menu-link {{set_active('mahasiswa.index')}}">
-            <div data-i18n="Search by Year">Search by Year</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="{{route('api-mahasiswa-prodi.index')}}" class="menu-link {{set_active('api-mahasiswa-prodi.index')}}">
-            <div data-i18n="Search by Prodi">Search by Prodi</div>
             </a>
         </li>      
         </ul>

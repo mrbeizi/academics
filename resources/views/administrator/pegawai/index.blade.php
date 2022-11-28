@@ -40,7 +40,7 @@
                                   <th>Gender</th>
                                   <th>Born</th>
                                   <th>Religion</th>
-                                  <th>Date Registered</th>
+                                  <th>Date Reg.</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -71,7 +71,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="mb-3">
-                                                            <label for="nama_ch" class="form-label">Nama (CH)*</label>
+                                                            <label for="nama_ch" class="form-label">Nama (CH)</label>
                                                             <input type="text" class="form-control" id="nama_ch" name="nama_ch" value="" placeholder="e.g 大卫" />
                                                         </div> 
                                                     </div>
@@ -89,7 +89,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="mb-3">
-                                                            <label for="jenis_kelamin" class="form-label">Gender</label>
+                                                            <label for="jenis_kelamin" class="form-label">Gender*</label>
                                                             <select class="form-select" id="jenis_kelamin" name="jenis_kelamin" aria-label="Default select example" style="cursor:pointer;">
                                                                 <option value="">- Choose -</option>
                                                                 <option value="1">Male</option>
@@ -113,14 +113,14 @@
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
-                                                            <label for="tempat_lahir" class="form-label">Born Date</label>
+                                                            <label for="tempat_lahir" class="form-label">Born Date*</label>
                                                             <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="" placeholder="2000/01/01" />
                                                             <span class="text-danger" id="tanggalLahirErrorMsg"></span>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
-                                                            <label for="agama" class="form-label">Religion</label>
+                                                            <label for="agama" class="form-label">Religion*</label>
                                                             <select class="form-select" id="agama" name="agama" aria-label="Default select example" style="cursor:pointer;">
                                                                 <option value="">- Choose -</option>
                                                                 <option value="Buddha">Buddha</option>
@@ -141,7 +141,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="mb-3">
-                                                            <label for="id_status_pegawai" class="form-label">State</label>
+                                                            <label for="id_status_pegawai" class="form-label">State*</label>
                                                             <select class="form-select" id="id_status_pegawai" name="id_status_pegawai" aria-label="Default select example" style="cursor:pointer;">
                                                                 <option value="">- Choose -</option>
                                                                 <option value="1">Active</option>
@@ -153,7 +153,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="mb-3">
-                                                            <label for="tanggal_masuk" class="form-label">Date Registered</label>
+                                                            <label for="tanggal_masuk" class="form-label">Date Registered*</label>
                                                             <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk" value="" placeholder="2000/01/01" />
                                                             <span class="text-danger" id="tanggalMasukErrorMsg"></span>
                                                         </div>
