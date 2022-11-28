@@ -90,6 +90,7 @@
         var table = $('#table_api_mahasiswa').DataTable({
             processing: true,
             serverSide: true,
+            searching: false,
             ajax: "{{ route('api-mahasiswa.index') }}",
             columns: [
                 {data: null,sortable:false,
@@ -99,18 +100,18 @@
                 }, 
                 {data: 'kode_registrasi',name: 'kode_registrasi',
                     render: function ( data, type, row ) {
-                        return row[0]['kode_registrasi'];
+                        return row['kode_registrasi'];
                     }
                 },
                 {data: 'nama_lengkap',name: 'nama_lengkap',
                     render: function ( data, type, row ) {
-                        return row[0]['nama_lengkap'];
+                        return row['nama_lengkap'];
                     }
                 },
                 {data: 'nim',name: 'nim'},
                 {data: 'prodi_fix',name: 'prodi_fix',
                     render: function ( data, type, row ) {
-                        return row[0]['prodi_fix'];
+                        return row['prodi_fix'];
                     }
                 },
                 {data: 'action',name: 'action'},

@@ -87,6 +87,7 @@ class MahasiswaController extends Controller
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>NIM Generated</th>
                                 <th>Kode Registrasi</th>
                                 <th>Nama Lengkap</th>
                                 <th>Prodi</th>
@@ -99,6 +100,7 @@ class MahasiswaController extends Controller
             $contents .= '
                             <tr>
                                 <td>'.++$no.'</td>
+                                <td><span class="badge bg-label-primary me-1">'.$data['tahun'].' . '.$data['kode_nim'].' . '. sprintf('%03d', $no++).'</span></td>
                                 <td>'.$data['kode_registrasi'].'</td>
                                 <td>'.$data['nama_lengkap'].'</td>
                                 <td>'.$data['prodi_fix'].'</td>

@@ -17,13 +17,13 @@ class ApiMahasiswaController extends Controller
         if($request->ajax()){
             return datatables()->of($jsonMahasiswa)
                 ->addColumn('action', function($data){
-                        return '<button type="button" name="view_detail" id="'.$data[0]['kode_registrasi'].'" class="view_detail btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View Details"><i class="bx bx-xs bx-show"></i></button>';
+                        return '<button type="button" name="view_detail" id="'.$data['kode_registrasi'].'" class="view_detail btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View Details"><i class="bx bx-xs bx-show"></i></button>';
                 })->addColumn('nim', function($data){
                     $string = "0";
                     $getProdi = Prodi::select('kode_nim','kode_prodi')->where('is_archived','=',0)->get();
                     foreach($getProdi as $kode){
-                        if($kode->kode_prodi == $data[0]['kode_prodi']){
-                            $generateNim = $data[0]['tahun'].' . '.$kode->kode_nim.' . '. sprintf('%03d', $string);                                               
+                        if($kode->kode_prodi == $data['kode_prodi']){
+                            $generateNim = $data['tahun'].' . '.$kode->kode_nim.' . '. sprintf('%03d', $string);                                               
                         }
                     }
                     return '<span class="badge bg-label-primary me-1">'.$generateNim.'</span>';
