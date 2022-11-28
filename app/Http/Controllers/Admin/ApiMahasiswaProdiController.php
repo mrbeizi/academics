@@ -33,6 +33,7 @@ class ApiMahasiswaProdiController extends Controller
                                 <th>Kode Registrasi</th>
                                 <th>Nama Lengkap</th>
                                 <th>Prodi</th>
+                                <th>NIM Generate</th>
                                 <th>Action</th>                
                             </tr>
                         </thead>
@@ -45,6 +46,7 @@ class ApiMahasiswaProdiController extends Controller
                                 <td>'.$data['kode_registrasi'].'</td>
                                 <td>'.$data['nama_lengkap'].'</td>
                                 <td>'.$data['prodi_fix'].'</td>
+                                <td>'.$data['tahun'].' . '.$data['kode_nim'].' . '. sprintf('%03d', $no++).'</td>
                                 <td>
                                     <button type="button" name="view_detail" id="'.$data['kode_registrasi'].'" class="view_detail btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View Details"><i class="bx bx-xs bx-show"></i></button>&nbsp;&nbsp;
                                     <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data['kode_registrasi'].'" data-toggle="tooltip" data-placement="bottom" title="Edit" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>&nbsp;&nbsp;

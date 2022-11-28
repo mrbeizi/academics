@@ -127,7 +127,7 @@
     // EDIT DATA
     $('body').on('click', '.edit-post', function () {
         var data_id = $(this).data('id');
-        alert(data_id);
+        alert("This feature is not available yet.");
         $.get('mahasiswa/' + data_id + '/edit', function (data) {
             $('#modal-judul').html("Edit data");
             $('#tombol-simpan').val("edit-post");
