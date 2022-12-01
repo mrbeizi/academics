@@ -40,7 +40,6 @@
                                   <th>Dikti Id</th>
                                   <th>Name</th>
                                   <th>Faculty</th>
-                                  <th>Period</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -195,7 +194,6 @@
                     },
                 },
                 {data: 'nama_fakultas',name: 'nama_fakultas'},
-                {data: 'nama_periode',name: 'nama_periode'},
                 {data: 'action',name: 'action'},
             ]
         });

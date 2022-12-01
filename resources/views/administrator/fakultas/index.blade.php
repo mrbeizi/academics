@@ -36,7 +36,6 @@
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Period ID</th>
                                   <th>Name ID</th>
                                   <th>Name EN</th>
                                   <th>Name CH</th>
@@ -165,7 +164,6 @@
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'nama_periode',name: 'nama_periode'},
                 {data: 'nama_id',name: 'nama_id'},
                 {data: 'nama_en',name: 'nama_en'},
                 {data: 'nama_ch',name: 'nama_ch'},
