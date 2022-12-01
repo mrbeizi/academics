@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Pegawai;
+use App\Model\StatusPegawai;
 
 class PegawaiController extends Controller
 {
@@ -24,7 +25,8 @@ class PegawaiController extends Controller
                 ->addIndexColumn(true)
                 ->make(true);
         }
-        return view('administrator.pegawai.index');
+        $getStatusPegawai = StatusPegawai::all();
+        return view('administrator.pegawai.index', compact('getStatusPegawai'));
     }
 
     public function store(Request $request)

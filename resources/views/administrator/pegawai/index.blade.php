@@ -143,10 +143,10 @@
                                                         <div class="mb-3">
                                                             <label for="id_status_pegawai" class="form-label">State*</label>
                                                             <select class="form-select" id="id_status_pegawai" name="id_status_pegawai" aria-label="Default select example" style="cursor:pointer;">
-                                                                <option value="">- Choose -</option>
-                                                                <option value="1">Active</option>
-                                                                <option value="0">Inactive</option>
-                                                                <option value="2">Blocked</option>
+                                                                <option value="" readonly>- Choose -</option>
+                                                                @foreach($getStatusPegawai as $data)
+                                                                <option value="{{$data->id}}">{{$data->nama_status}}</option>
+                                                                @endforeach
                                                             </select>
                                                             <span class="text-danger" id="statusPegawaiErrorMsg"></span>
                                                         </div>                                                        
@@ -298,6 +298,7 @@
             $('#id').val(data.id);
             $('#nip').val(data.nip);
             $('#nama_in').val(data.nama_in);
+            $('#nama_ch').val(data.nama_ch);
             $('#jenis_kelamin').val(data.jenis_kelamin);
             $('#tempat_lahir').val(data.tempat_lahir);
             $('#tanggal_lahir').val(data.tanggal_lahir);

@@ -84,10 +84,8 @@
                                                             <label for="golongan" class="form-label">Golongan*</label>
                                                             <select class="form-select" id="golongan" name="golongan" aria-label="Default select example" style="cursor:pointer;">
                                                                 <option value="">- Choose -</option>
-                                                                <option value="1">Gol I</option>
-                                                                <option value="2">Gol II</option>
-                                                                <option value="3">Gol III</option>
-                                                                <option value="4">Gol IV</option>
+                                                                <option value="1">Tenaga Kependidikan</option>
+                                                                <option value="2">Pendidik</option>
                                                                 <option value="0">Other</option>
                                                             </select>
                                                             <span class="text-danger" id="golonganErrorMsg"></span>
@@ -163,7 +161,11 @@
                 {data: 'nama_periode',name: 'nama_periode'},
                 {data: 'kode_jabatan',name: 'kode_jabatan'},
                 {data: 'nama_in',name: 'nama_in'},
-                {data: 'golongan',name: 'golongan'},
+                {data: 'golongan',name: 'golongan',
+                    render: function(type,data,row)
+                        { return (row.golongan == 1) ? '<span class="badge bg-label-warning me-1">Tenaga Kependidikan</span>' : (row.golongan == 2) ? '<span class="badge bg-label-primary me-1">Pendidik</span>' : '<span class="badge bg-label-secondary me-1">Other</span>';
+                    }
+                },
                 {data: 'action',name: 'action'},
             ]
         });
