@@ -70,6 +70,24 @@
         </ul>
     </li>
     <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('jabatan-pegawai.index')}} OR {{set_active('jabatan-akademik.index')}}">
+        <i class='menu-icon tf-icons bx bx-briefcase-alt bx-tada-hover'></i>
+        <div data-i18n="Jabatan">Jabatan</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="{{route('jabatan-pegawai.index')}}" class="menu-link {{set_active('jabatan-pegawai.index')}}">
+                <div data-i18n="Jabatan Pegawai">Jabatan Pegawai</div>
+                </a>
+            </li>       
+            <li class="menu-item">
+                <a href="{{route('jabatan-akademik.index')}}" class="menu-link {{set_active('jabatan-akademik.index')}}">
+                <div data-i18n="Jabatan Akademik">Jabatan Akademik</div>
+                </a>
+            </li>      
+        </ul>
+    </li>
+    <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('api-mahasiswa.index')}}">
         <i class='menu-icon tf-icons bx bx-shape-circle bx-tada-hover'></i>
         <div data-i18n="Data API">Data API</div>
@@ -84,72 +102,62 @@
     </li>
     
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}} OR {{set_active('pegawai.index')}} OR {{set_active('jabatan.index')}} OR {{set_active('jabatan-pegawai.index')}} OR {{set_active('jabatan-akademik.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}} OR {{set_active('jabatan.index')}} OR {{set_active('periode.index')}} OR {{set_active('gol-matakuliah.index')}}">
         <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
         <div data-i18n="Setup Database">Setup Database</div>
         </a>
         <ul class="menu-sub">
-        <li class="menu-item">
-            <a href="{{route('data-formulir.index')}}" class="menu-link {{set_active('data-formulir.index')}}">
-            <div data-i18n="Data Formulir">Data Formulir</div>
-            </a>
-        </li>       
-        <li class="menu-item">
-            <a href="{{route('pegawai.index')}}" class="menu-link {{set_active('pegawai.index')}}">
-            <div data-i18n="Pegawai">Pegawai</div>
-            </a>
-        </li>       
-        <li class="menu-item">
-            <a href="{{route('jabatan.index')}}" class="menu-link {{set_active('jabatan.index')}}">
-            <div data-i18n="Jabatan">Jabatan</div>
-            </a>
-        </li>       
-        <li class="menu-item">
-            <a href="{{route('jabatan-pegawai.index')}}" class="menu-link {{set_active('jabatan-pegawai.index')}}">
-            <div data-i18n="Jabatan Pegawai">Jabatan Pegawai</div>
-            </a>
-        </li>       
-        <li class="menu-item">
-            <a href="{{route('jabatan-akademik.index')}}" class="menu-link {{set_active('jabatan-akademik.index')}}">
-            <div data-i18n="Jabatan Akademik">Jabatan Akademik</div>
-            </a>
-        </li>       
+            <li class="menu-item">
+                <a href="{{route('data-formulir.index')}}" class="menu-link {{set_active('data-formulir.index')}}">
+                <div data-i18n="Data Formulir">Data Formulir</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{route('jabatan.index')}}" class="menu-link {{set_active('jabatan.index')}}">
+                <div data-i18n="Jabatan">Jabatan</div>
+                </a>
+            </li>             
+            <li class="menu-item">
+                <a href="{{route('periode.index')}}" class="menu-link {{set_active('periode.index')}}">
+                <div data-i18n="Periode">Periode</div>
+                </a>
+            </li>       
+            <li class="menu-item">
+                <a href="{{route('gol-matakuliah.index')}}" class="menu-link {{set_active('gol-matakuliah.index')}}">
+                <div data-i18n="Gol. Matakuliah">Gol. Matakuliah</div>
+                </a>
+            </li>               
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('periode.index')}} OR {{set_active('gol-matakuliah.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('profile')}}">
         <i class='menu-icon tf-icons bx bx-cog bx-spin-hover'></i>
         <div data-i18n="Settings">Settings</div>
         </a>
         <ul class="menu-sub">
-        <li class="menu-item">
-            <a href="{{route('periode.index')}}" class="menu-link {{set_active('periode.index')}}">
-            <div data-i18n="Periode">Periode</div>
-            </a>
-        </li>       
-        <li class="menu-item">
-            <a href="{{route('gol-matakuliah.index')}}" class="menu-link {{set_active('gol-matakuliah.index')}}">
-            <div data-i18n="Gol. Matakuliah">Gol. Matakuliah</div>
-            </a>
-        </li>       
+            <li class="menu-item">
+                <a href="{{route('profile')}}" class="menu-link {{set_active('profile')}}">
+                <div data-i18n="My Profile">My Profile</div>
+                </a>
+            </li>              
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('profile')}} OR {{set_active('user.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('pegawai.index')}} OR {{set_active('user.index')}}">
         <i class="menu-icon tf-icons bx bx-user bx-tada-hover"></i>
         <div data-i18n="Users">Users</div>
         </a>
         <ul class="menu-sub">
-        <li class="menu-item">
-            <a href="{{route('profile')}}" class="menu-link {{set_active('profile')}}">
-            <div data-i18n="Profile">Profile</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="{{route('user.index')}}" class="menu-link {{set_active('user.index')}}">
-            <div data-i18n="All Users">All Users</div>
-            </a>
-        </li>
+            <li class="menu-item">
+                <a href="{{route('pegawai.index')}}" class="menu-link {{set_active('pegawai.index')}}">
+                <div data-i18n="Pegawai">Pegawai</div>
+                </a>
+            </li>        
+            <li class="menu-item">
+                <a href="{{route('user.index')}}" class="menu-link {{set_active('user.index')}}">
+                <div data-i18n="Administrator">Administrator</div>
+                </a>
+            </li>
         </ul>
     </li>
     </ul>
