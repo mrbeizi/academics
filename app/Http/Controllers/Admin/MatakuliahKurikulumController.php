@@ -69,11 +69,13 @@ class MatakuliahKurikulumController extends Controller
         $request->validate([
             'id_kurikulum'              => 'required',
             'kode_matakuliah'           => 'required',
-            'semester'                  => 'required',
+            'semester'                  => 'required|numeric|min:1|max:14',
         ],[
             'id_kurikulum.required'     => 'Anda belum memilih kurikulum',
             'kode_matakuliah.required'  => 'Anda belum memilih matakuliah',
-            'semester.required'         => 'Anda belum mengisi kolom semester'
+            'semester.required'         => 'Anda belum mengisi kolom semester',
+            'semester.min'              => 'Semester minimal >= 1',
+            'semester.max'              => 'Semester maksimal <= 14'
         ]);
 
         $isWajib = $request->input('wajib');

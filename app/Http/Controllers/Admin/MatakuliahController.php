@@ -49,15 +49,19 @@ class MatakuliahController extends Controller
         $request->validate([
             'kode'                => 'required',
             'nama_id'             => 'required',
-            'sks_teori'           => 'required',
-            'sks_praktek'         => 'required',
+            'sks_teori'           => 'required|numeric|min:0|max:6',
+            'sks_praktek'         => 'required|numeric|min:0|max:6',
             'golongan_matakuliah' => 'required',
             'id_periode'          => 'required',
         ],[
             'kode.required'                 => 'Anda belum menginputkan kode matakuliah',
             'nama_id.required'              => 'Anda belum menginputkan nama',
             'sks_teori.required'            => 'Anda belum menginputkan jumlah SKS teori',
+            'sks_teori.min'                 => 'Bobot SKS Teori minimal >= 0',
+            'sks_teori.max'                 => 'Bobot SKS Teori maksimal <= 6',
             'sks_praktek.required'          => 'Anda belum menginputkan jumlah SKS praktek',
+            'sks_praktek.min'               => 'Bobot SKS Praktek minimal >= 0',
+            'sks_praktek.max'               => 'Bobot SKS Praktek maksimal >= 6',
             'golongan_matakuliah.required'  => 'Anda belum memilih golongan matakuliah',
             'id_periode.required'           => 'Anda belum memilih periode'
         ]);
