@@ -43,7 +43,7 @@
                                 <th>#</th>
                                 <th>Kode Reg</th>
                                 <th>Name</th>
-                                <th>NIM Generated</Gen></th>
+                                <th>No SPMB</th>
                                 <th>Prodi</th>
                                 <th>Actions</th>
                             </tr>
@@ -100,18 +100,22 @@
                 }, 
                 {data: 'kode_registrasi',name: 'kode_registrasi',
                     render: function ( data, type, row ) {
-                        return row['kode_registrasi'];
+                        return row[0]['kode_registrasi'];
                     }
                 },
                 {data: 'nama_lengkap',name: 'nama_lengkap',
                     render: function ( data, type, row ) {
-                        return row['nama_lengkap'];
+                        return row[0]['nama_lengkap'];
                     }
                 },
-                {data: 'nim',name: 'nim'},
+                {data: 'no_spmb',name: 'no_spmb',
+                    render: function ( data, type, row ) {
+                        return row[0]['no_spmb'];
+                    }
+                },
                 {data: 'prodi_fix',name: 'prodi_fix',
                     render: function ( data, type, row ) {
-                        return row['prodi_fix'];
+                        return row[0]['prodi_fix'];
                     }
                 },
                 {data: 'action',name: 'action'},

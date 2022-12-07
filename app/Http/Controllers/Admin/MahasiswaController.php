@@ -50,25 +50,12 @@ class MahasiswaController extends Controller
 
     protected function view(Request $request)
     {
-        
-        // $getApi = 'put your api here/'.$request->dataId;
         $getApi = 'put your api here/'.$request->dataId;
         $datas = file_get_contents($getApi);
         $json = json_decode($datas, TRUE);
         $rows = array();
 
         foreach($json as $no => $data){
-            // $content = '<table class="table table-borderless table-sm">
-            //             <tbody>
-            //                 <tr><td>Kode Registrasi</td><td>:</td><td>'.$data['kode_registrasi'].'</td></tr>
-            //                 <tr><td>No SPMB</td><td>:</td><td>'.$data['no_spmb'].'</td></tr>
-            //                 <tr><td>Nama Lengkap</td><td>:</td><td>'.$data['nama_lengkap'].'</td></tr>
-            //                 <tr><td>Prodi</td><td>:</td><td>'.$data['prodi_fix'].'</td></tr>
-            //                 <tr><td>Gel Pendaftaran</td><td>:</td><td>'.$data['gelombang_pendaftaran'].'</td></tr>
-            //                 <tr><td>Jalur Pendaftaran</td><td>:</td><td>'.$data['nama_jalur'].'</td></tr>
-            //                 <tr><td>Angkatan</td><td>:</td><td>'.$data['tahun'].'</td></tr>
-            //             </tbody>
-            //         </table>';
             $content = '<table class="table table-borderless table-sm">
                 <tbody>
                     <tr><td>'.$data[39]['nama_data'].'</td><td>:</td><td>'.$data[39]['isi_data'].'</td></tr>
@@ -93,6 +80,8 @@ class MahasiswaController extends Controller
         $datas = file_get_contents($getApi);
         $json = json_decode($datas, TRUE);
         $rows = array();
+        $no = 1;
+        $nim = 1;
 
         
             $contents = '<div class="card-body">
@@ -109,18 +98,18 @@ class MahasiswaController extends Controller
                         </thead>
                         <tbody>';
             if(!empty($json)){
-            foreach($json as $no => $data){
+            foreach($json as $data){
             $contents .= '
                             <tr>
-                                <td>'.++$no.'</td>
-                                <td><span class="badge bg-label-primary me-1">'.$data['tahun'].' . '.$data['kode_nim'].' . '. sprintf('%03d', $no++).'</span></td>
-                                <td>'.$data['kode_registrasi'].'</td>
-                                <td>'.$data['nama_lengkap'].'</td>
-                                <td>'.$data['prodi_fix'].'</td>
+                                <td>'.$no++.'</td>
+                                <td><span class="badge bg-label-primary me-1">'.$data[0]['tahun'].' . '.$data[0]['kode_nim'].' . '. sprintf('%03d', $nim++).'</span></td>
+                                <td>'.$data[0]['kode_registrasi'].'</td>
+                                <td>'.$data[0]['nama_lengkap'].'</td>
+                                <td>'.$data[0]['prodi_fix'].'</td>
                                 <td>
-                                    <button type="button" name="view_detail" id="'.$data['kode_registrasi'].'" class="view_detail btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View Details"><i class="bx bx-xs bx-show"></i></button>&nbsp;&nbsp;
-                                    <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data['kode_registrasi'].'" data-toggle="tooltip" data-placement="bottom" title="Edit" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>&nbsp;&nbsp;
-                                    <button type="button" name="delete" id="'.$data['kode_registrasi'].'" data-toggle="tooltip" data-placement="bottom" title="Delete" class="delete btn btn-danger btn-xs"><i class="bx bx-xs bx-trash"></i></button>
+                                    <button type="button" name="view_detail" id="'.$data[0]['kode_registrasi'].'" class="view_detail btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View Details"><i class="bx bx-xs bx-show"></i></button>&nbsp;&nbsp;
+                                    <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data[0]['kode_registrasi'].'" data-toggle="tooltip" data-placement="bottom" title="Edit" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>&nbsp;&nbsp;
+                                    <button type="button" name="delete" id="'.$data[0]['kode_registrasi'].'" data-toggle="tooltip" data-placement="bottom" title="Delete" class="delete btn btn-danger btn-xs"><i class="bx bx-xs bx-trash"></i></button>
                                 </td>
                             </tr>';
             }} else {
