@@ -16,7 +16,7 @@ class CreateStatusPegawaisTable extends Migration
         Schema::create('status_pegawais', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama_status',100);
-            $table->text('keterangan');
+            $table->text('keterangan')->nullable();
             $table->integer('id_periode');
             $table->timestamps();
             $table->integer('is_archived')->nullable();

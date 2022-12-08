@@ -102,7 +102,7 @@
     </li>
     
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}} OR {{set_active('jabatan.index')}} OR {{set_active('periode.index')}} OR {{set_active('gol-matakuliah.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}} OR {{set_active('jabatan.index')}} OR {{set_active('periode.index')}} OR {{set_active('gol-matakuliah.index')}} OR {{set_active('status-pegawai.index')}}">
         <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
         <div data-i18n="Setup Database">Setup Database</div>
         </a>
@@ -125,6 +125,11 @@
             <li class="menu-item">
                 <a href="{{route('gol-matakuliah.index')}}" class="menu-link {{set_active('gol-matakuliah.index')}}">
                 <div data-i18n="Gol. Matakuliah">Gol. Matakuliah</div>
+                </a>
+            </li>               
+            <li class="menu-item">
+                <a href="{{route('status-pegawai.index')}}" class="menu-link {{set_active('status-pegawai.index')}}">
+                <div data-i18n="Status Pegawai">Status Pegawai</div>
                 </a>
             </li>               
         </ul>

@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('jabatan-akademik','Admin\JabatanAkademikController');
     Route::resource('mahasiswa','Admin\MahasiswaController');
     Route::resource('gol-matakuliah','Admin\GolMatakuliahController');
+    Route::resource('status-pegawai','Admin\StatusPegawaiController');
 
     Route::post('archived-faculty','Admin\FakultasController@archiveFaculty')->name('archiveFaculty');
     Route::post('archived-kurikulum','Admin\KurikulumController@archiveKurikulum')->name('archiveKurikulum');
@@ -43,6 +44,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('archived-prodi','Admin\ProdiController@archiveProdi')->name('archiveProdi');
     Route::post('archived-data-formulir','Admin\DataFormulirController@archiveDataFormulir')->name('archiveDataFormulir');
     Route::post('archived-jabatan-pegawai','Admin\JabatanPegawaiController@archiveJabatanPegawai')->name('archiveJabatanPegawai');
+    Route::post('archived-status-pegawai','Admin\StatusPegawaiController@archiveStatusPegawai')->name('archiveStatusPegawai');
 
     Route::post('switch-period','Admin\PeriodeController@switchPeriode')->name('change-period-status');
     Route::post('switch-matakuliah','Admin\MatakuliahController@switchMatakuliah')->name('change-matakuliah-status');
@@ -63,6 +65,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('show-archived-prodi','Admin\ProdiController@show')->name('show.archived.prodi');
     Route::get('show-archived-data-formulir','Admin\DataFormulirController@show')->name('show.archived.dataformulir');
     Route::get('show-archived-jabatan-pegawai','Admin\JabatanPegawaiController@show')->name('show.archived.jabatanpegawai');
+    Route::get('show-archived-status-pegawai','Admin\StatusPegawaiController@show')->name('show.archived.status.pegawai');
     
     Route::post('unarchived-matakuliah','Admin\MatakuliahController@unarchiveMatakuliah')->name('unarchiveMatakuliah');
     Route::post('unarchived-kurikulum','Admin\KurikulumController@unarchiveKurikulum')->name('unarchiveKurikulum');
@@ -70,6 +73,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('unarchived-prodi','Admin\ProdiController@unarchiveProdi')->name('unarchiveProdi');
     Route::post('unarchived-data-formulir','Admin\DataFormulirController@unarchiveDataFormulir')->name('unarchiveDataFormulir');
     Route::post('unarchived-jabatan-pegawai','Admin\JabatanPegawaiController@unarchiveJabatanPegawai')->name('unarchiveJabatanPegawai');
+    Route::post('unarchived-status-pegawai','Admin\StatusPegawaiController@unarchiveStatusPegawai')->name('unarchiveStatusPegawai');
 
     Route::get('mahasiswa-view','Admin\MahasiswaController@view')->name('view-detail-mahasiswa');
 
