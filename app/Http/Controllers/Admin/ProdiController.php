@@ -40,16 +40,19 @@ class ProdiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_prodi'    => 'required|numeric|digits_between:5,5',
+            'kode_prodi'    => 'required',
             'kode_dikti'    => 'required|numeric|digits_between:5,5',
+            'kode_nim'      => 'required|numeric|digits_between:3,3',
             'id_fakultas'   => 'required',
             'id_periode'    => 'required',
             'nama_id'       => 'required',
         ],[
             'kode_prodi.required'          => 'Anda belum menginputkan kode prodi',
-            'kode_prodi.digits_between'    => 'Kode Prodi harus 5 digit',
             'kode_dikti.required'          => 'Anda belum menginputkan kode dikti',
             'kode_dikti.digits_between'    => 'Kode Dikti harus 5 digit',
+            'kode_nim.required'            => 'Anda belum menginputkan kode nim',
+            'kode_nim.digits_between'      => 'Kode NIM harus 3 digit',
+            'jenjang.required'             => 'Anda belum memilih jenjang',
             'id_fakultas.required'         => 'Anda belum memilih fakultas',
             'id_periode.required'          => 'Anda belum memilih periode',
             'nama_id.required'             => 'Anda belum menginputkan nama'
@@ -59,6 +62,8 @@ class ProdiController extends Controller
                 [
                     'kode_prodi'        => $request->kode_prodi,
                     'kode_dikti'        => $request->kode_dikti,
+                    'kode_nim'          => $request->kode_nim,
+                    'jenjang'           => $request->jenjang,
                     'id_fakultas'       => $request->id_fakultas,
                     'id_periode'        => $request->id_periode,
                     'nama_id'           => $request->nama_id,

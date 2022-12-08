@@ -64,7 +64,7 @@
 
                                                 <div class="mb-3">
                                                     <label for="kode_prodi" class="form-label">Prodi Code*</label>
-                                                    <input type="text" class="form-control" id="kode_prodi" name="kode_prodi" value="" placeholder="e.g 54001" onkeypress="return onlyNumeric(event)" />
+                                                    <input type="text" class="form-control" id="kode_prodi" name="kode_prodi" value="" placeholder="e.g ST" />
                                                     <span class="text-danger" id="kodeProdiErrorMsg"></span>
                                                 </div>
 
@@ -72,6 +72,24 @@
                                                     <label for="kode_dikti" class="form-label">Dikti Code*</label>
                                                     <input type="text" class="form-control" id="kode_dikti" name="kode_dikti" value="" placeholder="e.g 54001" onkeypress="return onlyNumeric(event)" />
                                                     <span class="text-danger" id="kodeDiktiErrorMsg"></span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="kode_nim" class="form-label">NIM Code*</label>
+                                                    <input type="text" class="form-control" id="kode_nim" name="kode_nim" value="" placeholder="e.g 123" onkeypress="return onlyNumeric(event)" />
+                                                    <span class="text-danger" id="kodeNimErrorMsg"></span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="jenjang" class="form-label">Edu. Stage*</label>
+                                                    <select class="form-select" id="jenjang" name="jenjang" aria-label="Default select example" style="cursor:pointer;">
+                                                        <option value="" readonly>- Choose -</option>
+                                                        <option value="D3">D3</option>
+                                                        <option value="S1">S1</option>
+                                                        <option value="S2">S2</option>
+                                                        <option value="S3">S3</option>
+                                                    </select>
+                                                    <span class="text-danger" id="jenjangErrorMsg"></span>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -84,7 +102,9 @@
                                                     </select>
                                                     <span class="text-danger" id="idFakultasErrorMsg"></span>
                                                 </div>
-
+                                                
+                                            </div>
+                                            <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label for="id_periode" class="form-label">Year Period*</label>
                                                     <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
@@ -95,8 +115,7 @@
                                                     </select>
                                                     <span class="text-danger" id="idPeriodeErrorMsg"></span>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-6">
+
                                                 <div class="mb-3">
                                                     <label for="nama_id" class="form-label">Name (ID)*</label>
                                                     <input type="text" class="form-control" id="nama_id" name="nama_id" value="" placeholder="John Doe" />
@@ -239,6 +258,8 @@
                     error: function(response) {
                         $('#kodeProdiErrorMsg').text(response.responseJSON.errors.kode_prodi);
                         $('#kodeDiktiErrorMsg').text(response.responseJSON.errors.kode_dikti);
+                        $('#kodeNimErrorMsg').text(response.responseJSON.errors.kode_nim);
+                        $('#jenjangErrorMsg').text(response.responseJSON.errors.jenjang);
                         $('#idFakultasErrorMsg').text(response.responseJSON.errors.id_fakultas);
                         $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
                         $('#namaIDErrorMsg').text(response.responseJSON.errors.nama_id);
@@ -270,6 +291,8 @@
             $('#id').val(data.id);
             $('#kode_prodi').val(data.kode_prodi);
             $('#kode_dikti').val(data.kode_dikti);
+            $('#kode_nim').val(data.kode_nim);
+            $('#jenjang').val(data.jenjang);
             $('#id_fakultas').val(data.id_fakultas);
             $('#id_periode').val(data.id_periode);
             $('#nama_id').val(data.nama_id);
