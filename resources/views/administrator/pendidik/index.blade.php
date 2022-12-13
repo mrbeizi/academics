@@ -109,14 +109,14 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="mb-3">
-                                                            <label for="prodi" class="form-label">Prodi*</label>
+                                                            <label for="prodi" class="form-label">Prodi</label>
                                                             <select class="form-select" id="prodi" name="prodi" aria-label="Default select example" style="cursor:pointer;">
                                                                 <option value="">- Choose -</option>
                                                                 @foreach($getProdi as $data)
                                                                 <option value="{{$data->id}}">{{$data->nama_id}}</option>
                                                                 @endforeach
                                                             </select>
-                                                            <span class="text-danger" id="prodiErrorMsg"></span>
+                                                            <div class="form-text">*Tidak wajib</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -174,7 +174,7 @@
                 {data: 'nama_pegawai',name: 'nama_pegawai'},
                 {data: 'nama_jabatan',name: 'nama_jabatan'},
                 {data: 'nama_fakultas',name: 'nama_fakultas'},
-                {data: 'nama_prodi',name: 'nama_prodi'},
+                {data: 'nama_prodi',name: 'nama_prodi',render: function(type,data,row){ return (row.prodi == 0) ? '-' : row.nama_prodi}},
                 {data: 'action',name: 'action'},
             ]
         });

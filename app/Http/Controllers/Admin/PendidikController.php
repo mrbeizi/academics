@@ -20,7 +20,7 @@ class PendidikController extends Controller
             ->leftJoin('periodes','periodes.id','=','pendidiks.id_periode')
             ->leftJoin('fakultas','fakultas.id','=','pendidiks.fakultas')
             ->leftJoin('prodis','prodis.id','=','pendidiks.prodi')
-            ->select('pendidiks.id AS id','pegawais.nama_in AS nama_pegawai','jabatans.nama_in AS nama_jabatan','periodes.nama_periode','fakultas.nama_id AS nama_fakultas','prodis.nama_id AS nama_prodi')
+            ->select('pendidiks.id AS id','pegawais.nama_in AS nama_pegawai','jabatans.nama_in AS nama_jabatan','periodes.nama_periode','fakultas.nama_id AS nama_fakultas','prodis.nama_id AS nama_prodi','pendidiks.prodi AS prodi')
             ->where('pendidiks.is_archived','=',0)
             ->get();
                 
@@ -51,14 +51,18 @@ class PendidikController extends Controller
             'id_jabatan' => 'required',
             'id_pegawai' => 'required',
             'fakultas'   => 'required',
-            'prodi'      => 'required',
         ],[
             'id_periode.required' => 'Anda belum memilih periode', 
             'id_jabatan.required' => 'Anda belum memilih jabatan',
             'id_pegawai.required' => 'Anda belum memilih nama pegawai',
-            'fakultas.required'   => 'Anda belum memilih fakultas',
-            'prodi.required'      => 'Anda belum memilih prodi'
+            'fakultas.required'   => 'Anda belum memilih fakultas'
         ]);
+
+        if($request->prodi == ''){
+            $prodi = 0;
+        } else {
+            $prodi = $request->prodi;
+        }
 
         $post = Pendidik::updateOrCreate(['id' => $request->id],
                 [
@@ -66,7 +70,7 @@ class PendidikController extends Controller
                     'id_periode'  => $request->id_periode,
                     'id_pegawai'  => $request->id_pegawai,
                     'fakultas'    => $request->fakultas,
-                    'prodi'       => $request->prodi,
+                    'prodi'       => $prodi,
                     'is_archived' => 0
                 ]); 
 
