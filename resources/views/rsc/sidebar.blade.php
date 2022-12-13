@@ -81,8 +81,8 @@
                 </a>
             </li>       
             <li class="menu-item">
-                <a href="{{route('jabatan-akademik.index')}}" class="menu-link {{set_active('jabatan-akademik.index')}}">
-                <div data-i18n="Jabatan Akademik">Jabatan Akademik</div>
+                <a href="{{route('pendidik.index')}}" class="menu-link {{set_active('pendidik.index')}}">
+                <div data-i18n="Pendidik (Dosen)">Pendidik (Dosen)</div>
                 </a>
             </li>      
         </ul>

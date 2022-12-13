@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title','Jabatan Akademik')
+@section('title','Pendidik (Dosen)')
 
 @section('breadcrumbs')
 <div class="container">
@@ -9,7 +9,7 @@
         <a href="{{route('dashboard')}}">Home</a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{route('jabatan-akademik.index')}}">@yield('title')</a>
+        <a href="{{route('pendidik.index')}}">@yield('title')</a>
       </li>
       <li class="breadcrumb-item active">Data</li>
     </ol>
@@ -31,7 +31,7 @@
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
-                            <table class="table table-hover table-responsive" id="table_jabatan_akademik">
+                            <table class="table table-hover table-responsive" id="table_pendidik">
                               <thead>
                                 <tr>
                                   <th>#</th>
@@ -160,10 +160,10 @@
 
     // DATATABLE
     $(document).ready(function () {
-        var table = $('#table_jabatan_akademik').DataTable({
+        var table = $('#table_pendidik').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('jabatan-akademik.index') }}",
+            ajax: "{{ route('pendidik.index') }}",
             columns: [
                 {data: null,sortable:false,
                     render: function (data, type, row, meta) {
@@ -198,14 +198,14 @@
 
                 $.ajax({
                     data: $('#form-tambah-edit').serialize(), 
-                    url: "{{ route('jabatan-akademik.store') }}",
+                    url: "{{ route('pendidik.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         $('#form-tambah-edit').trigger("reset");
                         $('#tambah-edit-modal').modal('hide');
                         $('#tombol-simpan').html('Save');
-                        $('#table_jabatan_akademik').DataTable().ajax.reload(null, true);
+                        $('#table_pendidik').DataTable().ajax.reload(null, true);
                         Swal.fire({
                             title: 'Good job!',
                             text: 'Data saved successfully!',
@@ -243,7 +243,7 @@
     // EDIT DATA
     $('body').on('click', '.edit-post', function () {
         var data_id = $(this).data('id');
-        $.get('jabatan-akademik/' + data_id + '/edit', function (data) {
+        $.get('pendidik/' + data_id + '/edit', function (data) {
             $('#modal-judul').html("Edit data");
             $('#tombol-simpan').val("edit-post");
             $('#tambah-edit-modal').modal('show');
@@ -272,7 +272,7 @@
             preConfirm: function() {
                 return new Promise(function(resolve) {
                     $.ajax({
-                        url: "jabatan-akademik/" + dataId,
+                        url: "pendidik/" + dataId,
                         type: 'DELETE',
                         data: {id:dataId},
                         dataType: 'json'
@@ -283,7 +283,7 @@
                             type: 'success',
                             timer: 2000
                         })
-                        $('#table_jabatan_akademik').DataTable().ajax.reload(null, true);
+                        $('#table_pendidik').DataTable().ajax.reload(null, true);
                     }).fail(function() {
                         Swal.fire({
                             title: 'Oops!',

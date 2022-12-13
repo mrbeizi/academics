@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('pegawai','Admin\PegawaiController');
     Route::resource('jabatan','Admin\JabatanController');
     Route::resource('jabatan-pegawai','Admin\JabatanPegawaiController');
-    Route::resource('jabatan-akademik','Admin\JabatanAkademikController');
+    Route::resource('pendidik','Admin\PendidikController');
     Route::resource('mahasiswa','Admin\MahasiswaController');
     Route::resource('gol-matakuliah','Admin\GolMatakuliahController');
     Route::resource('status-pegawai','Admin\StatusPegawaiController');
