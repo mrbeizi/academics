@@ -9,6 +9,7 @@ use App\Model\GolMatakuliah;
 use App\Model\Matakuliah;
 use App\Model\Kurikulum;
 use App\Model\Periode;
+use App\Model\Prodi;
 
 class MatakuliahKurikulumController extends Controller
 {
@@ -26,16 +27,47 @@ class MatakuliahKurikulumController extends Controller
             ->where([['kurikulums.id','=',$id],['periodes.is_active','=',1]])
             ->get();
 
-        // Start to get matakuliah according to id kurikulum and id prodi -- select datas where not in matakuliah kurikulum
-        $getS = MatakuliahKurikulum::select('kode_matakuliah')->where('id_kurikulum','=',$id)->get();
-        $getR = Kurikulum::leftJoin('gol_matakuliahs','gol_matakuliahs.id_prodi','=','kurikulums.id_prodi')
-            ->select('gol_matakuliahs.id')
-            ->where('kurikulums.id','=',$id)
-            ->get();
+        /* Get the subjects with conditions:
+            - First, get the kurikulum id
+            - Then, get the prodi id
+            - get data from gol matakuliah and put in an array as golongan
 
-        foreach($getR as $data){
-            $getMatakuliah = Matakuliah::whereNotIn('kode',$getS)->where([['is_active','=',1],['golongan_matakuliah','=',$data->id]])->get();        
+        */
+        
+        $kurikulum = Kurikulum::where('id',$id)->first();
+        $prodi = Prodi::where('id',$kurikulum->id_prodi)->first();
+        $golonganMatkul = GolMatakuliah::all();
+        $golongan=array();
+        foreach ($golonganMatkul as $key => $item) {
+            if ($prodi->id == $item->id_prodi || $prodi->id_fakultas == $item->id_fakultas || $item->id == 1) {
+                array_push($golongan, $item->id);
+            }
         }
+        
+        $getS = MatakuliahKurikulum::select('kode_matakuliah')->where('id_kurikulum','=',$id)->get();
+        $getR = Kurikulum::where('id',$id)->get();
+        
+        foreach ($getR as $data) {
+            $getMatakuliah = Matakuliah::leftJoin('gol_matakuliahs','gol_matakuliahs.id','=','matakuliahs.golongan_matakuliah')
+            ->whereIn('gol_matakuliahs.id', $golongan)
+            ->whereNotIn('kode',$getS)
+            ->where('is_active',1)
+            ->get();
+        }
+        /* End of get subject with conditions */
+
+        // Start to get matakuliah according to id kurikulum and id prodi -- select datas where not in matakuliah kurikulum
+        /*
+            $getS = MatakuliahKurikulum::select('kode_matakuliah')->where('id_kurikulum','=',$id)->get();
+            $getR = Kurikulum::leftJoin('gol_matakuliahs','gol_matakuliahs.id_prodi','=','kurikulums.id_prodi')
+                ->select('gol_matakuliahs.id')
+                ->where('kurikulums.id','=',$id)
+                ->get();
+
+            foreach($getR as $data){
+                $getMatakuliah = Matakuliah::whereNotIn('kode',$getS)->where([['is_active','=',1],['golongan_matakuliah','=',$data->id]])->get();        
+            }
+        */
         // End of get data matakuliah
 
         $getKurikulum = Kurikulum::where('is_active','=',1)->get();
