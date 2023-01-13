@@ -90,4 +90,13 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('api-mahasiswa-view','Admin\ApiMahasiswaController@viewformdetail')->name('view-detail-form');
     Route::resource('api-mahasiswa-prodi', 'Admin\ApiMahasiswaProdiController');
     Route::get('datatable-mahasiswa-prodi','Admin\ApiMahasiswaProdiController@showDataTable')->name('datatable-mahasiswa-prodi');
+
+    // Keuangan
+    Route::resource('semester','Keuangan\SemesterController');
+    Route::resource('payment-list','Keuangan\PaymentListController');
+    Route::resource('payment','Keuangan\PaymentController');
+    Route::get('/view-rincian-payment/{id}','Keuangan\ViewRincianPaymentController@index')->name('view-rincian-payment');
+    Route::get('/rincian-payment/{id}','Keuangan\ViewRincianPaymentController@index')->name('list-rincian-payment');
+    Route::get('/view-rincian-payment/payment/{id}/edit','Keuangan\PaymentController@edit');
+    Route::delete('/view-rincian-payment/payment/{id}','Keuangan\PaymentController@destroy');
 });

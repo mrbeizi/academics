@@ -88,7 +88,7 @@
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('api-mahasiswa.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('api-mahasiswa.index')}} OR {{set_active('mahasiswa.index')}}  OR {{set_active('api-mahasiswa-prodi.index')}}">
         <i class='menu-icon tf-icons bx bx-shape-circle bx-tada-hover'></i>
         <div data-i18n="Data API">Data API</div>
         </a>
@@ -170,6 +170,40 @@
             </li>
         </ul>
     </li>
+
+    <!-- Keuangan -->
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">Keuangan</span></li>
+    <li class="menu-item">
+        <a href="{{route('payment.index')}}" class="menu-link {{set_active('payment.index')}}">
+        <i class="menu-icon tf-icons bx bx-money bx-tada-hover"></i>
+        <div data-i18n="Payments">Payments</div>
+        </a>
+    </li>
+    <li class="menu-item">
+        <a href="#" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-spreadsheet bx-tada-hover"></i>
+        <div data-i18n="Reports">Reports</div>
+        </a>
+    </li>
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('semester.index')}} OR {{set_active('payment-list.index')}}">
+        <i class='menu-icon tf-icons bx bx-cog bx-tada-hover'></i>
+        <div data-i18n="Master Data">Master Data</div>
+        </a>
+        <ul class="menu-sub">
+        <li class="menu-item">
+            <a href="{{route('semester.index')}}" class="menu-link {{set_active('semester.index')}}">
+            <div data-i18n="Semester">Semester</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="{{route('payment-list.index')}}" class="menu-link {{set_active('payment-list.index')}}">
+            <div data-i18n="Payment List">Payment List</div>
+            </a>
+        </li>
+        </ul>
+    </li>
+    <!-- End of Sidebar Keuangan -->
     </ul>
     
     
