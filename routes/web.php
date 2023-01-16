@@ -99,4 +99,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/rincian-payment/{id}','Keuangan\ViewRincianPaymentController@index')->name('list-rincian-payment');
     Route::get('/view-rincian-payment/payment/{id}/edit','Keuangan\PaymentController@edit');
     Route::delete('/view-rincian-payment/payment/{id}','Keuangan\PaymentController@destroy');
+
+    Route::get('print-payment','Keuangan\PaymentController@print')->name('print-payment');
 });

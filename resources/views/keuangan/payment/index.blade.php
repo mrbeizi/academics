@@ -23,6 +23,46 @@
     <section id="basic-datatable">
         <div class="row">
             <div class="col-12">
+                <div class="mb-2">
+                    <p class="demo-inline-spacing">
+                        <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                          Print Payments
+                        </button>
+                      </p>
+                      <div class="collapse" id="collapseExample">
+                        <form action="{{route('print-payment')}}" method="GET" target="_blank">
+                            @csrf
+                            <div class="d-flex p-3 border">
+                            <div class="col-sm-5">
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label for="start_date" class="form-label">Start Date*</label>
+                                        <input type="date" class="form-control" id="start_date" name="start_date" value="" placeholder="mm/dd/yyyy" required />
+                                        <span class="text-danger" id="startDateErrorMsg"></span>
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label for="end_date" class="form-label">End Date*</label>
+                                        <input type="date" class="form-control" id="end_date" name="end_date" value="" placeholder="mm/dd/yyyy" required />
+                                        <span class="text-danger" id="endDateErrorMsg"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">                                
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label for="btn" class="form-label"></label>
+                                        <button type="submit" class="form-control btn btn-primary btn-block" id="tombol-cetak" value="print">Print</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                      </div>
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <table class="table table-hover table-responsive" id="table_payment">
