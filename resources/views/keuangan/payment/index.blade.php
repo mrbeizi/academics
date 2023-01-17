@@ -25,43 +25,77 @@
             <div class="col-12">
                 <div class="mb-2">
                     <p class="demo-inline-spacing">
-                        <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                          Print Payments
-                        </button>
-                      </p>
-                      <div class="collapse" id="collapseExample">
-                        <form action="{{route('print-payment')}}" method="GET" target="_blank">
-                            @csrf
-                            <div class="d-flex p-3 border">
-                            <div class="col-sm-5">
-                                <div class="col-sm-4">
-                                    <div class="mb-3">
-                                        <label for="start_date" class="form-label">Start Date*</label>
-                                        <input type="date" class="form-control" id="start_date" name="start_date" value="" placeholder="mm/dd/yyyy" required />
-                                        <span class="text-danger" id="startDateErrorMsg"></span>
-                                    </div>
-                                </div>                                
-                            </div>
-                            <div class="col-sm-5">
-                                <div class="col-sm-4">
-                                    <div class="mb-3">
-                                        <label for="end_date" class="form-label">End Date*</label>
-                                        <input type="date" class="form-control" id="end_date" name="end_date" value="" placeholder="mm/dd/yyyy" required />
-                                        <span class="text-danger" id="endDateErrorMsg"></span>
-                                    </div>
+                        <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Print </button>
+                        {{-- <button type="button" class="btn btn-primary mr-5" data-toggle="modal" data-target="#importPayment">Import</button> --}}
+                        <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="import-Payment"><button type="button" class="btn btn-primary mr-5">Import</button></a>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                    <form action="{{route('print-payment')}}" method="GET" target="_blank">
+                        @csrf
+                        <div class="d-flex p-3 border">
+                        <div class="col-sm-5">
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label for="start_date" class="form-label">Start Date*</label>
+                                    <input type="date" class="form-control" id="start_date" name="start_date" value="" placeholder="mm/dd/yyyy" required />
+                                    <span class="text-danger" id="startDateErrorMsg"></span>
                                 </div>
-                            </div>
-                            <div class="col-sm-2">                                
-                                <div class="col-sm-4">
-                                    <div class="mb-3">
-                                        <label for="btn" class="form-label"></label>
-                                        <button type="submit" class="form-control btn btn-primary btn-block" id="tombol-cetak" value="print">Print</button>
-                                    </div>
+                            </div>                                
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label for="end_date" class="form-label">End Date*</label>
+                                    <input type="date" class="form-control" id="end_date" name="end_date" value="" placeholder="mm/dd/yyyy" required />
+                                    <span class="text-danger" id="endDateErrorMsg"></span>
                                 </div>
                             </div>
                         </div>
-                        </form>
-                      </div>
+                        <div class="col-sm-2">                                
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label for="btn" class="form-label"></label>
+                                    <button type="submit" class="form-control btn btn-primary btn-block" id="tombol-cetak" value="print">Print</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                    </div>
+                    <!-- Import Excel -->
+                    <div class="modal fade" id="importPayment" aria-hidden="true">
+                        <div class="modal-dialog">
+                            
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">   
+                                    <form id="form-import-payment" name="form-import-payment" enctype="multipart/form-data"> 
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label>Pilih file excel</label>
+                                                <div class="form-group mt-3 mb-3">
+                                                    <input id="file" type="file" name="file" data-preview-file-type="any" class="file" required data-upload-url="#">
+                                                </div>
+                                                <span class="text-danger" id="fileErrorMsg"></span>
+                                            </div> 
+                                        </div>       
+                                    
+                                        <div class="col-sm-offset-2 col-sm-12">
+                                            <hr class="mt-2">
+                                            <div class="float-sm-end">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary btn-block" id="tombol-import" value="import">Import</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
@@ -111,8 +145,6 @@
                                         </div>
 
                                     </form>
-                                </div>
-                                <div class="modal-footer">
                                 </div>
                             </div>
                         </div>
@@ -267,6 +299,65 @@
             },
         });
     });
+
+    // Import Payment
+    //TOMBOL TAMBAH DATA
+    $('#import-Payment').click(function () {
+        $('#button-import').val("import-data");
+        $('#id').val('');
+        $('#form-import-payment').trigger("reset");
+        $('#exampleModalLabel').html("Import Payment");
+        $('#importPayment').modal('show');
+    });
+    
+    if ($("#form-import-payment").length > 0) {
+        $("#form-import-payment").validate({
+            submitHandler: function (form) {
+                var actionType = $('#tombol-import').val();
+                var formData = new FormData($("#form-import-payment")[0]);
+                $('#tombol-import').html('Importing..');
+
+                $.ajax({
+                    data: formData,
+                    contentType: false,
+                    processData: false, 
+                    url: "{{ route('import-payment') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#form-import-payment').trigger("reset");
+                        $('#importPayment').modal('hide');
+                        $('#tombol-import').html('Import');
+                        $('#table_payment').DataTable().ajax.reload(null, true);
+                        Swal.fire({
+                            title: 'Good job!',
+                            text: 'Data imported successfully!',
+                            type: 'success',
+                            customClass: {
+                            confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false,
+                            timer: 2000
+                        })
+                    },
+                    error: function(response) {
+                        $('#fileErrorMsg').text(response.responseJSON.errors.file);
+                        $('#tombol-import').html('Import');
+                        Swal.fire({
+                            title: 'Error!',
+                            text: ' Data failed to import!',
+                            type: 'error',
+                            customClass: {
+                            confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false,
+                            timer: 2000
+                        })
+                    }
+                });
+            }
+        })
+    }
     
   </script>
 @endsection

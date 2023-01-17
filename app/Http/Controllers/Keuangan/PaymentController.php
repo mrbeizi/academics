@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Keuangan;
 
+// For Import
+use App\Imports\Keuangan\ImportPayment;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Keuangan\PaymentList;
@@ -107,5 +111,25 @@ class PaymentController extends Controller
         $h = $canvas->get_height(); 
 
         return $pdf->stream('contoh.pdf');
+    }
+
+    public function importPayment(Request $request)
+    {
+        // validasi
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx',
+        ],[
+            'file.required'   => 'Anda belum memilih berkas excel',
+            'file.mimes'      => 'Format berkas .csv, .xls, .xlsx'
+        ]);
+
+        $file = $request->file('file');
+        $nama_file = date('Y-m-d_H-i-s').$file->getClientOriginalName();
+        $file->move('import/file-keuangan',$nama_file);
+        Excel::import(new ImportPayment, public_path('/import/file-keuangan/'.$nama_file));
+        return redirect()->route('payment.index');
     }
 }

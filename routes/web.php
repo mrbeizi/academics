@@ -102,4 +102,6 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::get('print-payment','Keuangan\PaymentController@print')->name('print-payment');
     Route::post('add-potongan','Keuangan\ViewRincianPaymentController@addPotongan')->name('add-potongan');
+
+    Route::post('import-payment', 'Keuangan\PaymentController@importPayment')->name('import-payment');
 });

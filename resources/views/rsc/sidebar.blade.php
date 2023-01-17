@@ -182,7 +182,7 @@
     <li class="menu-item">
         <a href="#" class="menu-link">
         <i class="menu-icon tf-icons bx bx-spreadsheet bx-tada-hover"></i>
-        <div data-i18n="Reports">Reports</div>
+        <div data-i18n="Import Payment">Import Payment</div>
         </a>
     </li>
     <li class="menu-item">
