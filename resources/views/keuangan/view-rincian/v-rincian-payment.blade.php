@@ -22,6 +22,7 @@
 <div class="container flex-grow-1">
     <section id="basic-datatable">
         <div class="row">
+            <h3>Payment History</h3>
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
@@ -29,6 +30,7 @@
                         <div class="mb-3">
                             <a href="{{route('payment.index')}}" class="dropdown-shortcuts-add text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="Back to Payment"><i class="bx bx-sm bx-left-arrow-circle bx-tada-hover"></i></a>
                             <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle"></i></a>
+                            <button type="button" id="print-payment-history" data-bs-toggle="tooltip" data-bs-placement="top" title="Payments History" class="btn btn-outline-danger btn-xs float-end"><i class="bx bx-xs bx-download"></i> Export PDF</button>
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
@@ -40,6 +42,8 @@
                                   <th>Student Name</th>
                                   <th>SMT</th>
                                   <th>Total Payments</th>
+                                  <th>Payment Disc.</th>
+                                  <th>Payment Date</th>
                                   <th>Notes</th>
                                   <th>Actions</th>
                                 </tr>
@@ -62,17 +66,7 @@
                                             <div class="col-sm-12">
 
                                                 <input type="hidden" name="id" id="id">
-
-                                                <div class="mb-3">
-                                                    <label for="nim_mahasiswa" class="form-label">Student Name*</label>
-                                                    <select class="form-select" id="nim_mahasiswa" name="nim_mahasiswa" aria-label="Default select example" style="cursor:pointer;">
-                                                        <option value="">- Choose -</option>
-                                                        @foreach($getMahasiswa as $mahasiswa)
-                                                        <option value="{{$mahasiswa->nim}}">{{$mahasiswa->nama_mahasiswa}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <span class="text-danger" id="nimMahasiswaErrorMsg"></span>
-                                                </div>
+                                                <input type="hidden" name="nim_mahasiswa" id="nim_mahasiswa" value="{{$id}}">
 
                                                 <div class="mb-3">
                                                     <label for="jumlah_bayar" class="col-sm-12 control-label">Jumlah Bayar (IDR)*</label>
@@ -138,6 +132,60 @@
                         </div>
                     </div>
                     <!-- AKHIR MODAL -->
+
+                    <!-- Modal untuk Tambah Potongan -->
+                    <div class="modal fade" id="tambah-pot" aria-hidden="true">
+                        <div class="modal-dialog ">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modal-judul-pot"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="tambah-catatan" name="tambah-catatan" method="POST" class="form-horizontal mt-3">
+                                      @csrf
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <input id="id" name="id" type="hidden">
+                                                        <input id="id_data_payment" name="id_data_payment" type="hidden">
+                                                        <div class="mb-3">
+                                                            <label for="jumlah_potongan" class="col-sm-12 control-label">Jumlah Potongan (IDR)*</label>
+                                                            <input type="number" class="form-control" id="jumlah_potongan" name="jumlah_potongan" placeholder="Input amount (IDR)" value="" required>
+                                                            <span class="text-danger" id="jumlahPotonganErrorMsg"></span>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="percentage" name="percentage" />
+                                                            <input type="hidden" value="1" id="hdnpercentage" checked="checked"/>
+                                                            <span class="custom-option-header">
+                                                                <span class="fw-semibold" for="percentage"> Persen*</span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="keterangan" class="form-label">Keterangan*</label>
+                                                            <input type="text" class="form-control" id="keterangan" name="keterangan" value="" placeholder="eg: SPP Sem IV" />
+                                                            <span class="text-danger" id="keteranganErrorMsg"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> 
+              
+                                            <div class="col-sm-offset-2 col-sm-12">
+                                                <hr class="mt-2">
+                                                <div class="float-sm-end">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan-pot" value="create">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+              
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Akhir Modal untuk Tambah Potongan -->
                     
                 </div>
             </div>
@@ -175,6 +223,12 @@
                 {data: 'nama_mahasiswa',name: 'nama_mahasiswa'},
                 {data: 'semester',name: 'semester'},
                 {data: 'jumlah_bayar',name: 'jumlah_bayar',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')},
+                {data: 'jumlah_potongan',name: 'jumlah_potongan',render: function(type, row,row)
+                    { 
+                        return (row.is_percentage == 1) ? '-'+row.jumlah_potongan+'%' : '-'+row.jumlah_potongan+' ';
+                    }
+                },
+                {data: 'created_at',name: 'created_at',render: function ( data, type, row ) {return moment(row.created_at).format("LL")},},
                 {data: 'keterangan',name: 'keterangan'},
                 {data: 'action',name: 'action'},
             ]
@@ -301,6 +355,20 @@
         });
     });
 
+    // CLIK Tambah Potongan
+    $('body').on('click', '.add-potongan', function (data) {
+        var data_id = $(this).data('id');
+        $('#modal-judul-pot').html("Add Data");
+        $('#tombol-simpan-pot').val("add-potongan");
+        $('#tambah-pot').modal('show');
+        $('#input').val(data_id);      
+        $('#id_data_payment').val(data_id);
+    });
+
+    $('#percentage').on('change', function(){
+        $('#hdnpercentage').val(this.checked ? 1 : 0);
+    });
+
     // INPUT FORMAT RUPIAH OTOMATIS 
     var rupiah = document.getElementById('jumlah_bayar');
     rupiah.addEventListener('keyup',function(e){
@@ -321,6 +389,56 @@
 
         rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
         return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    }
+
+    // Mengirim data tambah potongan
+    if ($("#tambah-catatan").length > 0) {
+        $("#tambah-catatan").validate({
+            submitHandler: function (form) {
+                var actionType = $('#tombol-simpan-pot').val();
+                $('#tombol-simpan-pot').html('Sending..');
+
+                $.ajax({
+                    data: $('#tambah-catatan').serialize(),
+                    url: "{{ route('add-potongan') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#tambah-catatan').trigger("reset");
+                        $('#tambah-pot').modal('hide');
+                        $('#tombol-simpan-pot').html('Save');
+                        var oTable = $('#table_payment').dataTable();
+                        oTable.fnDraw(false);
+                        Swal.fire({
+                            title: 'Good job!',
+                            text: 'Data saved successfully!',
+                            type: 'success',
+                            customClass: {
+                            confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false,
+                            timer: 2000
+                        })
+                    },
+                    error: function(response) {
+                        $('#idDataPaymentErrorMsg').text(response.responseJSON.errors.id_data_payment);
+                        $('#jumlahPotonganErrorMsg').text(response.responseJSON.errors.jumlah_potongan);
+                        $('#keteranganErrorMsg').text(response.responseJSON.errors.keterangan);
+                        $('#tombol-simpan-pot').html('Save');
+                        Swal.fire({
+                            title: 'Error!',
+                            text: ' Data failed to save!',
+                            type: 'error',
+                            customClass: {
+                            confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false,
+                            timer: 2000
+                        })
+                    }
+                });
+            }
+        })
     }
     
   </script>

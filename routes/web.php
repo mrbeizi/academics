@@ -101,4 +101,5 @@ Route::group(['middleware' => 'auth'], function(){
     Route::delete('/view-rincian-payment/payment/{id}','Keuangan\PaymentController@destroy');
 
     Route::get('print-payment','Keuangan\PaymentController@print')->name('print-payment');
+    Route::post('add-potongan','Keuangan\ViewRincianPaymentController@addPotongan')->name('add-potongan');
 });

@@ -85,16 +85,14 @@ class PaymentController extends Controller
         if (request()->start_date || request()->end_date) {
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
-
-            // $sd = $request->start_date; $ed = $request->end_date;
-            // $data = Payment::whereBetween('created_at',[$start_date,$end_date])->get();
+            
             $data = Payment::leftJoin('mahasiswas','mahasiswas.nim','=','payments.nim_mahasiswa')
-            ->leftJoin('prodis','prodis.id','=','mahasiswas.id_prodi')
-            ->leftJoin('payment_lists','payment_lists.id','=','payments.id_payment_list')
-            ->select('payments.id AS id','payments.*','mahasiswas.nim','mahasiswas.nama_mahasiswa','prodis.kode_prodi','payment_lists.nama_pembayaran')
-            ->whereBetween('payments.created_at',[$start_date,$end_date])
-            ->orderBy('payments.nim_mahasiswa','ASC')
-            ->get();
+                ->leftJoin('prodis','prodis.id','=','mahasiswas.id_prodi')
+                ->leftJoin('payment_lists','payment_lists.id','=','payments.id_payment_list')
+                ->select('payments.id AS id','payments.*','mahasiswas.nim','mahasiswas.nama_mahasiswa','prodis.kode_prodi','payment_lists.nama_pembayaran')
+                ->whereBetween('payments.tgl_pembayaran',[$start_date,$end_date])
+                ->orderBy('payments.nim_mahasiswa','ASC')
+                ->get();
         } else {
             $data = Payment::latest()->get();
         }
