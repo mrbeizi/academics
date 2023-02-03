@@ -7,18 +7,21 @@
 <body>
 	<style type="text/css">
 		table tr td {
-            font-size: 9pt;
+            font-size: 8pt;
         }
 		table tr th{
-			font-size: 9pt;
+			font-size: 8pt;
             text-align: center;
 		}
+		.author p{
+			font-size: 9pt;
+		}
         #range-date{
-            font-size: 11pt;
+            font-size: 8pt;
             margin-bottom: 1.5em;
         }
         #print-date{
-            font-size: 7pt;
+            font-size: 6pt;
             float: right;
         }
         #logo img {
@@ -29,11 +32,11 @@
 	</style>
     <div id="logo">
         <img src="{{asset('template/images/head.png')}}" alt="header">
-        <h5>LAPORAN REKAPITULASI PEMBAYARAN BIAYA KULIAH</h4>
-        <p id="range-date">Tanggal: {{tanggal_indonesia($start_date)}} sd {{tanggal_indonesia($end_date)}}</p>
+        <h5>LAPORAN REKAPITULASI PEMBAYARAN BIAYA KULIAH</h5>
+        <p id="range-date">Angkatan: <b>{{$angkatan}}</b> -- Tanggal: {{tanggal_indonesia($start_date)}} sd {{tanggal_indonesia($end_date)}}</p>
     </div>
  
-	<table class='table table-bordered'>
+	<table class='table table-bordered table-striped'>
 		<thead>
 			<tr>
 				<th>#</th>
@@ -46,19 +49,35 @@
 			</tr>
 		</thead>
 		<tbody>
-			@php $i=1; $grandTotal = 0; @endphp
-			@foreach($data as $p)
+			@php $i=1; $totalKategoriA = 0; @endphp
+			@foreach($dataPayment as $payment)
 			<tr>
 				<td align="center">{{ $i++ }}</td>
-				<td align="center">{{$p->nim_mahasiswa}}</td>
-				<td>{{$p->nama_mahasiswa}}</td>
-				<td align="center">{{$p->kode_prodi}}</td>
-				<td align="center">{{$p->semester}}</td>
-				<td align="right">Rp. {{ number_format($p->jumlah_bayar,0,',','.') }}</td>
-				<td>{{$p->keterangan}}</td>
+				<td align="center">{{$payment->nim_mahasiswa}}</td>
+				<td>{{$payment->nama_mahasiswa}}</td>
+				<td align="center">{{$payment->kode_prodi}}</td>
+				<td align="center">{{$payment->semester}}</td>
+				<td align="right">Rp. {{ number_format($payment->jumlah_bayar,0,',','.') }}</td>
+				<td>{{$payment->keterangan}}</td>
 			</tr>
-            @php $grandTotal += $p->jumlah_bayar; @endphp
+            @php $totalKategoriA += $payment->jumlah_bayar; @endphp
 			@endforeach
+			@php $totalKategoriB = 0; @endphp
+			@foreach($dataDenda as $key => $val)
+				@foreach($val as $k => $v)
+				@php $totalKategoriB += $v->total_denda; @endphp
+					<tr>
+						@if($k == 0)
+						<td style="vertical-align: middle;" align="center" colspan="5" rowspan="{{count($val)}}">Total Denda {{$v->kode_prodi}}</td>
+						@endif
+						<td align="right">Rp. {{ number_format($v->total_denda,0,',','.') }}</td>
+						@if($k == 0)
+						<td align="right" style="vertical-align: middle;" rowspan="{{count($val)}}">Rp. {{ number_format($v->total_denda,0,',','.') }}</td>
+						@endif
+					</tr>
+				@endforeach
+			@endforeach
+			@php $grandTotal = $totalKategoriA+$totalKategoriB; @endphp
             <tr>
                 <td colspan="5" align="center"><b>Grand Total</b></td>
                 <td align="right"><b>Rp. {{ number_format($grandTotal,0,',','.') }}</b></td>
@@ -68,6 +87,11 @@
 	</table>
 
     <p id="print-date">Printed date: {{tanggal_indonesia(now())}}</p>
+
+	<div class="mt-3 author">
+		<p>Dibuat oleh:</p>
+		<p class="mt-2">{{Auth::user()->name}}</p>
+	</div>
  
 </body>
 </html>

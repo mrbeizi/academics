@@ -88,7 +88,7 @@
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('api-mahasiswa.index')}} OR {{set_active('mahasiswa.index')}}  OR {{set_active('api-mahasiswa-prodi.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('api-mahasiswa.index')}} OR {{set_active('calon-mahasiswa.index')}}  OR {{set_active('api-mahasiswa-prodi.index')}}">
         <i class='menu-icon tf-icons bx bx-shape-circle bx-tada-hover'></i>
         <div data-i18n="Data API">Data API</div>
         </a>
@@ -140,20 +140,7 @@
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('profile')}}">
-        <i class='menu-icon tf-icons bx bx-cog bx-spin-hover'></i>
-        <div data-i18n="Settings">Settings</div>
-        </a>
-        <ul class="menu-sub">
-            <li class="menu-item">
-                <a href="{{route('profile')}}" class="menu-link {{set_active('profile')}}">
-                <div data-i18n="My Profile">My Profile</div>
-                </a>
-            </li>              
-        </ul>
-    </li>
-    <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('pegawai.index')}} OR {{set_active('user.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('pegawai.index')}} OR {{set_active('mahasiswa.index')}} OR {{set_active('user.index')}}">
         <i class="menu-icon tf-icons bx bx-user bx-tada-hover"></i>
         <div data-i18n="Users">Users</div>
         </a>
@@ -161,6 +148,11 @@
             <li class="menu-item">
                 <a href="{{route('pegawai.index')}}" class="menu-link {{set_active('pegawai.index')}}">
                 <div data-i18n="Pegawai">Pegawai</div>
+                </a>
+            </li>        
+            <li class="menu-item">
+                <a href="{{route('mahasiswa.index')}}" class="menu-link {{set_active('mahasiswa.index')}}">
+                <div data-i18n="Mahasiswa">Mahasiswa</div>
                 </a>
             </li>        
             <li class="menu-item">
@@ -180,17 +172,22 @@
         </a>
     </li>
     <li class="menu-item">
-        <a href="#" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-spreadsheet bx-tada-hover"></i>
-        <div data-i18n="Import Payment">Import Payment</div>
+        <a href="{{route('year-period.index')}}" class="menu-link {{set_active('year-period.index')}}">
+        <i class="menu-icon tf-icons bx bx-calendar bx-tada-hover"></i>
+        <div data-i18n="Year Period">Year Period</div>
         </a>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('semester.index')}} OR {{set_active('payment-list.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('setup-biaya.index')}} OR {{set_active('semester.index')}} OR {{set_active('payment-list.index')}}">
         <i class='menu-icon tf-icons bx bx-cog bx-tada-hover'></i>
         <div data-i18n="Master Data">Master Data</div>
         </a>
         <ul class="menu-sub">
+        <li class="menu-item">
+            <a href="{{route('setup-biaya.index')}}" class="menu-link {{set_active('setup-biaya.index')}}">
+            <div data-i18n="Setup Biaya">Setup Biaya</div>
+            </a>
+        </li>
         <li class="menu-item">
             <a href="{{route('semester.index')}}" class="menu-link {{set_active('semester.index')}}">
             <div data-i18n="Semester">Semester</div>

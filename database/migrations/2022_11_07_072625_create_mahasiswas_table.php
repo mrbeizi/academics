@@ -26,6 +26,7 @@ class CreateMahasiswasTable extends Migration
             $table->string('agama',100);
             $table->integer('id_status_mahasiswa');
             $table->datetime('tanggal_masuk');
+            $table->integer('nim_valid');
             $table->timestamps();
         });
     }

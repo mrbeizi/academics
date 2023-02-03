@@ -21,53 +21,64 @@
 
 <div class="container flex-grow-1">
     <section id="basic-datatable">
-        <div class="row mt-3">
-            <div class="col-sm-12 mb-3">
-                <form class="row g-3" id="form-show" name="form-show">
-                    @csrf
-                    <div class="col-auto">
-                        <label for="inputTahun" class="col-sm-12 col-form-label">Tahun Ajaran</label>
-                    </div>
-                    <div class="col-auto">
-                      <select style="cursor:pointer;" class="form-control" id="tahun" name="tahun" required>
-                            <option value="" readonly> - Pilih Tahun -</option>
-                                @foreach($jsonTahunAjaran as $key => $data)
-                                <option value="{{$data['tahun']}}">{{$data['tahun']}}</option>
-                                @endforeach
-                            <span class="tahunErrorMsg"></span>
-                        </select>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-primary" id="tombol-show" name="submit" type="submit">Show datas</button>
-                    </div>
-                    <div class="col-sm">
-                        <a href="{{route('api-mahasiswa.index')}}" class="dropdown-shortcuts-add text-body float-end" data-bs-toggle="tooltip" data-bs-placement="top" title="Back to All Mahasiswa"><i class="bx bx-xs bx-left-arrow-circle bx-tada-hover"></i> Kembali</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-12">
-                <div class="card" id="datatable-mahasiswa">
-                    
-                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-hover table-responsive" id="table_mahasiswa">
+                            <tfoot style="display: table-header-group;">
+                                <tr>
+                                    <th width="10%;">#</th>
+                                    <th>No Form</th>
+                                    <th>NIM</th>
+                                    <th>Name</th>
+                                    <th>Faculty</th>
+                                    <th>Gender</th>
+                                    <th>Religion</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </tfoot>
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>No Form</th>
+                                <th>NIM</th>
+                                <th>Name</th>
+                                <th>Faculty</th>
+                                <th>Gender</th>
+                                <th>Religion</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
 
-                <!-- MULAI MODAL VIEW DETAIL-->
-                <div class="modal fade" tabindex="-1" role="dialog" id="view_detail" data-backdrop="false">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Details</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div id="table" class="col-sm-12 table-responsive"></div>
+                    <!-- SHOW ARCHIVED MODAL-->
+                    <div class="modal fade" tabindex="-1" role="dialog" id="show-archived-modal" data-backdrop="false">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Archived Datas</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-hover table-responsive" id="table_show_archived" width="100%">
+                                        <thead>
+                                          <tr>
+                                            <th>#</th>
+                                            <th>Faculty</th>
+                                            <th>Name</th>
+                                            <th>Actions</th>
+                                          </tr>
+                                        </thead>
+                                      </table>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- AKHIR SHOW ARCHIVED MODAL-->
+                    
                 </div>
-                <!-- AKHIR MODAL VIEW DETAIL-->
             </div>
         </div>
     </section>
@@ -85,60 +96,50 @@
         });
     });
 
-    // SEARCH
-    if ($("#form-show").length > 0) {
-        $("#form-show").validate({
-            submitHandler: function (form) {
-                var actionType = $('#tombol-show').val();
-                yearSelect = document.getElementById("tahun").value;
-                $('#tombol-show').html('Processing..');
-                $.ajax({
-                    url: '{{ route("datatable-mahasiswa") }}',
-                    data: {yearSelect:yearSelect},
-                    type: "GET",
-                    dataType: 'json',
-                    success: function(response, data){
-                        $("#datatable-mahasiswa").html(response.dataTable);
-                        $('#tombol-show').html('Show datas');
-                    },
-                    error: function(response) {
-                        console.log('Failed to get datas of '+yearSelect);
-                        $('#tombol-show').html('Show datas');
+    // DATATABLE
+    $(document).ready(function () {
+        var table = $('#table_mahasiswa').DataTable({
+            initComplete: function () {
+                // Apply the search
+                this.api()
+                    .columns()
+                    .every(function () {
+                        var that = this;
+    
+                        $('input', this.footer()).on('keyup change clear', function () {
+                            if (that.search() !== this.value) {
+                                that.search(this.value).draw();
+                            }
+                        });
+                    });
+            },
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('mahasiswa.index') }}",
+            columns: [
+                {data: null,sortable:false,
+                    render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
                     }
-                });
-            }
-        })
-    }
-
-    // TOMBOL VIEW
-    $(document).on('click', '.view_detail', function () {
-        dataId = $(this).attr('id');
-        $.ajax({
-			url: "{{route('view-detail-mahasiswa')}}",
-			method: "GET",
-			data: {dataId: dataId},
-			success: function(response, data){
-                $('#view_detail').modal('show');
-                $("#table").html(response.table)
-			}
-		})
+                }, 
+                {data: 'no_form',name: 'no_form'},
+                {data: 'nim',name: 'nim'},
+                {data: 'nama_mahasiswa',name: 'nama_mahasiswa'},
+                {data: 'nama_prodi',name: 'nama_prodi'},
+                {data: 'jenis_kelamin',name: 'jenis_kelamin',
+                    render:function(data,type,row){
+                        return (row.jenis_kelamin == 1) ? 'Laki-laki' : 'Perempuan';
+                    }
+                },
+                {data: 'agama',name: 'agama'},
+                {data: 'action',name: 'action'},
+            ]
+        });
     });
 
-    // EDIT DATA
-    $('body').on('click', '.edit-post', function () {
-        var data_id = $(this).data('id');
-        alert(data_id);
-        $.get('mahasiswa/' + data_id + '/edit', function (data) {
-            $('#modal-judul').html("Edit data");
-            $('#tombol-simpan').val("edit-post");
-            $('#tambah-edit-modal').modal('show');
-              
-            $('#id').val(data.id);
-            $('#nama_data').val(data.nama_data);
-            $('#isi_data').val(data.isi_data);
-            $('#no_hp').val(data.no_hp);
-            $('#nama_prodi').val(data.nama_prodi);
-        })
+    $('#table_mahasiswa tfoot th').each(function () {
+        var title = $(this).text();
+        $(this).html('<input type="text" class="form-control" placeholder="Cari ' + title + '" />');
     });
 
 </script>

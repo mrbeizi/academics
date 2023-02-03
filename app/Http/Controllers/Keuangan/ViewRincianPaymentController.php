@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\Keuangan\Payment;
 use App\Model\Keuangan\PaymentList;
 use App\Model\Keuangan\PaymentDiscount;
+use App\Model\Keuangan\SetupBiaya;
 use App\Model\Keuangan\Semester;
 use App\Model\Mahasiswa;
 use Response;
@@ -22,27 +23,52 @@ class ViewRincianPaymentController extends Controller
             ->leftJoin('prodis','prodis.id','=','mahasiswas.id_prodi')
             ->leftJoin('payment_lists','payment_lists.id','=','payments.id_payment_list')
             ->leftJoin('payment_discounts','payment_discounts.id_data_payment','=','payments.id')
-            ->select('payments.id AS id','payments.*','mahasiswas.nim','mahasiswas.nama_mahasiswa','prodis.nama_id','payment_lists.nama_pembayaran','payment_discounts.jumlah_potongan')
+            ->select('payments.id AS id','payments.*','mahasiswas.nim','mahasiswas.nama_mahasiswa','mahasiswas.id_status_mahasiswa','prodis.nama_id','payment_lists.nama_pembayaran','payment_discounts.jumlah_potongan')
             ->where('payments.nim_mahasiswa',$id)
+            ->orderBy('payments.created_at','DESC')
             ->get();
                 
         if($request->ajax()){
             return datatables()->of($dataPayments)
                 ->addColumn('action', function($data){
-                    $button = '<button type="button" name="add-potongan" data-id="'.$data->id.'" class="add-potongan btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Update Potongan"><i class="bx bx-xs bx-dollar-circle"></i></button>';
-                    $button .= '&nbsp;&nbsp;';
-                    $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Edit" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
-                    $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="bx bx-xs bx-trash"></i></button>';
-                    return $button;
+                    if($data->id_status_mahasiswa <= 3) {
+                        $button = '<button type="button" name="add-potongan" data-id="'.$data->id.'" class="add-potongan btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Update Potongan"><i class="bx bx-xs bx-dollar-circle"></i></button>';
+                        $button .= '&nbsp;&nbsp;';
+                        $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Edit" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
+                        $button .= '&nbsp;&nbsp;';
+                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="bx bx-xs bx-trash"></i></button>';
+                        return $button;
+                    } else {
+                        return '<span class="badge bg-label-secondary me-1">Disabled</span>';
+                    }
                 })
                 ->rawColumns(['action'])
                 ->addIndexColumn(true)
                 ->make(true);
         }
-        $getPaymentList = PaymentList::select('id','nama_pembayaran')->get();
+        $getBiaya = SetupBiaya::leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
+            ->leftJoin('mahasiswas','mahasiswas.id_prodi','=','prodis.id')
+            ->leftJoin('status_mahasiswas','status_mahasiswas.id','=','mahasiswas.id_status_mahasiswa')
+            ->select('setup_biayas.nama_biaya','setup_biayas.nilai','status_mahasiswas.id AS ism','status_mahasiswas.nama_status')
+            ->where('mahasiswas.nim',$id)
+            ->get();
+        $grandTotal = Payment::where('nim_mahasiswa',$id)->sum('jumlah_bayar');
+
+        // Check State of students
+        if($this->studentState($id)->id_status_mahasiswa == 3){
+            $getPaymentList = PaymentList::select('id','nama_pembayaran')->where('id','=',3)->get();
+        } else {
+            $getPaymentList = PaymentList::select('id','nama_pembayaran')->where('id','!=', 3)->get();
+        }
+
         $getSemester = Semester::select('id','nama_semester')->get();
-        return view('keuangan.view-rincian.v-rincian-payment', ['id' => $id,'getPaymentList' => $getPaymentList,'getSemester'=>$getSemester]);
+        return view('keuangan.view-rincian.v-rincian-payment', ['id' => $id,'getPaymentList' => $getPaymentList,'getSemester'=>$getSemester,'getBiaya' => $getBiaya,'grandTotal'=>$grandTotal,'studentState' => $this->studentState($id)]);
+    }
+
+    protected function studentState($nim)
+    {
+        $data = Mahasiswa::where('nim',$nim)->select('id_status_mahasiswa')->first();
+        return $data;
     }
 
     public function store(Request $request)

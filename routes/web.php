@@ -34,10 +34,11 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('jabatan','Admin\JabatanController');
     Route::resource('jabatan-pegawai','Admin\JabatanPegawaiController');
     Route::resource('pendidik','Admin\PendidikController');
-    Route::resource('mahasiswa','Admin\MahasiswaController');
+    Route::resource('calon-mahasiswa','Admin\CalonMahasiswaController');
     Route::resource('gol-matakuliah','Admin\GolMatakuliahController');
     Route::resource('status-pegawai','Admin\StatusPegawaiController');
     Route::resource('status-mahasiswa','Admin\StatusMahasiswaController');
+    Route::resource('mahasiswa','Admin\MahasiswaController');
 
     Route::post('archived-faculty','Admin\FakultasController@archiveFaculty')->name('archiveFaculty');
     Route::post('archived-kurikulum','Admin\KurikulumController@archiveKurikulum')->name('archiveKurikulum');
@@ -79,12 +80,12 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('unarchived-status-pegawai','Admin\StatusPegawaiController@unarchiveStatusPegawai')->name('unarchiveStatusPegawai');
     Route::post('unarchived-status-mahasiswa','Admin\StatusMahasiswaController@unarchiveStatusMahasiswa')->name('unarchiveStatusMahasiswa');
 
-    Route::get('mahasiswa-view','Admin\MahasiswaController@view')->name('view-detail-mahasiswa');
+    Route::get('mahasiswa-view','Admin\CalonMahasiswaController@view')->name('view-detail-mahasiswa');
 
     // API Mahasiswa
-    Route::get('/mahasiswa/tahun','Admin\MahasiswaController@show')->name('get.mahasiswa');
-    Route::get('mahasiswa-view','Admin\MahasiswaController@view')->name('view-detail-mahasiswa');
-    Route::get('datatable-mahasiswa','Admin\MahasiswaController@showDataTable')->name('datatable-mahasiswa');
+    Route::get('/mahasiswa/tahun','Admin\CalonMahasiswaController@show')->name('get.mahasiswa');
+    Route::get('mahasiswa-view','Admin\CalonMahasiswaController@view')->name('view-detail-mahasiswa');
+    Route::get('datatable-mahasiswa','Admin\CalonMahasiswaController@showDataTable')->name('datatable-mahasiswa');
     
     Route::resource('api-mahasiswa', 'Admin\ApiMahasiswaController');
     Route::get('api-mahasiswa-view','Admin\ApiMahasiswaController@viewformdetail')->name('view-detail-form');
@@ -104,4 +105,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('add-potongan','Keuangan\ViewRincianPaymentController@addPotongan')->name('add-potongan');
 
     Route::post('import-payment', 'Keuangan\PaymentController@importPayment')->name('import-payment');
+
+    Route::resource('year-period','Keuangan\YearPeriodController');
+    Route::post('switch-year-period','Keuangan\YearPeriodController@switchPeriod')->name('change-year-period-status');
+    Route::resource('setup-biaya','Keuangan\SetupBiayaController');
 });

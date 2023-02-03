@@ -13,7 +13,7 @@ class PeriodeSeeder extends Seeder
     public function run()
     {
         $records = [
-            ['id' => '1','kode' => 'PE001','nama_periode' => 'Semester Ganjil','is_active' => '1','input_nilai' => 1,'temp_open' => 1,'finish' => 0]
+            ['id' => '1','kode' => '20231','nama_periode' => 'Semester Ganjil','is_active' => '1','input_nilai' => 1,'temp_open' => 1,'finish' => 0]
        ];
        Periode::insert($records);
     }

@@ -28,7 +28,7 @@
                 </a>
               
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a class="dropdown-item" href="{{route('mahasiswa.index')}}"><i class="bx bx-xs bx-right-arrow-circle bx-tada-hover"></i> Tahun Ajaran</a>
+                  <a class="dropdown-item" href="{{route('calon-mahasiswa.index')}}"><i class="bx bx-xs bx-right-arrow-circle bx-tada-hover"></i> Tahun Ajaran</a>
                   <a class="dropdown-item" href="{{route('api-mahasiswa-prodi.index')}}"><i class="bx bx-xs bx-right-arrow-circle bx-tada-hover"></i> Prodi</a>
                 </div>
             </div>

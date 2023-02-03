@@ -29,7 +29,7 @@ class ApiMahasiswaController extends Controller
 
     public function viewformdetail(Request $request)
     {
-        $getApi = 'put your api here/'.$request->dataId;
+        $getApi = 'put your api here'.$request->dataId;
         $datas = file_get_contents($getApi);
         $json = json_decode($datas, TRUE);
         $rows = array();

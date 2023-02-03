@@ -11,7 +11,7 @@ class ApiMahasiswaProdiController extends Controller
     public function index(Request $request)
     {
         // Just for Prodi
-        $getProdi = file_get_contents('http://join.uvers.ac.id/public/api/prodi');
+        $getProdi = file_get_contents('put your api here');
         $jsonProdi = json_decode($getProdi, TRUE);
 
         return view('administrator.api-mahasiswa-prodi.index', compact('jsonProdi'));
@@ -19,7 +19,7 @@ class ApiMahasiswaProdiController extends Controller
 
     protected function showDataTable(Request $request)
     {
-        $getApi = 'http://join.uvers.ac.id/public/api/search-mahasiswa-prodi/'.$request->prodiSelect;
+        $getApi = 'put your api here/'.$request->prodiSelect;
         $datas = file_get_contents($getApi);
         $json = json_decode($datas, TRUE);
         $rows = array();

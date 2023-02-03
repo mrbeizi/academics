@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title','Year Period')
+@section('title','Setup Biaya')
 
 @section('breadcrumbs')
 <div class="container">
@@ -9,7 +9,7 @@
         <a href="{{route('dashboard')}}">Home</a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{route('year-period.index')}}">@yield('title')</a>
+        <a href="{{route('setup-biaya.index')}}">@yield('title')</a>
       </li>
       <li class="breadcrumb-item active">Data</li>
     </ol>
@@ -31,13 +31,14 @@
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
-                            <table class="table table-hover table-responsive" id="table_year_period">
+                            <table class="table table-hover table-responsive" id="table_setup_biaya">
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Year</th>
-                                  <th>Created at</th>
-                                  <th>State</th>
+                                  <th>Period</th>
+                                  <th>Lingkup Biaya</th>
+                                  <th>Nama Biaya</th>
+                                  <th>Amount (IDR)</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -61,17 +62,38 @@
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="tahun" class="form-label">Year*</label>
-                                                    <input type="text" class="form-control" id="tahun" name="tahun" value="" min="{{date('Y')-2}}" maxlength="4" placeholder="eg: 2023" onkeypress="return onlyNumeric(event)" />
-                                                    <span class="text-danger" id="tahunErrorMsg"></span>
+                                                    <label for="nama_biaya" class="form-label">Nama Biaya*</label>
+                                                    <input type="text" class="form-control" id="nama_biaya" name="nama_biaya" value="" placeholder="eg: SPP Sem 2" />
+                                                    <span class="text-danger" id="namaBiayaErrorMsg"></span>
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <input class="form-check-input" type="checkbox" value="1" id="is_active" name="is_active" />
-                                                    <span class="custom-option-header">
-                                                        <span class="fw-semibold" for="is_active"> Status Active</span>
-                                                    </span>
+                                                    <label for="id_lingkup_biaya" class="form-label">Prodi*</label>
+                                                    <select class="form-select" id="id_lingkup_biaya" name="id_lingkup_biaya" aria-label="Default select example" style="cursor:pointer;">
+                                                        <option value="">- Choose -</option>
+                                                        @foreach($getProdi as $data)
+                                                        <option value="{{$data->id}}">{{$data->nama_id}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="text-danger" id="idLingkupBiayaErrorMsg"></span>
                                                 </div> 
+
+                                                <div class="mb-3">
+                                                    <label for="nilai" class="col-sm-12 control-label">Jumlah Biaya (IDR)*</label>
+                                                    <input type="text" class="form-control" id="nilai" name="nilai" placeholder="Input amount (IDR)" value="" required>
+                                                    <span class="text-danger" id="nilaiErrorMsg"></span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="id_periode" class="form-label">Year Period*</label>
+                                                    <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
+                                                        <option value="">- Choose -</option>
+                                                        @foreach($getYearPeriod as $year)
+                                                        <option value="{{$year->id}}">{{$year->tahun}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="text-danger" id="idPeriodeErrorMsg"></span>
+                                                </div>
                                                 
                                             </div>
                                             
@@ -114,10 +136,10 @@
 
     // DATATABLE
     $(document).ready(function () {
-        var table = $('#table_year_period').DataTable({
+        var table = $('#table_setup_biaya').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('year-period.index') }}",
+            ajax: "{{ route('setup-biaya.index') }}",
             columns: [
                 {data: null,sortable:false,
                     render: function (data, type, row, meta) {
@@ -125,8 +147,9 @@
                     }
                 }, 
                 {data: 'tahun',name: 'tahun'},
-                {data: 'created_at',name: 'created_at',render: function ( data, type, row ) {return moment(row.created_at).format("L")},},
-                {data: 'status',name: 'status'},
+                {data: 'nama_id',name: 'nama_id'},
+                {data: 'nama_biaya',name: 'nama_biaya'},
+                {data: 'nilai',name: 'nilai',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')},
                 {data: 'action',name: 'action'},
             ]
         });
@@ -150,14 +173,14 @@
 
                 $.ajax({
                     data: $('#form-tambah-edit').serialize(), 
-                    url: "{{ route('year-period.store') }}",
+                    url: "{{ route('setup-biaya.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         $('#form-tambah-edit').trigger("reset");
                         $('#tambah-edit-modal').modal('hide');
                         $('#tombol-simpan').html('Save');
-                        var oTable = $('#table_year_period').dataTable();
+                        var oTable = $('#table_setup_biaya').dataTable();
                         oTable.fnDraw(false);
                         Swal.fire({
                             title: 'Good job!',
@@ -171,7 +194,10 @@
                         })
                     },
                     error: function(response) {
-                        $('#tahunErrorMsg').text(response.responseJSON.errors.tahun);
+                        $('#namaBiayaErrorMsg').text(response.responseJSON.errors.nama_biaya);
+                        $('#idLingkupBiayaErrorMsg').text(response.responseJSON.errors.id_lingkup_biaya);
+                        $('#nilaiErrorMsg').text(response.responseJSON.errors.nilai);
+                        $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',
@@ -192,14 +218,16 @@
     // EDIT DATA
     $('body').on('click', '.edit-post', function () {
         var data_id = $(this).data('id');
-        $.get('year-period/' + data_id + '/edit', function (data) {
+        $.get('setup-biaya/' + data_id + '/edit', function (data) {
             $('#modal-judul').html("Edit data");
             $('#tombol-simpan').val("edit-post");
             $('#tambah-edit-modal').modal('show');
               
             $('#id').val(data.id);
-            $('#tahun').val(data.tahun);
-            $('#is_active').val(data.is_active);
+            $('#nama_biaya').val(data.nama_biaya);
+            $('#id_lingkup_biaya').val(data.id_lingkup_biaya);
+            $('#nilai').val(data.nilai);
+            $('#id_periode').val(data.id_periode);
         })
     });
 
@@ -218,7 +246,7 @@
             preConfirm: function() {
                 return new Promise(function(resolve) {
                     $.ajax({
-                        url: "year-period/" + dataId,
+                        url: "setup-biaya/" + dataId,
                         type: 'DELETE',
                         data: {id:dataId},
                         dataType: 'json'
@@ -229,7 +257,7 @@
                             type: 'success',
                             timer: 2000
                         })
-                        $('#table_year_period').DataTable().ajax.reload(null, true);
+                        $('#table_setup_biaya').DataTable().ajax.reload(null, true);
                     }).fail(function() {
                         Swal.fire({
                             title: 'Oops!',
@@ -243,34 +271,26 @@
         });
     });
 
-    /* UNTUK TOGGLE STATUS */
-    function PeriodeStatus(id,is_active){
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "{{ Route('change-year-period-status') }}",
-            id: $('.period-status'+id+'').val(),
-            data:{'is_active':is_active,'id':id},
-        }).done(function(data, response) {
-            Swal.fire({
-                title: 'Success!',
-                text: 'State changed successfully!',
-                type: 'success',
-                customClass: {
-                confirmButton: 'btn btn-primary'
-                },
-                buttonsStyling: false,
-                timer: 2000
-            })
-            $('#table_year_period').DataTable().ajax.reload(null, true);
-        })
-    }
+    // INPUT FORMAT RUPIAH OTOMATIS 
+    var rupiah = document.getElementById('nilai');
+    rupiah.addEventListener('keyup',function(e){
+    rupiah.value = formatRupiah(this.value,'Rp. ');
+    })
 
-    function onlyNumeric(event) {
-        var angka = (event.which) ? event.which : event.keyCode
-        if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
-            return false;
-        return true;
+    function formatRupiah(angka, prefix){
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if(ribuan) {
+        separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
     }
     
   </script>

@@ -29,7 +29,9 @@
                         <!-- MULAI TOMBOL TAMBAH -->
                         <div class="mb-3">
                             <a href="{{route('payment.index')}}" class="dropdown-shortcuts-add text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="Back to Payment"><i class="bx bx-sm bx-left-arrow-circle bx-tada-hover"></i></a>
+                            @if($studentState->id_status_mahasiswa <= 3)
                             <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle"></i></a>
+                            @endif
                             <button type="button" id="print-payment-history" data-bs-toggle="tooltip" data-bs-placement="top" title="Payments History" class="btn btn-outline-danger btn-xs float-end"><i class="bx bx-xs bx-download"></i> Export PDF</button>
                         </div>
                         
@@ -41,13 +43,20 @@
                                   <th>NIM</th>
                                   <th>Student Name</th>
                                   <th>SMT</th>
-                                  <th>Total Payments</th>
-                                  <th>Payment Disc.</th>
-                                  <th>Payment Date</th>
+                                  <th>Amounts</th>
+                                  <th>Disc.</th>
+                                  <th>Date</th>
                                   <th>Notes</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
+                              <tfoot class="bg-secondary">
+                                <tr>
+                                    <th colspan="4" style="color: black;">Grand Total</th>
+                                    <th style="color: rgb(0, 0, 0); font-size: 14px;">{{currency_IDR($grandTotal)}}</th>
+                                    <th colspan="4"></th>
+                                </tr>
+                            </tfoot>
                             </table>
                         </div>
                     </div>
@@ -63,6 +72,20 @@
                                 <div class="modal-body">
                                     <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
                                         <div class="row">
+                                            <div class="col-sm-12 mb-3">
+                                                <div class="border p-3">
+                                                    @foreach($getBiaya as $item)
+                                                        @if($item->ism == 3)
+                                                            <span class="badge bg-label-warning me-1 mb-2">STATUS {{$item->nama_status}}</span>
+                                                        @else
+                                                            <span class="badge bg-label-success me-1 mb-2">STATUS {{$item->nama_status}}</span>
+                                                        @endif
+                                                        <h3>{{currency_IDR($item->nilai)}}</h3>
+                                                        <label>{{currency_IDR($item->nilai / 5)}} per month</label>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                            
                                             <div class="col-sm-12">
 
                                                 <input type="hidden" name="id" id="id">
@@ -70,10 +93,11 @@
 
                                                 <div class="mb-3">
                                                     <label for="jumlah_bayar" class="col-sm-12 control-label">Jumlah Bayar (IDR)*</label>
-                                                    <input type="text" class="form-control" id="jumlah_bayar" name="jumlah_bayar" placeholder="Input amount (IDR)" value="" required>
+                                                    <input type="text" class="form-control" id="jumlah_bayar" name="jumlah_bayar" placeholder="Type {{currency_IDR($item->nilai / 5)}}" value="" required>
                                                     <span class="text-danger" id="jumlahBayarErrorMsg"></span>
                                                 </div>                                                
                                             </div>
+                                            
                                             <div class="col-sm-12">
                                                 <div class="row">
                                                     <div class="col-sm-6">
@@ -228,7 +252,7 @@
                         return (row.is_percentage == 1) ? '-'+row.jumlah_potongan+'%' : '-'+row.jumlah_potongan+' ';
                     }
                 },
-                {data: 'created_at',name: 'created_at',render: function ( data, type, row ) {return moment(row.created_at).format("LL")},},
+                {data: 'tgl_pembayaran',name: 'tgl_pembayaran',render: function ( data, type, row ) {return moment(row.tgl_pembayaran).format("LL")},},
                 {data: 'keterangan',name: 'keterangan'},
                 {data: 'action',name: 'action'},
             ]
@@ -272,6 +296,7 @@
                             buttonsStyling: false,
                             timer: 2000
                         })
+                        location.reload();
                     },
                     error: function(response) {
                         $('#nimMahasiswaErrorMsg').text(response.responseJSON.errors.nim_mahasiswa);
@@ -342,6 +367,7 @@
                             timer: 2000
                         })
                         $('#table_payment').DataTable().ajax.reload(null, true);
+                        location.reload();
                     }).fail(function() {
                         Swal.fire({
                             title: 'Oops!',

@@ -33,8 +33,17 @@
                     <form action="{{route('print-payment')}}" method="GET" target="_blank">
                         @csrf
                         <div class="d-flex p-3 border">
-                        <div class="col-sm-5">
-                            <div class="col-sm-4">
+                        <div class="col-sm-3">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label for="datepicker" class="form-label">Year Level*</label>
+                                    <input  type="text" class="form-control date" id="datepicker" data-date="2012" data-date-format="yyyy" name="tanggal_masuk" required />     
+                                </div>
+                                <span class="text-danger" id="angkatanErrorMsg"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label for="start_date" class="form-label">Start Date*</label>
                                     <input type="date" class="form-control" id="start_date" name="start_date" value="" placeholder="mm/dd/yyyy" required />
@@ -42,8 +51,8 @@
                                 </div>
                             </div>                                
                         </div>
-                        <div class="col-sm-5">
-                            <div class="col-sm-4">
+                        <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label for="end_date" class="form-label">End Date*</label>
                                     <input type="date" class="form-control" id="end_date" name="end_date" value="" placeholder="mm/dd/yyyy" required />
@@ -51,7 +60,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-2">                                
+                        <div class="col-sm-3">                                
                             <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label for="btn" class="form-label"></label>
@@ -100,12 +109,23 @@
                 <div class="card">
                     <div class="card-body">
                         <table class="table table-hover table-responsive" id="table_payment">
+                            <tfoot style="display: table-header-group;">
+                                <tr>
+                                    <th>#</th>
+                                    <th>NIM</th>
+                                    <th>Student Name</th>
+                                    <th>Major</th>
+                                    <th>State</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </tfoot>
                             <thead>
                             <tr>
                                 <th>#</th>
                                 <th>NIM</th>
                                 <th>Student Name</th>
                                 <th>Major</th>
+                                <th>State</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -173,6 +193,20 @@
     // DATATABLE
     $(document).ready(function () {
         var table = $('#table_payment').DataTable({
+            initComplete: function () {
+                // Apply the search
+                this.api()
+                    .columns()
+                    .every(function () {
+                        var that = this;
+    
+                        $('input', this.footer()).on('keyup change clear', function () {
+                            if (that.search() !== this.value) {
+                                that.search(this.value).draw();
+                            }
+                        });
+                    });
+            },
             processing: true,
             serverSide: true,
             ajax: "{{ route('payment.index') }}",
@@ -185,6 +219,11 @@
                 {data: 'nim',name: 'nim'},
                 {data: 'nama_mahasiswa',name: 'nama_mahasiswa'},
                 {data: 'nama_prodi',name: 'nama_prodi'},
+                {data: 'nama_status',name: 'nama_status', 
+                    render: function(type,data,row){ 
+                        return (row.ism == 1) ? row.nama_status+' <div class="spinner-grow spinner-grow-sm text-success" role="nama_status">' : (row.ism == 3) ? row.nama_status+' <div class="spinner-grow spinner-grow-sm text-warning" role="nama_status">' : row.nama_status;  
+                    }
+                },
                 {data: 'action',name: 'action'},
             ]
         });
@@ -358,6 +397,19 @@
             }
         })
     }
+
+    $("#datepicker").datepicker({
+        format: "yyyy",
+        viewMode: "years", 
+        minViewMode: "years",
+        autoclose: true
+    });
+
+    $('#table_payment tfoot th').each(function () {
+        var title = $(this).text();
+        $(this).html('<input type="text" class="form-control" placeholder="Cari ' + title + '" />');
+    });
+
     
   </script>
 @endsection
