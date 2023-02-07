@@ -105,8 +105,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('add-potongan','Keuangan\ViewRincianPaymentController@addPotongan')->name('add-potongan');
 
     Route::post('import-payment', 'Keuangan\PaymentController@importPayment')->name('import-payment');
+    Route::get('count-fine','Keuangan\PaymentController@countFine')->name('count-fine');
 
     Route::resource('year-period','Keuangan\YearPeriodController');
     Route::post('switch-year-period','Keuangan\YearPeriodController@switchPeriod')->name('change-year-period-status');
     Route::resource('setup-biaya','Keuangan\SetupBiayaController');
+
 });

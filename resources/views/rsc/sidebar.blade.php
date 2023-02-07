@@ -32,115 +32,57 @@
     </li>
 
     <!-- Apps & Pages -->
-    <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Datas</span></li>
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">Main Menus</span></li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('matakuliah.index')}} OR {{set_active('kurikulum.index')}}">
-        <i class='menu-icon tf-icons bx bx-bookmark bx-tada-hover'></i>
-        <div data-i18n="Kurikulum">Kurikulum</div>
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class='menu-icon tf-icons bx bx-dock-top bx-tada-hover'></i>
+        <div data-i18n="Perkuliahan">Perkuliahan</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
-            <a href="{{route('matakuliah.index')}}" class="menu-link {{set_active('matakuliah.index')}}">
-            <div data-i18n="Daftar Matakuliah">Daftar Matakuliah</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="{{route('kurikulum.index')}}" class="menu-link {{set_active('kurikulum.index')}}">
-            <div data-i18n="Daftar Kurikulum">Daftar Kurikulum</div>
+            <a href="#" class="menu-link">
+            <div data-i18n="Kelompok Mahasiswa">Kelompok Mahasiswa</div>
             </a>
         </li>
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('fakultas.index')}} OR {{set_active('prodi.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('periode.index')}} OR {{set_active('kurikulum.index')}} OR {{set_active('matakuliah.index')}} OR {{set_active('gol-matakuliah.index')}}">
         <i class='menu-icon tf-icons bx bx-buildings bx-tada-hover'></i>
         <div data-i18n="Universitas">Universitas</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
-            <a href="{{route('fakultas.index')}}" class="menu-link {{set_active('fakultas.index')}}">
-            <div data-i18n="Daftar Fakultas">Daftar Fakultas</div>
+            <a href="{{route('periode.index')}}" class="menu-link {{set_active('periode.index')}}">
+            <div data-i18n="Periode">Periode</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="{{route('prodi.index')}}" class="menu-link {{set_active('prodi.index')}}">
-            <div data-i18n="Daftar Prodi">Daftar Prodi</div>
-            </a>
-        </li>       
+            <a class="menu-link menu-toggle {{set_active('kurikulum.index')}} OR {{set_active('matakuliah.index')}} OR {{set_active('gol-matakuliah.index')}}" href="javascript:void(0)">
+            <div data-i18n="Kurikulum">Kurikulum</div></a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{route('kurikulum.index')}}" class="menu-link {{set_active('kurikulum.index')}}">
+                    <div data-i18n="Daftar Kurikulum">Daftar Kurikulum</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{route('matakuliah.index')}}" class="menu-link {{set_active('matakuliah.index')}}">
+                    <div data-i18n="Daftar Matakuliah">Daftar Matakuliah</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{route('gol-matakuliah.index')}}" class="menu-link {{set_active('gol-matakuliah.index')}}">
+                    <div data-i18n="Gol. Matakuliah">Gol. Matakuliah</div>
+                    </a>
+                </li> 
+            </ul>
+        </li>
+             
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('jabatan-pegawai.index')}} OR {{set_active('jabatan-akademik.index')}}">
-        <i class='menu-icon tf-icons bx bx-briefcase-alt bx-tada-hover'></i>
-        <div data-i18n="Jabatan">Jabatan</div>
-        </a>
-        <ul class="menu-sub">
-            <li class="menu-item">
-                <a href="{{route('jabatan-pegawai.index')}}" class="menu-link {{set_active('jabatan-pegawai.index')}}">
-                <div data-i18n="Jabatan Pegawai">Jabatan Pegawai</div>
-                </a>
-            </li>       
-            <li class="menu-item">
-                <a href="{{route('pendidik.index')}}" class="menu-link {{set_active('pendidik.index')}}">
-                <div data-i18n="Pendidik (Dosen)">Pendidik (Dosen)</div>
-                </a>
-            </li>      
-        </ul>
-    </li>
-    <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('api-mahasiswa.index')}} OR {{set_active('calon-mahasiswa.index')}}  OR {{set_active('api-mahasiswa-prodi.index')}}">
-        <i class='menu-icon tf-icons bx bx-shape-circle bx-tada-hover'></i>
-        <div data-i18n="Data API">Data API</div>
-        </a>
-        <ul class="menu-sub">
-        <li class="menu-item">
-            <a href="{{route('api-mahasiswa.index')}}" class="menu-link {{set_active('api-mahasiswa.index')}}">
-            <div data-i18n="All Mahasiswa">All Mahasiswa</div>
-            </a>
-        </li>      
-        </ul>
-    </li>
-    
-    <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-formulir.index')}} OR {{set_active('jabatan.index')}} OR {{set_active('periode.index')}} OR {{set_active('gol-matakuliah.index')}} OR {{set_active('status-pegawai.index')}} OR {{set_active('status-mahasiswa.index')}}">
-        <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
-        <div data-i18n="Setup Database">Setup Database</div>
-        </a>
-        <ul class="menu-sub">
-            <li class="menu-item">
-                <a href="{{route('data-formulir.index')}}" class="menu-link {{set_active('data-formulir.index')}}">
-                <div data-i18n="Data Formulir">Data Formulir</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{route('jabatan.index')}}" class="menu-link {{set_active('jabatan.index')}}">
-                <div data-i18n="Jabatan">Jabatan</div>
-                </a>
-            </li>             
-            <li class="menu-item">
-                <a href="{{route('periode.index')}}" class="menu-link {{set_active('periode.index')}}">
-                <div data-i18n="Periode">Periode</div>
-                </a>
-            </li>       
-            <li class="menu-item">
-                <a href="{{route('gol-matakuliah.index')}}" class="menu-link {{set_active('gol-matakuliah.index')}}">
-                <div data-i18n="Gol. Matakuliah">Gol. Matakuliah</div>
-                </a>
-            </li>               
-            <li class="menu-item">
-                <a href="{{route('status-pegawai.index')}}" class="menu-link {{set_active('status-pegawai.index')}}">
-                <div data-i18n="Status Pegawai">Status Pegawai</div>
-                </a>
-            </li>               
-            <li class="menu-item">
-                <a href="{{route('status-mahasiswa.index')}}" class="menu-link {{set_active('status-mahasiswa.index')}}">
-                <div data-i18n="Status Mahasiswa">Status Mahasiswa</div>
-                </a>
-            </li>               
-        </ul>
-    </li>
-    <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('pegawai.index')}} OR {{set_active('mahasiswa.index')}} OR {{set_active('user.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('pegawai.index')}} OR {{set_active('mahasiswa.index')}} OR {{set_active('status-pegawai.index')}} OR {{set_active('status-mahasiswa.index')}} OR {{set_active('api-mahasiswa.index')}} OR {{set_active('calon-mahasiswa.index')}}  OR {{set_active('api-mahasiswa-prodi.index')}} OR {{set_active('user.index')}}">
         <i class="menu-icon tf-icons bx bx-user bx-tada-hover"></i>
         <div data-i18n="Users">Users</div>
         </a>
@@ -154,6 +96,28 @@
                 <a href="{{route('mahasiswa.index')}}" class="menu-link {{set_active('mahasiswa.index')}}">
                 <div data-i18n="Mahasiswa">Mahasiswa</div>
                 </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{route('status-pegawai.index')}}" class="menu-link {{set_active('status-pegawai.index')}}">
+                <div data-i18n="Status Pegawai">Status Pegawai</div>
+                </a>
+            </li>               
+            <li class="menu-item">
+                <a href="{{route('status-mahasiswa.index')}}" class="menu-link {{set_active('status-mahasiswa.index')}}">
+                <div data-i18n="Status Mahasiswa">Status Mahasiswa</div>
+                </a>
+            </li> 
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('api-mahasiswa.index')}} OR {{set_active('calon-mahasiswa.index')}}  OR {{set_active('api-mahasiswa-prodi.index')}}">
+                <div data-i18n="Data API">Data API</div>
+                </a>
+                <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{route('api-mahasiswa.index')}}" class="menu-link {{set_active('api-mahasiswa.index')}}">
+                    <div data-i18n="All Mahasiswa">All Mahasiswa</div>
+                    </a>
+                </li>      
+                </ul>
             </li>        
             <li class="menu-item">
                 <a href="{{route('user.index')}}" class="menu-link {{set_active('user.index')}}">
@@ -162,6 +126,57 @@
             </li>
         </ul>
     </li>
+    
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('jabatan.index')}} OR {{set_active('pendidik.index')}} OR {{set_active('jabatan-pegawai.index')}}">
+        <i class='menu-icon tf-icons bx bx-briefcase-alt bx-tada-hover'></i>
+        <div data-i18n="Jabatan">Jabatan</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="{{route('jabatan.index')}}" class="menu-link {{set_active('jabatan.index')}}">
+                <div data-i18n="Jabatan">Jabatan</div>
+                </a>
+            </li> 
+            <li class="menu-item">
+                <a href="{{route('pendidik.index')}}" class="menu-link {{set_active('pendidik.index')}}">
+                <div data-i18n="Pendidik (Dosen)">Pendidik (Dosen)</div>
+                </a>
+            </li> 
+            <li class="menu-item">
+                <a href="{{route('jabatan-pegawai.index')}}" class="menu-link {{set_active('jabatan-pegawai.index')}}">
+                <div data-i18n="Jabatan Pegawai">Jabatan Pegawai</div>
+                </a>
+            </li>       
+                 
+        </ul>
+    </li>
+    
+    
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('fakultas.index')}} OR {{set_active('prodi.index')}} OR {{set_active('data-formulir.index')}}">
+        <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
+        <div data-i18n="Data Master">Data Master</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="{{route('fakultas.index')}}" class="menu-link {{set_active('fakultas.index')}}">
+                <div data-i18n="Daftar Fakultas">Daftar Fakultas</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{route('prodi.index')}}" class="menu-link {{set_active('prodi.index')}}">
+                <div data-i18n="Daftar Prodi">Daftar Prodi</div>
+                </a>
+            </li>  
+            <li class="menu-item">
+                <a href="{{route('data-formulir.index')}}" class="menu-link {{set_active('data-formulir.index')}}">
+                <div data-i18n="Data Formulir">Data Formulir</div>
+                </a>
+            </li>      
+        </ul>
+    </li>
+    
 
     <!-- Keuangan -->
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Keuangan</span></li>
