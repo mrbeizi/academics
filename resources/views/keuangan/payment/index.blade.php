@@ -25,14 +25,14 @@
             <div class="col-12">
                 <div class="mb-2">
                     <p class="demo-inline-spacing">
-                        <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Print </button>
-                        {{-- <button type="button" class="btn btn-primary mr-5" data-toggle="modal" data-target="#importPayment">Import</button> --}}
-                        <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="import-Payment"><button type="button" class="btn btn-primary mr-5">Import</button></a>
+                        <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bx bx-xs bx-printer"></i> Print </button>
+                        <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="import-Payment"><button type="button" class="btn btn-primary mr-5"><i class="bx bx-xs bx-import"></i> Import</button></a>
+                        <button type="button" id="count-fine" data-bs-toggle="collapse" data-bs-target="#collapseCountFine" aria-expanded="false" aria-controls="collapseCountFine" class="btn btn-info me-1 float-end"><i class="bx bx-xs bx-dollar-circle"></i> Count Fine</button>
                     </p>
                     <div class="collapse" id="collapseExample">
                     <form action="{{route('print-payment')}}" method="GET" target="_blank">
                         @csrf
-                        <div class="d-flex p-3 border">
+                        <div class="d-flex p-3 border justify-content-center">
                         <div class="col-sm-3">
                             <div class="col-sm-6">
                                 <div class="mb-3">
@@ -70,6 +70,40 @@
                         </div>
                     </div>
                     </form>
+                    </div>
+
+                    <div class="collapse" id="collapseCountFine">
+                        <form id="form-count" name="form-count" class="form-horizontal">
+                            <div class="d-flex p-3 border">
+                                <div class="col-sm-3">
+                                    <div class="col-sm-8">
+                                        <div class="mb-3">
+                                            <label for="tanggal_awal" class="form-label">Start Date*</label>
+                                            <input type="date" class="form-control" id="tanggal_awal" name="tanggal_awal" value="" placeholder="mm/dd/yyyy" required />
+                                            <span class="text-danger" id="tanggalAwalErrorMsg"></span>
+                                        </div>
+                                    </div>                                
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="col-sm-8">
+                                        <div class="mb-3">
+                                            <label for="tanggal_akhir" class="form-label">End Date*</label>
+                                            <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" value="" placeholder="mm/dd/yyyy" required />
+                                            <span class="text-danger" id="tanggalAkhirErrorMsg"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">                                
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label for="btn" class="form-label"></label>
+                                            <button type="submit" class="form-control btn btn-primary btn-block tombol-count" id="tombol-count" name="submit">Count</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="col-sm-8 p-3" id="count-page"></div>  
                     </div>
                     <!-- Import Excel -->
                     <div class="modal fade" id="importPayment" aria-hidden="true">
@@ -392,6 +426,31 @@
                             buttonsStyling: false,
                             timer: 2000
                         })
+                    }
+                });
+            }
+        })
+    }
+
+    // Button Count Fine
+    if ($("#form-count").length > 0) {
+        $("#form-count").validate({
+            submitHandler: function (form) {
+                var actionType = $('#tombol-count').val();
+                tanggal_awal = document.getElementById("tanggal_awal").value;
+                tanggal_akhir = document.getElementById("tanggal_akhir").value;
+                $('#tombol-count').html('Count..');
+                $.ajax({
+                    url: '{{ route("count-fine") }}',
+                    data: {tanggal_awal:tanggal_awal,tanggal_akhir:tanggal_akhir},
+                    type: "GET",
+                    dataType: 'json',
+                    success: function(response, data){
+                        $("#count-page").html(response.content);
+                        $('#tombol-count').html('Count');
+                    },
+                    error: function(response) {
+                        $('#tombol-count').html('Count');
                     }
                 });
             }

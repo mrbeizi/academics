@@ -151,4 +151,45 @@ class PaymentController extends Controller
         Excel::import(new ImportPayment, public_path('/import/file-keuangan/'.$nama_file));
         return redirect()->route('payment.index');
     }
+
+    public function countFine(Request $request)
+    {
+        if($request->tanggal_awal <= $request->tanggal_akhir){
+            $tanggal_awal = $request->tanggal_awal;
+            $tanggal_akhir = $request->tanggal_akhir;
+            $interval = Carbon::parse($tanggal_akhir)->diffInDays(Carbon::parse($tanggal_awal));
+            $total = 0;
+
+            for($i=1; $i<=$interval; $i++){
+                $fine = ceil($i/7)*5000;
+                $total = $total + $fine;
+            }
+
+            $content = '<div class="col-md">
+                            <div class="card text-white bg-primary">
+                            <div class="card-header">Hasil Perhitungan</div>
+                            <div class="card-body">
+                                <p class="card-title text-white">Dari tanggal '.tanggal_indonesia($tanggal_awal).' sampai dengan tanggal '.tanggal_indonesia($tanggal_akhir).' adalah '.$interval.' hari</p>
+                                <h5 class="card-text">
+                                Maka, total denda sebesar <b>'.currency_IDR($total).'</b>
+                                </h5>
+                            </div>
+                            </div>
+                        </div>';
+        } else {
+            $content = '<div class="col-md">
+                            <div class="card text-white bg-primary">
+                            <div class="card-header">Hasil Perhitungan</div>
+                            <div class="card-body">
+                                <p class="card-title text-white">Maaf, tanggal yang anda inputkan salah</p>
+                                <h5 class="card-text">
+                                Silahkan pilih tanggal dengan benar.</b>
+                                </h5>
+                            </div>
+                            </div>
+                        </div>';
+        }
+
+        return response()->json(['content' => $content]);
+    }
 }
