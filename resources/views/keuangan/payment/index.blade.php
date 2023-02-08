@@ -23,88 +23,91 @@
     <section id="basic-datatable">
         <div class="row">
             <div class="col-12">
-                <div class="mb-2">
+                <div class="mb-2" id="myGroup">
                     <p class="demo-inline-spacing">
-                        <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bx bx-xs bx-printer"></i> Print </button>
-                        <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="import-Payment"><button type="button" class="btn btn-primary mr-5"><i class="bx bx-xs bx-import"></i> Import</button></a>
-                        <button type="button" id="count-fine" data-bs-toggle="collapse" data-bs-target="#collapseCountFine" aria-expanded="false" aria-controls="collapseCountFine" class="btn btn-info me-1 float-end"><i class="bx bx-xs bx-dollar-circle"></i> Count Fine</button>
+                        <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bx bx-xs bx-printer bx-tada-hover"></i> Print </button>
+                        <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="import-Payment"><button type="button" class="btn btn-primary mr-5"><i class="bx bx-xs bx-import bx-tada-hover"></i> Import</button></a>
+                        <button type="button" id="count-fine" data-bs-toggle="collapse" data-bs-target="#collapseCountFine" aria-expanded="false" aria-controls="collapseCountFine" class="btn btn-info me-1 float-end"><i class="bx bx-xs bx-dollar-circle bx-tada-hover"></i> Count Fine</button>
                     </p>
-                    <div class="collapse" id="collapseExample">
-                    <form action="{{route('print-payment')}}" method="GET" target="_blank">
-                        @csrf
-                        <div class="d-flex p-3 border justify-content-center">
-                        <div class="col-sm-3">
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label for="datepicker" class="form-label">Year Level*</label>
-                                    <input  type="text" class="form-control date" id="datepicker" data-date="2012" data-date-format="yyyy" name="tanggal_masuk" required />     
+                    <div class="accordion-group">
+                        <div class="collapse indent" id="collapseExample" data-bs-parent="#myGroup">
+                            <form action="{{route('print-payment')}}" method="GET" target="_blank">
+                                @csrf
+                                <div class="d-flex p-3 border justify-content-center">
+                                    <div class="col-sm-3">
+                                        <div class="col-sm-6">
+                                            <div class="mb-3">
+                                                <label for="datepicker" class="form-label">Year Level*</label>
+                                                <input  type="text" class="form-control date" id="datepicker" data-date="2012" data-date-format="yyyy" name="tanggal_masuk" required />     
+                                            </div>
+                                            <span class="text-danger" id="angkatanErrorMsg"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="col-sm-6">
+                                            <div class="mb-3">
+                                                <label for="start_date" class="form-label">Start Date*</label>
+                                                <input type="date" class="form-control" id="start_date" name="start_date" value="" placeholder="mm/dd/yyyy" required />
+                                                <span class="text-danger" id="startDateErrorMsg"></span>
+                                            </div>
+                                        </div>                                
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="col-sm-6">
+                                            <div class="mb-3">
+                                                <label for="end_date" class="form-label">End Date*</label>
+                                                <input type="date" class="form-control" id="end_date" name="end_date" value="" placeholder="mm/dd/yyyy" required />
+                                                <span class="text-danger" id="endDateErrorMsg"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">                                
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label for="btn" class="form-label"></label>
+                                                <button type="submit" class="form-control btn btn-primary btn-block" id="tombol-cetak" value="print">Print</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="text-danger" id="angkatanErrorMsg"></span>
-                            </div>
+                            </form>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label for="start_date" class="form-label">Start Date*</label>
-                                    <input type="date" class="form-control" id="start_date" name="start_date" value="" placeholder="mm/dd/yyyy" required />
-                                    <span class="text-danger" id="startDateErrorMsg"></span>
+                        <div class="collapse indent" id="collapseCountFine" data-bs-parent="#myGroup">
+                            <form id="form-count" name="form-count" class="form-horizontal">
+                                <div class="d-flex p-3 border">
+                                    <div class="col-sm-3">
+                                        <div class="col-sm-8">
+                                            <div class="mb-3">
+                                                <label for="tanggal_awal" class="form-label">Start Date*</label>
+                                                <input type="date" class="form-control" id="tanggal_awal" name="tanggal_awal" value="" placeholder="mm/dd/yyyy" required />
+                                                <span class="text-danger" id="tanggalAwalErrorMsg"></span>
+                                            </div>
+                                        </div>                                
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="col-sm-8">
+                                            <div class="mb-3">
+                                                <label for="tanggal_akhir" class="form-label">End Date*</label>
+                                                <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" value="" placeholder="mm/dd/yyyy" required />
+                                                <span class="text-danger" id="tanggalAkhirErrorMsg"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">                                
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label for="btn" class="form-label"></label>
+                                                <button type="submit" class="form-control btn btn-primary btn-block tombol-count" id="tombol-count" name="submit">Count</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>                                
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label for="end_date" class="form-label">End Date*</label>
-                                    <input type="date" class="form-control" id="end_date" name="end_date" value="" placeholder="mm/dd/yyyy" required />
-                                    <span class="text-danger" id="endDateErrorMsg"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">                                
-                            <div class="col-sm-4">
-                                <div class="mb-3">
-                                    <label for="btn" class="form-label"></label>
-                                    <button type="submit" class="form-control btn btn-primary btn-block" id="tombol-cetak" value="print">Print</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
-                    </form>
-                    </div>
+                     
 
-                    <div class="collapse" id="collapseCountFine">
-                        <form id="form-count" name="form-count" class="form-horizontal">
-                            <div class="d-flex p-3 border">
-                                <div class="col-sm-3">
-                                    <div class="col-sm-8">
-                                        <div class="mb-3">
-                                            <label for="tanggal_awal" class="form-label">Start Date*</label>
-                                            <input type="date" class="form-control" id="tanggal_awal" name="tanggal_awal" value="" placeholder="mm/dd/yyyy" required />
-                                            <span class="text-danger" id="tanggalAwalErrorMsg"></span>
-                                        </div>
-                                    </div>                                
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="col-sm-8">
-                                        <div class="mb-3">
-                                            <label for="tanggal_akhir" class="form-label">End Date*</label>
-                                            <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" value="" placeholder="mm/dd/yyyy" required />
-                                            <span class="text-danger" id="tanggalAkhirErrorMsg"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">                                
-                                    <div class="col-sm-4">
-                                        <div class="mb-3">
-                                            <label for="btn" class="form-label"></label>
-                                            <button type="submit" class="form-control btn btn-primary btn-block tombol-count" id="tombol-count" name="submit">Count</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="col-sm-8 p-3" id="count-page"></div>  
-                    </div>
+                    
                     <!-- Import Excel -->
                     <div class="modal fade" id="importPayment" aria-hidden="true">
                         <div class="modal-dialog">
@@ -140,12 +143,13 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-8 mt-3 mb-3" id="count-page"></div> 
                 <div class="card">
                     <div class="card-body">
                         <table class="table table-hover table-responsive" id="table_payment">
                             <tfoot style="display: table-header-group;">
                                 <tr>
-                                    <th>#</th>
+                                    <th width="8%;">#</th>
                                     <th>NIM</th>
                                     <th>Student Name</th>
                                     <th>Major</th>
@@ -431,6 +435,11 @@
             }
         })
     }
+
+    var $myGroup = $('#myGroup');
+        $myGroup.on('show.bs.collapse','.collapse', function() {
+            $myGroup.find('.collapse.in').collapse('hide');
+    });
 
     // Button Count Fine
     if ($("#form-count").length > 0) {

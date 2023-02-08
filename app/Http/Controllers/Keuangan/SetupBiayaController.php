@@ -18,7 +18,7 @@ class SetupBiayaController extends Controller
     {
         $dataSetupBiaya = SetupBiaya::leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
             ->leftJoin('year_periods','year_periods.id','=','setup_biayas.id_periode')
-            ->select('setup_biayas.id AS id','setup_biayas.nama_biaya','setup_biayas.nilai','prodis.nama_id','year_periods.tahun')
+            ->select('setup_biayas.id AS id','setup_biayas.*','prodis.nama_id','year_periods.tahun')
             ->get();
                 
         if($request->ajax()){

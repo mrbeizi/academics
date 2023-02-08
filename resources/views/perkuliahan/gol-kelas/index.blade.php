@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title','Setup Biaya')
+@section('title','Kelompok Mahasiswa')
 
 @section('breadcrumbs')
 <div class="container">
@@ -9,7 +9,7 @@
         <a href="{{route('dashboard')}}">Home</a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{route('setup-biaya.index')}}">@yield('title')</a>
+        <a href="{{route('gol-kelas.index')}}">@yield('title')</a>
       </li>
       <li class="breadcrumb-item active">Data</li>
     </ol>
@@ -27,18 +27,17 @@
                     <div class="card-body">
                         <!-- MULAI TOMBOL TAMBAH -->
                         <div class="mb-3">
-                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle"></i></a>
+                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
-                            <table class="table table-hover table-responsive" id="table_setup_biaya">
+                            <table class="table table-hover table-responsive" id="table_gol_kelas">
                               <thead>
                                 <tr>
                                   <th>#</th>
+                                  <th>Group Name</th>
+                                  <th>Notes</th>
                                   <th>Period</th>
-                                  <th>Lingkup Biaya</th>
-                                  <th>Nama Biaya</th>
-                                  <th>Amount (IDR)</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -62,42 +61,29 @@
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="nama_biaya" class="form-label">Nama Biaya*</label>
-                                                    <input type="text" class="form-control" id="nama_biaya" name="nama_biaya" value="" placeholder="eg: SPP Sem 2" />
-                                                    <span class="text-danger" id="namaBiayaErrorMsg"></span>
+                                                    <label for="nama_golongan" class="form-label">Nama Golongan*</label>
+                                                    <input type="text" class="form-control" id="nama_golongan" name="nama_golongan" value="" placeholder="John Doe" />
+                                                    <span class="text-danger" id="namaGolErrorMsg"></span>
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="id_lingkup_biaya" class="form-label">Prodi*</label>
-                                                    <select class="form-select" id="id_lingkup_biaya" name="id_lingkup_biaya" aria-label="Default select example" style="cursor:pointer;">
-                                                        <option value="">- Choose -</option>
-                                                        <option value="0">Universitas</option>
-                                                        @foreach($getProdi as $data)
-                                                        <option value="{{$data->id}}">{{$data->nama_id}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <span class="text-danger" id="idLingkupBiayaErrorMsg"></span>
-                                                </div> 
-
-                                                <div class="mb-3">
-                                                    <label for="nilai" class="col-sm-12 control-label">Jumlah Biaya (IDR)*</label>
-                                                    <input type="text" class="form-control" id="nilai" name="nilai" placeholder="Input amount (IDR)" value="" required>
-                                                    <span class="text-danger" id="nilaiErrorMsg"></span>
+                                                    <label for="keterangan" class="form-label">Keterangan</label>
+                                                    <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
+                                                    <span class="text-danger" id="keteranganErrorMsg"></span>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="id_periode" class="form-label">Year Period*</label>
                                                     <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
                                                         <option value="">- Choose -</option>
-                                                        @foreach($getYearPeriod as $year)
-                                                        <option value="{{$year->id}}">{{$year->tahun}}</option>
+                                                        @foreach($getPeriode as $data)
+                                                        <option value="{{$data->id}}">{{$data->nama_periode}}</option>
                                                         @endforeach
                                                     </select>
                                                     <span class="text-danger" id="idPeriodeErrorMsg"></span>
                                                 </div>
                                                 
                                             </div>
-                                            
                                             <div class="col-sm-offset-2 col-sm-12">
                                                 <hr class="mt-2">
                                                 <div class="float-sm-end">
@@ -121,12 +107,11 @@
         </div>
     </section>
 </div>
-         
+
 @endsection
 @section('script')
-  
-  <!-- Core JS -->
-  <script>
+
+<script>
     $(document).ready(function () {
         $.ajaxSetup({
             headers: {
@@ -137,24 +122,19 @@
 
     // DATATABLE
     $(document).ready(function () {
-        var table = $('#table_setup_biaya').DataTable({
+        var table = $('#table_gol_kelas').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('setup-biaya.index') }}",
+            ajax: "{{ route('gol-kelas.index') }}",
             columns: [
                 {data: null,sortable:false,
                     render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'tahun',name: 'tahun'},
-                {data: 'nama_id',name: 'nama_id',
-                    render: function(type,data,row){ 
-                        return (row.id_lingkup_biaya == 0) ? 'Universitas' : row.nama_id;  
-                    }
-                },
-                {data: 'nama_biaya',name: 'nama_biaya'},
-                {data: 'nilai',name: 'nilai',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')},
+                {data: 'setting',name: 'setting'},
+                {data: 'keterangan',name: 'keterangan'},
+                {data: 'nama_periode',name: 'nama_periode'},
                 {data: 'action',name: 'action'},
             ]
         });
@@ -178,15 +158,14 @@
 
                 $.ajax({
                     data: $('#form-tambah-edit').serialize(), 
-                    url: "{{ route('setup-biaya.store') }}",
+                    url: "{{ route('gol-kelas.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         $('#form-tambah-edit').trigger("reset");
                         $('#tambah-edit-modal').modal('hide');
                         $('#tombol-simpan').html('Save');
-                        var oTable = $('#table_setup_biaya').dataTable();
-                        oTable.fnDraw(false);
+                        $('#table_gol_kelas').DataTable().ajax.reload(null, true);
                         Swal.fire({
                             title: 'Good job!',
                             text: 'Data saved successfully!',
@@ -199,14 +178,13 @@
                         })
                     },
                     error: function(response) {
-                        $('#namaBiayaErrorMsg').text(response.responseJSON.errors.nama_biaya);
-                        $('#idLingkupBiayaErrorMsg').text(response.responseJSON.errors.id_lingkup_biaya);
-                        $('#nilaiErrorMsg').text(response.responseJSON.errors.nilai);
+                        $('#namaGolErrorMsg').text(response.responseJSON.errors.nama_golongan);
+                        $('#keteranganErrorMsg').text(response.responseJSON.errors.keterangan);
                         $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',
-                            text: ' Data failed to save!',
+                            text: 'Data failed to save!',
                             type: 'error',
                             customClass: {
                             confirmButton: 'btn btn-primary'
@@ -223,15 +201,14 @@
     // EDIT DATA
     $('body').on('click', '.edit-post', function () {
         var data_id = $(this).data('id');
-        $.get('setup-biaya/' + data_id + '/edit', function (data) {
+        $.get('gol-kelas/' + data_id + '/edit', function (data) {
             $('#modal-judul').html("Edit data");
             $('#tombol-simpan').val("edit-post");
             $('#tambah-edit-modal').modal('show');
               
             $('#id').val(data.id);
-            $('#nama_biaya').val(data.nama_biaya);
-            $('#id_lingkup_biaya').val(data.id_lingkup_biaya);
-            $('#nilai').val(data.nilai);
+            $('#nama_golongan').val(data.nama_golongan);
+            $('#keterangan').val(data.keterangan);
             $('#id_periode').val(data.id_periode);
         })
     });
@@ -251,7 +228,7 @@
             preConfirm: function() {
                 return new Promise(function(resolve) {
                     $.ajax({
-                        url: "setup-biaya/" + dataId,
+                        url: "gol-kelas/" + dataId,
                         type: 'DELETE',
                         data: {id:dataId},
                         dataType: 'json'
@@ -262,7 +239,7 @@
                             type: 'success',
                             timer: 2000
                         })
-                        $('#table_setup_biaya').DataTable().ajax.reload(null, true);
+                        $('#table_gol_kelas').DataTable().ajax.reload(null, true);
                     }).fail(function() {
                         Swal.fire({
                             title: 'Oops!',
@@ -276,27 +253,13 @@
         });
     });
 
-    // INPUT FORMAT RUPIAH OTOMATIS 
-    var rupiah = document.getElementById('nilai');
-    rupiah.addEventListener('keyup',function(e){
-    rupiah.value = formatRupiah(this.value,'Rp. ');
-    })
-
-    function formatRupiah(angka, prefix){
-        var number_string = angka.replace(/[^,\d]/g, '').toString(),
-        split = number_string.split(','),
-        sisa = split[0].length % 3,
-        rupiah = split[0].substr(0, sisa),
-        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-        if(ribuan) {
-        separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-        }
-
-        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    function onlyNumeric(event) {
+        var angka = (event.which) ? event.which : event.keyCode
+        if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+            return false;
+        return true;
     }
-    
-  </script>
+
+</script>
+
 @endsection

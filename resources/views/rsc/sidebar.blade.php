@@ -34,13 +34,13 @@
     <!-- Apps & Pages -->
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Main Menus</span></li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('gol-kelas.index')}}">
         <i class='menu-icon tf-icons bx bx-dock-top bx-tada-hover'></i>
         <div data-i18n="Perkuliahan">Perkuliahan</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="{{route('gol-kelas.index')}}" class="menu-link {{set_active('gol-kelas.index')}}">
             <div data-i18n="Kelompok Mahasiswa">Kelompok Mahasiswa</div>
             </a>
         </li>
@@ -194,8 +194,8 @@
     </li>
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('setup-biaya.index')}} OR {{set_active('semester.index')}} OR {{set_active('payment-list.index')}}">
-        <i class='menu-icon tf-icons bx bx-cog bx-tada-hover'></i>
-        <div data-i18n="Master Data">Master Data</div>
+        <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
+        <div data-i18n="Data Master">Data Master</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">

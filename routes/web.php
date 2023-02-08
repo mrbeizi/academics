@@ -111,4 +111,11 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('switch-year-period','Keuangan\YearPeriodController@switchPeriod')->name('change-year-period-status');
     Route::resource('setup-biaya','Keuangan\SetupBiayaController');
 
+    // Perkuliahan
+    Route::resource('gol-kelas','Perkuliahan\GolKelasController');
+    Route::resource('in-kelas','Perkuliahan\InKelasController');
+    Route::get('/add-kelas/{id}','Perkuliahan\InKelasController@index')->name('in.kelas');
+    Route::get('/add-kelas-mhs/{id}','Perkuliahan\InKelasController@listMahasiswa')->name('list.mahasiswa');
+    Route::delete('/del-kelas-mhs/{id}','Perkuliahan\InKelasController@destroy')->name('del.mahasiswa');
+
 });

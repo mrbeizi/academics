@@ -93,7 +93,7 @@
 
                                                 <div class="mb-3">
                                                     <label for="jumlah_bayar" class="col-sm-12 control-label">Jumlah Bayar (IDR)*</label>
-                                                    <input type="text" class="form-control" id="jumlah_bayar" name="jumlah_bayar" placeholder="Type {{currency_IDR($item->nilai / 5)}}" value="" required>
+                                                    <input type="text" class="form-control" id="jumlah_bayar" name="jumlah_bayar" placeholder="Type Amount" value="" required>
                                                     <span class="text-danger" id="jumlahBayarErrorMsg"></span>
                                                 </div>                                                
                                             </div>
