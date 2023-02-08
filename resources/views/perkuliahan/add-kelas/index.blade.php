@@ -37,15 +37,16 @@
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="card bg-warning text-white text-center p-3">
+                                                @foreach($getInfo as $info)
                                                 <figure class="mb-0">
-                                                @foreach($dataKelas as $datas) @endforeach
-                                                <blockquote class="blockquote">
-                                                    <p>Nama Golongan {{$datas->nama_golongan}}.</p>
+                                                    <blockquote class="blockquote">
+                                                    <p>Nama Golongan {{$info->nama_golongan}}.</p>
                                                 </blockquote>
-                                                <figcaption class="blockquote-footer mb-0 text-white">
-                                                    Periode <cite title="{{$datas->nama_periode}}">{{$datas->nama_periode}}</cite>
+                                                <figcaption class="blockquote-footer mb-0 text-white">                                                    
+                                                    Periode <cite title="{{$info->nama_periode}}">{{$info->nama_periode}}</cite>
                                                 </figcaption>
                                                 </figure>
+                                                @endforeach
                                             </div>
                                         </div>
                                         <div class="col-sm-8">

@@ -32,10 +32,14 @@ class InKelasController extends Controller
                 ->addIndexColumn(true)
                 ->make(true);
         }
+        $getInfo = DB::table('gol_kelas')->leftJoin('periodes','periodes.id','=','gol_kelas.id_periode')
+            ->select('gol_kelas.id AS id','gol_kelas.*','periodes.nama_periode')
+            ->where('gol_kelas.id',$id)
+            ->get();
         $getGolKelas = DB::table('gol_kelas')->where('id','!=',$id)->get();
         $getPeriode = Periode::all();
         $getProdi = Prodi::all();
-        return view('perkuliahan.add-kelas.index',['id' => $id,'dataKelas' => $dataKelas,'getGolKelas' => $getGolKelas,'getPeriode' => $getPeriode, 'getProdi' => $getProdi]);
+        return view('perkuliahan.add-kelas.index',['id' => $id,'dataKelas' => $dataKelas,'getInfo' => $getInfo,'getGolKelas' => $getGolKelas,'getPeriode' => $getPeriode, 'getProdi' => $getProdi]);
     }
 
     public function listMahasiswa(Request $request, $id)
