@@ -147,7 +147,11 @@
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'tahun',name: 'tahun'},
+                {data: 'kode',name: 'kode',
+                    render: function(type,data,row){ 
+                        return row.kode+' - '+row.nama_periode;  
+                    }
+                },
                 {data: 'nama_id',name: 'nama_id',
                     render: function(type,data,row){ 
                         return (row.id_lingkup_biaya == 0) ? 'Universitas' : row.nama_id;  
