@@ -187,9 +187,9 @@
         </a>
     </li>
     <li class="menu-item">
-        <a href="{{route('year-period.index')}}" class="menu-link {{set_active('year-period.index')}}">
-        <i class="menu-icon tf-icons bx bx-calendar bx-tada-hover"></i>
-        <div data-i18n="Year Period">Year Period</div>
+        <a href="{{route('biaya-kuliah.index')}}" class="menu-link {{set_active('biaya-kuliah.index')}}">
+        <i class="menu-icon tf-icons bx bx-wallet bx-tada-hover"></i>
+        <div data-i18n="Biaya Kuliah">Biaya Kuliah</div>
         </a>
     </li>
     <li class="menu-item">
@@ -201,11 +201,6 @@
         <li class="menu-item">
             <a href="{{route('setup-biaya.index')}}" class="menu-link {{set_active('setup-biaya.index')}}">
             <div data-i18n="Setup Biaya">Setup Biaya</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="{{route('semester.index')}}" class="menu-link {{set_active('semester.index')}}">
-            <div data-i18n="Semester">Semester</div>
             </a>
         </li>
         <li class="menu-item">

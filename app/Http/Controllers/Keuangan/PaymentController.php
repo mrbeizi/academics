@@ -10,7 +10,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Keuangan\PaymentList;
 use App\Model\Keuangan\Payment;
-use App\Model\Keuangan\Semester;
 use App\Model\Mahasiswa;
 use Carbon\Carbon;
 use PDF;
@@ -47,14 +46,14 @@ class PaymentController extends Controller
             'nim_mahasiswa'      => 'required',
             'jumlah_bayar'       => 'required',
             'id_payment_list'    => 'required',
-            'semester'           => 'required',
+            'id_periode'         => 'required',
             'tgl_pembayaran'     => 'required',
             'keterangan'         => 'required',
         ],[
             'nim_mahasiswa.required'    => 'Anda belum memilih mahasiswa',
             'jumlah_bayar.required'     => 'Anda belum menginput jumlah bayar',
             'id_payment_list.required'  => 'Anda belum memilih nama pembayaran',
-            'semester.required'         => 'Anda belum memilih Semester',
+            'id_periode.required'       => 'Anda belum memilih periode',
             'tgl_pembayaran.required'   => 'Anda belum memilih tanggal pembayaran',
             'keterangan.required'       => 'Anda belum menginput keterangan'
         ]);
@@ -64,7 +63,7 @@ class PaymentController extends Controller
                         'nim_mahasiswa'     => $request->nim_mahasiswa,
                         'id_payment_list'   => $request->id_payment_list,
                         'jumlah_bayar'      => preg_replace('/\D/','', $request->jumlah_bayar),
-                        'semester'          => $request->semester,
+                        'id_periode'        => $request->id_periode,
                         'tgl_pembayaran'    => $request->tgl_pembayaran,
                         'keterangan'        => $request->keterangan,
                     ]); 
@@ -157,12 +156,16 @@ class PaymentController extends Controller
         if($request->tanggal_awal <= $request->tanggal_akhir){
             $tanggal_awal = $request->tanggal_awal;
             $tanggal_akhir = $request->tanggal_akhir;
-            $interval = Carbon::parse($tanggal_akhir)->diffInDays(Carbon::parse($tanggal_awal));
+            $interval = Carbon::parse($tanggal_akhir)->diffInDays(Carbon::parse($tanggal_awal)) + 1;
             $total = 0;
 
             for($i=1; $i<=$interval; $i++){
-                $fine = ceil($i/7)*5000;
-                $total = $total + $fine;
+                // $fine = ceil($i/7)*5000;
+                // $total = $total + $fine;
+                // New Calculation -- total equals to interval multiply to fine amount (5000) plus flat amount from the first week!
+                $flatAmount = 5000;
+                $finePerDay = 5000;
+                $total = $flatAmount + ($interval*$finePerDay);
             }
 
             $content = '<div class="col-md">

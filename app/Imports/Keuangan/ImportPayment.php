@@ -19,9 +19,8 @@ class ImportPayment implements ToModel
             'nim_mahasiswa' => $row[1],
             'id_payment_list' => $row[2], 
             'jumlah_bayar' => $row[3],
-            'semester' => $row[4],
-            'tgl_pembayaran' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[5])->format('Y-m-d'),
-            'keterangan' => $row[6],
+            'tgl_pembayaran' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[4])->format('Y-m-d'),
+            'keterangan' => $row[5],
         ]);
     }
 }

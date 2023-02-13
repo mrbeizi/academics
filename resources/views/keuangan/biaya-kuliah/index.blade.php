@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title','Semester')
+@section('title','Biaya Kuliah')
 
 @section('breadcrumbs')
 <div class="container">
@@ -9,7 +9,7 @@
         <a href="{{route('dashboard')}}">Home</a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{route('semester.index')}}">@yield('title')</a>
+        <a href="{{route('biaya-kuliah.index')}}">@yield('title')</a>
       </li>
       <li class="breadcrumb-item active">Data</li>
     </ol>
@@ -22,25 +22,27 @@
 <div class="container flex-grow-1">
     <section id="basic-datatable">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12">                  
                 <div class="card">
                     <div class="card-body">
                         <!-- MULAI TOMBOL TAMBAH -->
                         <div class="mb-3">
-                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle"></i></a>
+                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
-                            <table class="table table-hover table-responsive" id="table_semester">
-                              <thead>
-                                <tr>
-                                  <th>#</th>
-                                  <th>Name</th>
-                                  <th>Actions</th>
-                                </tr>
-                              </thead>
-                            </table>
-                        </div>
+                        <table class="table table-hover table-responsive" id="table_biaya_kuliah">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>NIM</th>
+                                <th>Student Name</th>
+                                <th>Period</th>
+                                <th>Major</th>
+                                <th>Amount</th>
+                            </tr>
+                            </thead>
+                        </table>
                     </div>
 
                     <!-- MULAI MODAL FORM TAMBAH/EDIT-->
@@ -59,9 +61,9 @@
                                                 <input type="hidden" name="id" id="id">
 
                                                 <div class="mb-3">
-                                                    <label for="nama_semester" class="form-label">Name Semester*</label>
-                                                    <input type="text" class="form-control" id="nama_semester" name="nama_semester" value="" placeholder="eg: Semester IV" />
-                                                    <span class="text-danger" id="namaSemesterErrorMsg"></span>
+                                                    <label for="nama_pembayaran" class="form-label">Payment Name*</label>
+                                                    <input type="text" class="form-control" id="nama_pembayaran" name="nama_pembayaran" value="" placeholder="eg: Uang Lab" />
+                                                    <span class="text-danger" id="namaPembayaranErrorMsg"></span>
                                                 </div>
                                                 
                                             </div>
@@ -76,8 +78,6 @@
                                         </div>
 
                                     </form>
-                                </div>
-                                <div class="modal-footer">
                                 </div>
                             </div>
                         </div>
@@ -105,18 +105,39 @@
 
     // DATATABLE
     $(document).ready(function () {
-        var table = $('#table_semester').DataTable({
+        var table = $('#table_biaya_kuliah').DataTable({
+            initComplete: function () {
+                // Apply the search
+                this.api()
+                    .columns()
+                    .every(function () {
+                        var that = this;
+    
+                        $('input', this.footer()).on('keyup change clear', function () {
+                            if (that.search() !== this.value) {
+                                that.search(this.value).draw();
+                            }
+                        });
+                    });
+            },
             processing: true,
             serverSide: true,
-            ajax: "{{ route('semester.index') }}",
+            ajax: "{{ route('biaya-kuliah.index') }}",
             columns: [
                 {data: null,sortable:false,
                     render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'nama_semester',name: 'nama_semester'},
-                {data: 'action',name: 'action'},
+                {data: 'nim',name: 'nim'},
+                {data: 'nama_mahasiswa',name: 'nama_mahasiswa'},
+                {data: 'nama_periode',name: 'nama_periode',render: function(type,data,row)
+                    { 
+                        return row.kode+' - '+row.nama_periode;
+                    }
+                },
+                {data: 'nama_id',name: 'nama_id'},
+                {data: 'biaya',name: 'biaya',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')},
             ]
         });
     });
@@ -139,15 +160,14 @@
 
                 $.ajax({
                     data: $('#form-tambah-edit').serialize(), 
-                    url: "{{ route('semester.store') }}",
+                    url: "{{ route('biaya-kuliah.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         $('#form-tambah-edit').trigger("reset");
                         $('#tambah-edit-modal').modal('hide');
                         $('#tombol-simpan').html('Save');
-                        var oTable = $('#table_semester').dataTable();
-                        oTable.fnDraw(false);
+                        $('#table_biaya_kuliah').DataTable().ajax.reload(null, true);
                         Swal.fire({
                             title: 'Good job!',
                             text: 'Data saved successfully!',
@@ -160,11 +180,12 @@
                         })
                     },
                     error: function(response) {
-                        $('#namaSemesterErrorMsg').text(response.responseJSON.errors.nama_semester);
+                        $('#kodeProdiErrorMsg').text(response.responseJSON.errors.kode_prodi);
+                        $('#kodeDiktiErrorMsg').text(response.responseJSON.errors.kode_dikti);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',
-                            text: ' Data failed to save!',
+                            text: 'Data failed to save!',
                             type: 'error',
                             customClass: {
                             confirmButton: 'btn btn-primary'
@@ -177,59 +198,6 @@
             }
         })
     }
-
-    // EDIT DATA
-    $('body').on('click', '.edit-post', function () {
-        var data_id = $(this).data('id');
-        $.get('semester/' + data_id + '/edit', function (data) {
-            $('#modal-judul').html("Edit data");
-            $('#tombol-simpan').val("edit-post");
-            $('#tambah-edit-modal').modal('show');
-              
-            $('#id').val(data.id);
-            $('#nama_semester').val(data.nama_semester);
-        })
-    });
-
-    // TOMBOL DELETE
-    $(document).on('click', '.delete', function () {
-        dataId = $(this).attr('id');
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "It will be deleted permanently!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
-            showLoaderOnConfirm: true,
-            preConfirm: function() {
-                return new Promise(function(resolve) {
-                    $.ajax({
-                        url: "semester/" + dataId,
-                        type: 'DELETE',
-                        data: {id:dataId},
-                        dataType: 'json'
-                    }).done(function(response) {
-                        Swal.fire({
-                            title: 'Deleted!',
-                            text: 'Your data has been deleted.',
-                            type: 'success',
-                            timer: 2000
-                        })
-                        $('#table_semester').DataTable().ajax.reload(null, true);
-                    }).fail(function() {
-                        Swal.fire({
-                            title: 'Oops!',
-                            text: 'Something went wrong with ajax!',
-                            type: 'error',
-                            timer: 2000
-                        })
-                    });
-                });
-            },
-        });
-    });
     
   </script>
 @endsection

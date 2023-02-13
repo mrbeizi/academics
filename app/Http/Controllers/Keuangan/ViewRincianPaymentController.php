@@ -8,8 +8,9 @@ use App\Model\Keuangan\Payment;
 use App\Model\Keuangan\PaymentList;
 use App\Model\Keuangan\PaymentDiscount;
 use App\Model\Keuangan\SetupBiaya;
-use App\Model\Keuangan\Semester;
+use App\Model\Keuangan\BiayaKuliah;
 use App\Model\Mahasiswa;
+use App\Model\Periode;
 use Response;
 use Session;
 use Validator;
@@ -22,8 +23,9 @@ class ViewRincianPaymentController extends Controller
         $dataPayments = Payment::leftJoin('mahasiswas','mahasiswas.nim','=','payments.nim_mahasiswa')
             ->leftJoin('prodis','prodis.id','=','mahasiswas.id_prodi')
             ->leftJoin('payment_lists','payment_lists.id','=','payments.id_payment_list')
+            ->leftJoin('periodes','periodes.id','=','payments.id_periode')
             ->leftJoin('payment_discounts','payment_discounts.id_data_payment','=','payments.id')
-            ->select('payments.id AS id','payments.*','mahasiswas.nim','mahasiswas.nama_mahasiswa','mahasiswas.id_status_mahasiswa','prodis.nama_id','payment_lists.nama_pembayaran','payment_discounts.jumlah_potongan')
+            ->select('payments.id AS id','payments.*','mahasiswas.nim','mahasiswas.nama_mahasiswa','mahasiswas.id_status_mahasiswa','prodis.nama_id','payment_lists.nama_pembayaran','payment_discounts.jumlah_potongan','periodes.nama_periode','periodes.kode')
             ->where('payments.nim_mahasiswa',$id)
             ->orderBy('payments.created_at','DESC')
             ->get();
@@ -46,10 +48,15 @@ class ViewRincianPaymentController extends Controller
                 ->addIndexColumn(true)
                 ->make(true);
         }
-        $getBiaya = SetupBiaya::leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
-            ->leftJoin('mahasiswas','mahasiswas.id_prodi','=','prodis.id')
+        // $getBiaya = SetupBiaya::leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
+        //     ->leftJoin('mahasiswas','mahasiswas.id_prodi','=','prodis.id')
+        //     ->leftJoin('status_mahasiswas','status_mahasiswas.id','=','mahasiswas.id_status_mahasiswa')
+        //     ->select('setup_biayas.nama_biaya','setup_biayas.nilai','status_mahasiswas.id AS ism','status_mahasiswas.nama_status')
+        //     ->where('mahasiswas.nim',$id)
+        //     ->get();
+        $getBiaya = BiayaKuliah::leftJoin('mahasiswas','mahasiswas.nim','=','biaya_kuliahs.nim')
             ->leftJoin('status_mahasiswas','status_mahasiswas.id','=','mahasiswas.id_status_mahasiswa')
-            ->select('setup_biayas.nama_biaya','setup_biayas.nilai','status_mahasiswas.id AS ism','status_mahasiswas.nama_status')
+            ->select('biaya_kuliahs.id AS id','biaya_kuliahs.*','status_mahasiswas.id AS ism','status_mahasiswas.nama_status')
             ->where('mahasiswas.nim',$id)
             ->get();
         $grandTotal = Payment::where('nim_mahasiswa',$id)->sum('jumlah_bayar');
@@ -61,8 +68,8 @@ class ViewRincianPaymentController extends Controller
             $getPaymentList = PaymentList::select('id','nama_pembayaran')->where('id','!=', 3)->get();
         }
 
-        $getSemester = Semester::select('id','nama_semester')->get();
-        return view('keuangan.view-rincian.v-rincian-payment', ['id' => $id,'getPaymentList' => $getPaymentList,'getSemester'=>$getSemester,'getBiaya' => $getBiaya,'grandTotal'=>$grandTotal,'studentState' => $this->studentState($id)]);
+        $getPeriode = Periode::select('id','kode','nama_periode')->get();
+        return view('keuangan.view-rincian.v-rincian-payment', ['id' => $id,'getPaymentList' => $getPaymentList,'getPeriode'=>$getPeriode,'getBiaya' => $getBiaya,'grandTotal'=>$grandTotal,'studentState' => $this->studentState($id)]);
     }
 
     protected function studentState($nim)
@@ -77,14 +84,14 @@ class ViewRincianPaymentController extends Controller
             'nim_mahasiswa'      => 'required',
             'jumlah_bayar'       => 'required',
             'id_payment_list'    => 'required',
-            'semester'           => 'required',
+            'id_periode'         => 'required',
             'tgl_pembayaran'     => 'required',
             'keterangan'         => 'required',
         ],[
             'nim_mahasiswa.required'    => 'Anda belum memilih mahasiswa',
             'jumlah_bayar.required'     => 'Anda belum menginput jumlah bayar',
             'id_payment_list.required'  => 'Anda belum memilih nama pembayaran',
-            'semester.required'         => 'Anda belum memilih Semester',
+            'id_periode.required'       => 'Anda belum memilih Periode',
             'tgl_pembayaran.required'   => 'Anda belum memilih tanggal pembayaran',
             'keterangan.required'       => 'Anda belum menginput keterangan'
         ]);
@@ -94,7 +101,7 @@ class ViewRincianPaymentController extends Controller
                         'nim_mahasiswa'     => $request->nim_mahasiswa,
                         'id_payment_list'   => $request->id_payment_list,
                         'jumlah_bayar'      => preg_replace('/\D/','', $request->jumlah_bayar),
-                        'semester'          => $request->semester,
+                        'id_periode'        => $request->id_periode,
                         'tgl_pembayaran'    => $request->tgl_pembayaran,
                         'keterangan'        => $request->keterangan,
                     ]); 

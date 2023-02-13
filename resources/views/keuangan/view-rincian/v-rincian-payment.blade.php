@@ -42,7 +42,7 @@
                                   <th>#</th>
                                   <th>NIM</th>
                                   <th>Student Name</th>
-                                  <th>SMT</th>
+                                  <th>Period</th>
                                   <th>Amounts</th>
                                   <th>Disc.</th>
                                   <th>Date</th>
@@ -50,15 +50,30 @@
                                   <th>Actions</th>
                                 </tr>
                               </thead>
-                              <tfoot class="bg-secondary">
+                              <tfoot class="bg-secondary bg-gradient">
                                 <tr>
                                     <th colspan="4" style="color: black;">Grand Total</th>
                                     <th style="color: rgb(0, 0, 0); font-size: 14px;">{{currency_IDR($grandTotal)}}</th>
                                     <th colspan="4"></th>
                                 </tr>
                             </tfoot>
-                            </table>
-                        </div>
+                            @foreach($getBiaya as $r)
+                            <div class="d-flex justify-content-between mt-3 mb-1">
+                                <span>Total Biaya Kuliah</span>
+                                <span class="text-muted">{{currency_IDR($r->biaya)}}</span>
+                            </div>
+                            <div class="progress mb-3">
+                                
+                                @if($grandTotal != 0)
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: {{ceil(100/($r->biaya/$grandTotal))}}%;" aria-valuenow="{{$grandTotal}}" aria-valuemin="0" aria-valuemax="{{$r->biaya}}">{{ceil(100/($r->biaya/$grandTotal))}}%</div>
+                                @else
+                                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 0%;" aria-valuenow="{{$grandTotal}}" aria-valuemin="0" aria-valuemax="{{$r->biaya}}">0%</div>
+                                @endif
+                            </div>
+                            @endforeach
+                        </table>
+                    </div>
+                    
                     </div>
 
                     <!-- MULAI MODAL FORM TAMBAH/EDIT-->
@@ -80,8 +95,8 @@
                                                         @else
                                                             <span class="badge bg-label-success me-1 mb-2">STATUS {{$item->nama_status}}</span>
                                                         @endif
-                                                        <h3>{{currency_IDR($item->nilai)}}</h3>
-                                                        <label>{{currency_IDR($item->nilai / 5)}} per month</label>
+                                                        <h3>{{currency_IDR($item->biaya)}}</h3>
+                                                        <label>{{currency_IDR($item->biaya / 5)}} per month</label>
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -114,14 +129,14 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="mb-3">
-                                                            <label for="semester" class="form-label">Semester*</label>
-                                                            <select class="form-select" id="semester" name="semester" aria-label="Default select example" style="cursor:pointer;">
+                                                            <label for="id_periode" class="form-label">Periode*</label>
+                                                            <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
                                                                 <option value="">- Choose -</option>
-                                                                @foreach($getSemester as $semester)
-                                                                <option value="{{$semester->id}}">{{$semester->nama_semester}}</option>
+                                                                @foreach($getPeriode as $periode)
+                                                                <option value="{{$periode->id}}">{{$periode->kode .' > '.$periode->nama_periode}}</option>
                                                                 @endforeach
                                                             </select>
-                                                            <span class="text-danger" id="semesterErrorMsg"></span>
+                                                            <span class="text-danger" id="idPeriodeErrorMsg"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -245,7 +260,11 @@
                 }, 
                 {data: 'nim',name: 'nim'},
                 {data: 'nama_mahasiswa',name: 'nama_mahasiswa'},
-                {data: 'semester',name: 'semester'},
+                {data: 'nama_periode',name: 'nama_periode',
+                    render: function(type,data,row){ 
+                        return row.kode + ' - ' + row.nama_periode; 
+                    }
+                },
                 {data: 'jumlah_bayar',name: 'jumlah_bayar',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')},
                 {data: 'jumlah_potongan',name: 'jumlah_potongan',render: function(type, row,row)
                     { 
@@ -302,7 +321,7 @@
                         $('#nimMahasiswaErrorMsg').text(response.responseJSON.errors.nim_mahasiswa);
                         $('#idPaymentListErrorMsg').text(response.responseJSON.errors.id_payment_list);
                         $('#jumlahBayarErrorMsg').text(response.responseJSON.errors.jumlah_bayar);
-                        $('#SemesterErrorMsg').text(response.responseJSON.errors.semester);
+                        $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
                         $('#tglPembayaranErrorMsg').text(response.responseJSON.errors.tgl_pembayaran);
                         $('#keteranganErrorMsg').text(response.responseJSON.errors.keterangan);
                         $('#tombol-simpan').html('Save');
@@ -334,7 +353,7 @@
             $('#nim_mahasiswa').val(data.nim_mahasiswa);
             $('#id_payment_list').val(data.id_payment_list);
             $('#jumlah_bayar').val(data.jumlah_bayar);
-            $('#semester').val(data.semester);
+            $('#id_periode').val(data.id_periode);
             $('#tgl_pembayaran').val(data.tgl_pembayaran);
             $('#keterangan').val(data.keterangan);
         })

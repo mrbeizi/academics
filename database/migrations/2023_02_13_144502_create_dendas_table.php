@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSemestersTable extends Migration
+class CreateDendasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,14 @@ class CreateSemestersTable extends Migration
      */
     public function up()
     {
-        Schema::create('semesters', function (Blueprint $table) {
+        Schema::create('dendas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama_semester',30);
+            $table->integer('id_periode');
+            $table->string('nim');
+            $table->integer('id_biaya_kuliah');
+            $table->string('cicilan');
+            $table->bigInteger('potongan')->nullable();
+            $table->bigInteger('jumlah_denda');
             $table->timestamps();
         });
     }
@@ -27,6 +32,6 @@ class CreateSemestersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('semesters');
+        Schema::dropIfExists('dendas');
     }
 }

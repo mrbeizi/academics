@@ -93,7 +93,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('datatable-mahasiswa-prodi','Admin\ApiMahasiswaProdiController@showDataTable')->name('datatable-mahasiswa-prodi');
 
     // Keuangan
-    Route::resource('semester','Keuangan\SemesterController');
     Route::resource('payment-list','Keuangan\PaymentListController');
     Route::resource('payment','Keuangan\PaymentController');
     Route::get('/view-rincian-payment/{id}','Keuangan\ViewRincianPaymentController@index')->name('view-rincian-payment');
@@ -107,9 +106,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('import-payment', 'Keuangan\PaymentController@importPayment')->name('import-payment');
     Route::get('count-fine','Keuangan\PaymentController@countFine')->name('count-fine');
 
-    Route::resource('year-period','Keuangan\YearPeriodController');
-    Route::post('switch-year-period','Keuangan\YearPeriodController@switchPeriod')->name('change-year-period-status');
     Route::resource('setup-biaya','Keuangan\SetupBiayaController');
+
+    Route::resource('biaya-kuliah','Keuangan\BiayaKuliahController');
 
     // Perkuliahan
     Route::resource('gol-kelas','Perkuliahan\GolKelasController');

@@ -90,7 +90,7 @@
                                                     <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
                                                         <option value="">- Choose -</option>
                                                         @foreach($getYearPeriod as $year)
-                                                        <option value="{{$year->id}}">{{$year->tahun}}</option>
+                                                        <option value="{{$year->id}}">{{$year->kode}} - {{$year->nama_periode}}</option>
                                                         @endforeach
                                                     </select>
                                                     <span class="text-danger" id="idPeriodeErrorMsg"></span>

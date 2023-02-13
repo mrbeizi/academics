@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Keuangan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Keuangan\SetupBiaya;
-use App\Model\Keuangan\YearPeriod;
 use App\Model\Prodi;
+use App\Model\Periode;
 use Response;
 use Session;
 use Validator;
@@ -34,7 +34,7 @@ class SetupBiayaController extends Controller
                 ->make(true);
         }
         $getProdi = Prodi::where('is_archived','=',0)->get();
-        $getYearPeriod = YearPeriod::where('is_active','=',1)->get();
+        $getYearPeriod = Periode::where('is_active','=',1)->get();
         return view('keuangan.setup-biaya.index', compact('getProdi','getYearPeriod'));
     }
 
