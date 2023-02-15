@@ -34,7 +34,7 @@ class SetupBiayaController extends Controller
                 ->make(true);
         }
         $getProdi = Prodi::where('is_archived','=',0)->get();
-        $getYearPeriod = Periode::where('is_active','=',1)->get();
+        $getYearPeriod = Periode::all();
         return view('keuangan.setup-biaya.index', compact('getProdi','getYearPeriod'));
     }
 

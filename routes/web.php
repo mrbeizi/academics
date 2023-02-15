@@ -107,8 +107,14 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('count-fine','Keuangan\PaymentController@countFine')->name('count-fine');
 
     Route::resource('setup-biaya','Keuangan\SetupBiayaController');
-
     Route::resource('biaya-kuliah','Keuangan\BiayaKuliahController');
+
+    Route::resource('custom-biaya','Keuangan\CustomBiayaController');
+    Route::post('switch-custom-biaya','Keuangan\CustomBiayaController@switchStatus')->name('change-custom-biaya-status');
+
+    Route::resource('discount-biaya','Keuangan\DiscountBiayaController');
+    Route::get('/potongan-biaya/{id}','Keuangan\DiscountBiayaController@index')->name('potongan-biaya');
+    Route::get('/list-discounts/{id}','Keuangan\DiscountBiayaController@listDiscount')->name('list-discount');
 
     // Perkuliahan
     Route::resource('gol-kelas','Perkuliahan\GolKelasController');
