@@ -35,9 +35,9 @@
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Setting</th>
-                                  <th>Period</th>
                                   <th>Payment Name</th>
+                                  <th>Period</th>
+                                  <th>Setting</th>
                                   <th>State</th>
                                   <th>Actions</th>
                                 </tr>
@@ -137,13 +137,13 @@
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'setting',name: 'setting'},
+                {data: 'nama_custom_biaya',name: 'nama_custom_biaya'},
                 {data: 'kode',name: 'kode',
                     render: function(type,data,row){ 
                         return row.kode+' - '+row.nama_periode;  
                     }
                 },
-                {data: 'nama_custom_biaya',name: 'nama_custom_biaya'},
+                {data: 'setting',name: 'setting'},
                 {data: 'status',name: 'status'},
                 {data: 'action',name: 'action'},
             ]

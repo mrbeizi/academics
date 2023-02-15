@@ -17,7 +17,7 @@ class CalonMahasiswaController extends Controller
     {
 
         // Just for TahunAjaran
-        $getApiTahunAjaran = file_get_contents('put your api here');
+        $getApiTahunAjaran = file_get_contents('put-your-url-here/api/tahun-ajaran');
         $jsonTahunAjaran = json_decode($getApiTahunAjaran, TRUE);
 
         return view('administrator.calon-mahasiswa.index', compact('jsonTahunAjaran'));
@@ -26,11 +26,11 @@ class CalonMahasiswaController extends Controller
     public function show(Request $request)
     {
         if($request->tahun){
-            $getApi = 'put your api here/'.$request->tahun;
+            $getApi = 'put-your-url-here/api/data-mahasiswa/'.$request->tahun;
             $datas = file_get_contents($getApi);
             $json = json_decode($datas, TRUE);
         }else{
-            $getApi = 'put your api here';
+            $getApi = 'put-your-url-here/api/data-mahasiswa';
             $datas = file_get_contents($getApi);
             $json = json_decode($datas, TRUE);
         }
@@ -54,7 +54,7 @@ class CalonMahasiswaController extends Controller
 
     protected function view(Request $request)
     {
-        $getApi = 'put your api here/'.$request->dataId;
+        $getApi = 'put-your-url-here/api/detail-form-mahasiswa/'.$request->dataId;
         $datas = file_get_contents($getApi);
         $json = json_decode($datas, TRUE);
         $rows = array();
@@ -80,7 +80,7 @@ class CalonMahasiswaController extends Controller
 
     protected function showDataTable(Request $request)
     {
-        $getApi = 'put your api here/'.$request->yearSelect;
+        $getApi = 'put-your-url-here/api/data-mahasiswa/'.$request->yearSelect;
         $datas = file_get_contents($getApi);
         $json = json_decode($datas, TRUE);
         $rows = array();

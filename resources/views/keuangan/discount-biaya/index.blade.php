@@ -43,6 +43,7 @@
                                                 <div class="form-group">
                                                     <div class="col-lg-12">
                                                         <h3>{{$item->nama_custom_biaya}}</h3>
+                                                        <input type="hidden" name="id_custom_biaya" id="id_custom_biaya" value="{{$item->id}}">
                                                     </div>
                                                 </div>
                                             </div> 
@@ -50,16 +51,22 @@
                                         @endforeach
                                         <div class="col-sm-3 mb-1">
                                             <label for="id_setup_biaya" class="form-label">Payment Group*</label>
-                                                <select name="id_setup_biaya" class="form-select" aria-label="Default select example" style="cursor:pointer;" required>
+                                                <select name="id_setup_biaya" class="form-select" aria-label="Default select example" style="cursor:pointer;">
                                                     <option value="" readonly>- Choose -</option>                                  
-                                                    @foreach($getPaymentList as $data)                                 
-                                                    <option value="{{$data->id_biaya}}">[{{$data->kode}}] {{$data->nama_id}} > {{$data->nama_biaya}} > Rp{{number_format($data->nilai,0,',','.')}}</option>
+                                                    @foreach($getPaymentList as $data)
+                                                        @if($data->id_lingkup_biaya != 0)
+                                                            <option value="{{$data->id_biaya}}">[{{$data->kode}}] {{$data->nama_id}} > {{$data->nama_biaya}} > Rp{{number_format($data->nilai,0,',','.')}}</option>
+                                                        @else
+                                                            <option value="{{$data->id_biaya}}">[{{$data->kode}}] Universitas > {{$data->nama_biaya}} > Rp{{number_format($data->nilai,0,',','.')}}</option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
+                                                <span class="text-danger" id="idSetupBiayaErrorMsg"></span>
                                         </div>
                                         <div class="col-sm-3 mb-1">
                                             <label for="discount" class="form-label">Discount*</label>
-                                                <input type="number" min="0" class="form-control" id="discount" name="discount" placeholder="Insert Value" value=""  required>
+                                            <input type="number" min="0" class="form-control" id="discount" name="discount" placeholder="Insert Value" value="">
+                                            <span class="text-danger" id="discountErrorMsg"></span>
                                         </div>
                                         <div class="col-sm-3 mb-1">
                                             <label for="is_percentage" class="form-label mb-1"></label>
@@ -73,11 +80,9 @@
                                         </div>
         
                                         <div class="col-sm-3">                                
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="btn" class="form-label"></label>
-                                                    <button type="submit" class="form-control btn btn-warning btn-block tombol-simpan" id="tombol-simpan" name="submit">Save</button>
-                                                </div>
+                                            <div class="mb-3">
+                                                <label for="btn" class="form-label"></label>
+                                                <button type="submit" class="form-control btn btn-warning btn-block tombol-simpan" id="tombol-simpan" name="submit">Save</button>
                                             </div>
                                         </div>
         
@@ -90,8 +95,9 @@
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Period</th>
+                                  <th>Payment Name</th>
                                   <th>Group</th>
+                                  <th>Amount</th>
                                   <th>Disc.</th>
                                   <th>Actions</th>
                                 </tr>
@@ -134,9 +140,18 @@
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
-                {data: 'nama_periode',name: 'nama_periode'},
-                {data: 'nama_prodi',name: 'nama_prodi'},
-                {data: 'discount',name: 'discount'},
+                {data: 'nama_custom_biaya',name: 'nama_custom_biaya'},
+                {data: 'nama_prodi',name: 'nama_prodi',
+                    render: function(type,data,row) { 
+                        return (row.id_lingkup_biaya == 0) ? 'Universitas' : row.nama_prodi;
+                    }
+                },
+                {data: 'nilai',name: 'nilai',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')},
+                {data: 'discount',name: 'discount', 
+                    render: function(type,data,row) { 
+                        return (row.is_percentage == 1) ? '-'+row.discount+'%' : '-'+row.discount+'';
+                    }
+                },
                 {data: 'action',name: 'action'},
             ]
         });
@@ -160,7 +175,7 @@
 
                 $.ajax({
                     data: $('#form-tambah-edit').serialize(), 
-                    url: "{{ route('mk-kurikulum.store') }}",
+                    url: "{{ route('discount-biaya.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
@@ -178,12 +193,10 @@
                             buttonsStyling: false,
                             timer: 2000
                         })
-                        location.reload();
                     },
                     error: function(response) {
-                        $('#idKurikulumErrorMsg').text(response.responseJSON.errors.id_kurikulum);
-                        $('#kodeMatakuliahErrorMsg').text(response.responseJSON.errors.kode_matakuliah);
-                        $('#semesterErrorMsg').text(response.responseJSON.errors.semester);
+                        $('#idSetupBiayaErrorMsg').text(response.responseJSON.errors.id_setup_biaya);
+                        $('#discountErrorMsg').text(response.responseJSON.errors.discount);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',
@@ -200,21 +213,6 @@
             }
         })
     }
-
-    // EDIT DATA
-    $('body').on('click', '.edit-post', function () {
-        var data_id = $(this).data('id');
-        $.get('mk-kurikulum/' + data_id + '/edit', function (data) {
-            $('#modal-judul').html("Edit data");
-            $('#tombol-simpan').val("edit-post");
-            $('#tambah-edit-modal').modal('show');
-              
-            $('#id').val(data.id);
-            $('#id_kurikulum').val(data.id_kurikulum);
-            $('#kode_matakuliah').val(data.kode_matakuliah);
-            $('#semester').val(data.semester);
-        })
-    });
 
     /* UNTUK TOGGLE STATUS */
     function MatakuliahStatus(id,is_active){
@@ -253,7 +251,7 @@
             preConfirm: function() {
                 return new Promise(function(resolve) {
                     $.ajax({
-                        url: '{{route("del.mkkurikulum", ":id_mkkurikulum")}}'.replace(":id_mkkurikulum", dataId),
+                        url: '{{route("del-discount", ":id_custom_biaya")}}'.replace(":id_custom_biaya", dataId),
                         type: 'DELETE',
                         data: {id:dataId},
                         dataType: 'json'
@@ -265,7 +263,6 @@
                             timer: 2000
                         })
                         $('#table_discount_biaya').DataTable().ajax.reload(null, true);
-                        location.reload();
                     }).fail(function() {
                         Swal.fire({
                             title: 'Oops!',

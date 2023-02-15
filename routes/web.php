@@ -115,6 +115,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('discount-biaya','Keuangan\DiscountBiayaController');
     Route::get('/potongan-biaya/{id}','Keuangan\DiscountBiayaController@index')->name('potongan-biaya');
     Route::get('/list-discounts/{id}','Keuangan\DiscountBiayaController@listDiscount')->name('list-discount');
+    Route::delete('/del-list-discount/{id}','Keuangan\DiscountBiayaController@destroy')->name('del-discount');
 
     // Perkuliahan
     Route::resource('gol-kelas','Perkuliahan\GolKelasController');

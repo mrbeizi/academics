@@ -23,14 +23,77 @@
     <section id="basic-datatable">
         <div class="row">
             <div class="col-12">                  
+                <!-- MULAI TOMBOL TAMBAH -->
+                <div class="mb-3">
+                    <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bx bx-xs bx-plus-circle bx-tada-hover"></i> Add Data </button>
+                    <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="import-Payment"><button type="button" class="btn btn-primary mr-5"><i class="bx bx-xs bx-import bx-tada-hover"></i> Import</button></a>
+                </div>
+
+                <div class="collapse indent mb-3" id="collapseExample">
+                    <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
+                        <div class="border p-3 rounded">
+                            <input type="hidden" name="id" id="id">    
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-inline">
+                                                <label class="control-label" for="nim">NIM or Registration Number</label>
+                                                <select class="form-select" id="nim" name="nim" aria-label="Default select example" style="cursor:pointer;">
+                                                    <option value="">- Choose -</option>
+                                                    @foreach($getMahasiswa as $mahasiswa)
+                                                        <option value="{{$mahasiswa->nim}}">{{$mahasiswa->nama_prodi}} - {{$mahasiswa->nama_mahasiswa}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="text-danger" id="nimErrorMsg"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-inline">
+                                                <label class="control-label" for="id_periode">Period</label>
+                                                <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
+                                                    <option value="">- Choose -</option>
+                                                    @foreach($getPeriode as $period)
+                                                        <option value="{{$period->id}}">{{$period->nama_periode}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="text-danger" id="idPeriodeErrorMsg"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-inline">
+                                                <label class="control-label" for="biaya">Amount</label>
+                                                <select class="form-select" id="biaya" name="biaya" aria-label="Default select example" style="cursor:pointer;">
+                                                    <option value="">- Choose -</option>
+                                                    @foreach($getPaymentList as $data)
+                                                        @if($data->id_lingkup_biaya != 0)
+                                                            <option value="{{$data->nilai}}">{{$data->nama_id}} > {{$data->nama_biaya}} > Rp{{number_format($data->nilai,0,',','.')}}</option>
+                                                        @else
+                                                            <option value="{{$data->nilai}}">Universitas > {{$data->nama_biaya}} > Rp{{number_format($data->nilai,0,',','.')}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                                <span class="text-danger" id="biayaErrorMsg"></span>
+                                            </div>
+                                        </div>                              
+                                        <div class="col-sm-3">
+                                            <div class="mb-3">
+                                                <label for="btn" class="form-label"></label>
+                                                <button type="submit" class="form-control btn btn-success btn-block tombol-simpan" id="tombol-simpan" name="submit">Save</button>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>                                        
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                
+                <!-- AKHIR TOMBOL -->
                 <div class="card">
                     <div class="card-body">
-                        <!-- MULAI TOMBOL TAMBAH -->
-                        <div class="mb-3">
-                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="tombol-tambah" data-bs-toggle="tooltip" data-bs-placement="top" title="Add data"><i class="bx bx-sm bx-plus-circle bx-spin-hover"></i></a>
-                        </div>
-                        
-                        <!-- AKHIR TOMBOL -->
                         <table class="table table-hover table-responsive" id="table_biaya_kuliah">
                             <thead>
                             <tr>
@@ -44,45 +107,6 @@
                             </thead>
                         </table>
                     </div>
-
-                    <!-- MULAI MODAL FORM TAMBAH/EDIT-->
-                    <div class="modal fade" id="tambah-edit-modal" aria-hidden="true">
-                        <div class="modal-dialog ">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="modal-judul"></h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-
-                                                <input type="hidden" name="id" id="id">
-
-                                                <div class="mb-3">
-                                                    <label for="nama_pembayaran" class="form-label">Payment Name*</label>
-                                                    <input type="text" class="form-control" id="nama_pembayaran" name="nama_pembayaran" value="" placeholder="eg: Uang Lab" />
-                                                    <span class="text-danger" id="namaPembayaranErrorMsg"></span>
-                                                </div>
-                                                
-                                            </div>
-                                            
-                                            <div class="col-sm-offset-2 col-sm-12">
-                                                <hr class="mt-2">
-                                                <div class="float-sm-end">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan" value="create">Save</button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- AKHIR MODAL -->
                     
                 </div>
             </div>
@@ -142,15 +166,6 @@
         });
     });
 
-    //TOMBOL TAMBAH DATA
-    $('#tombol-tambah').click(function () {
-        $('#button-simpan').val("create-post");
-        $('#id').val('');
-        $('#form-tambah-edit').trigger("reset");
-        $('#modal-judul').html("Add new data");
-        $('#tambah-edit-modal').modal('show');
-    });
-
     // TOMBOL TAMBAH
     if ($("#form-tambah-edit").length > 0) {
         $("#form-tambah-edit").validate({
@@ -180,8 +195,9 @@
                         })
                     },
                     error: function(response) {
-                        $('#kodeProdiErrorMsg').text(response.responseJSON.errors.kode_prodi);
-                        $('#kodeDiktiErrorMsg').text(response.responseJSON.errors.kode_dikti);
+                        $('#nimErrorMsg').text(response.responseJSON.errors.nim);
+                        $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
+                        $('#biayaErrorMsg').text(response.responseJSON.errors.biaya);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',

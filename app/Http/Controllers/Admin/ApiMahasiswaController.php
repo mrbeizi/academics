@@ -11,7 +11,7 @@ class ApiMahasiswaController extends Controller
     public function index(Request $request)
     {
         // Just for Api Mahasiswa
-        $getApiMahasiswa = file_get_contents('put your api here');
+        $getApiMahasiswa = file_get_contents('put-your-url-here/api/data-json-mahasiswa');
         $jsonMahasiswa = json_decode($getApiMahasiswa, TRUE);
 
         if($request->ajax()){
@@ -29,7 +29,7 @@ class ApiMahasiswaController extends Controller
 
     public function viewformdetail(Request $request)
     {
-        $getApi = 'put your api here'.$request->dataId;
+        $getApi = 'put-your-url-here/api/detail-form-mahasiswa/'.$request->dataId;
         $datas = file_get_contents($getApi);
         $json = json_decode($datas, TRUE);
         $rows = array();
