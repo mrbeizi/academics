@@ -13,7 +13,6 @@ class JabatanController extends Controller
     {
         $dataJabatan = Jabatan::leftJoin('periodes','periodes.id','=','jabatans.id_periode')
             ->select('jabatans.id AS id','jabatans.*','periodes.nama_periode')
-            ->where('periodes.is_active','=',1)
             ->get();
                 
         if($request->ajax()){

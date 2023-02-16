@@ -17,7 +17,7 @@ class MahasiswaController extends Controller
         $dataMhs = Mahasiswa::leftJoin('periodes','periodes.id','=','mahasiswas.id_periode')
             ->leftJoin('prodis','prodis.id','=','mahasiswas.id_prodi')
             ->select('mahasiswas.id AS id','mahasiswas.*','periodes.nama_periode','prodis.nama_id AS nama_prodi')
-            ->where([['periodes.is_active','=',1],['prodis.is_archived','=',0]])
+            ->where('prodis.is_archived','=',0)
             ->get();
                 
         if($request->ajax()){

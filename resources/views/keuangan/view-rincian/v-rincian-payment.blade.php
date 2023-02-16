@@ -57,20 +57,20 @@
                                     <th colspan="4"></th>
                                 </tr>
                             </tfoot>
-                            @foreach($getBiaya as $r)
+                            {{-- @foreach($getBiaya as $r) --}}
                             <div class="d-flex justify-content-between mt-3 mb-1">
                                 <span>Total Biaya Kuliah</span>
-                                <span class="text-muted">{{currency_IDR($r->biaya)}}</span>
+                                <span class="text-muted">{{currency_IDR($sumBiaya)}}</span>
                             </div>
                             <div class="progress mb-3">
                                 
                                 @if($grandTotal != 0)
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: {{ceil(100/($r->biaya/$grandTotal))}}%;" aria-valuenow="{{$grandTotal}}" aria-valuemin="0" aria-valuemax="{{$r->biaya}}">{{ceil(100/($r->biaya/$grandTotal))}}%</div>
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: {{ceil(100/($sumBiaya/$grandTotal))}}%;" aria-valuenow="{{$grandTotal}}" aria-valuemin="0" aria-valuemax="{{$sumBiaya}}">{{ceil(100/($sumBiaya/$grandTotal))}}%</div>
                                 @else
-                                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 0%;" aria-valuenow="{{$grandTotal}}" aria-valuemin="0" aria-valuemax="{{$r->biaya}}">0%</div>
+                                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 0%;" aria-valuenow="{{$grandTotal}}" aria-valuemin="0" aria-valuemax="{{$sumBiaya}}">0%</div>
                                 @endif
                             </div>
-                            @endforeach
+                            {{-- @endforeach --}}
                         </table>
                     </div>
                     

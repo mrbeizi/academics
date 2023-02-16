@@ -19,7 +19,7 @@ class FakultasController extends Controller
     {
         $dataFakultas = Fakultas::leftJoin('periodes','periodes.id','=','fakultas.id_periode')
             ->select('fakultas.id AS id','fakultas.*','periodes.nama_periode')
-            ->where([['periodes.is_active','=',1],['fakultas.is_archived','=',0]])
+            ->where('fakultas.is_archived','=',0)
             ->get();
                 
         if($request->ajax()){

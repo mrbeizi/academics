@@ -31,7 +31,7 @@ class PaymentController extends Controller
         if($request->ajax()){
             return datatables()->of($dataMahasiswa)
                 ->addColumn('action', function($data){
-                    return '<a href="'.Route('view-rincian-payment',['id' => $data->nim]).'"><button type="button" name="view_form" id="'.$data->nim_mahasiswa.'" class="view_form btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="View Rincian"><i class="bx bx-xs bx-detail"></i> Detail</button></a>';
+                    return '<a href="'.Route('view-rincian-payment',['id' => $data->nim]).'"><button type="button" name="view_form" id="'.$data->nim_mahasiswa.'" class="view_form btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="View Detail Payments"><i class="bx bx-xs bx-detail"></i> Payment</button></a>';
                 })
                 ->rawColumns(['action'])
                 ->addIndexColumn(true)

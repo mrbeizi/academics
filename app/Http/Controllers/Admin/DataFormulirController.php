@@ -17,7 +17,7 @@ class DataFormulirController extends Controller
     {
         $dataFormulir = DataFormulir::leftJoin('periodes','periodes.id','=','data_formulirs.id_periode')
             ->select('data_formulirs.id AS id','data_formulirs.nama_data','periodes.nama_periode')
-            ->where([['periodes.is_active','=',1],['data_formulirs.is_archived','=',0]])
+            ->where('data_formulirs.is_archived','=',0)
             ->get();
                 
         if($request->ajax()){

@@ -15,7 +15,7 @@ class ProdiController extends Controller
         $dataProdi = Prodi::leftJoin('periodes','periodes.id','=','prodis.id_periode')
             ->leftJoin('fakultas','fakultas.id','=','prodis.id_fakultas')
             ->select('prodis.id AS id','prodis.*','periodes.nama_periode','fakultas.nama_id AS nama_fakultas')
-            ->where([['periodes.is_active','=',1],['prodis.is_archived','=',0]])
+            ->where('prodis.is_archived','=',0)
             ->get();
                 
         if($request->ajax()){

@@ -187,19 +187,19 @@
         </a>
     </li>
     <li class="menu-item">
-        <a href="{{route('custom-biaya.index')}}" class="menu-link {{set_active('custom-biaya.index')}}">
-        <i class="menu-icon tf-icons bx bx-wallet-alt bx-tada-hover"></i>
-        <div data-i18n="Custom Biaya">Custom Biaya</div>
-        </a>
-    </li>
-    <li class="menu-item">
         <a href="{{route('biaya-kuliah.index')}}" class="menu-link {{set_active('biaya-kuliah.index')}}">
         <i class="menu-icon tf-icons bx bx-wallet bx-tada-hover"></i>
         <div data-i18n="Biaya Kuliah">Biaya Kuliah</div>
         </a>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('setup-biaya.index')}} OR {{set_active('semester.index')}} OR {{set_active('payment-list.index')}}">
+        <a href="{{route('custom-biaya.index')}}" class="menu-link {{set_active('custom-biaya.index')}}">
+        <i class="menu-icon tf-icons bx bx-wallet-alt bx-tada-hover"></i>
+        <div data-i18n="Custom Biaya">Custom Biaya</div>
+        </a>
+    </li>    
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('setup-biaya.index')}} OR {{set_active('payment-list.index')}}">
         <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
         <div data-i18n="Data Master">Data Master</div>
         </a>

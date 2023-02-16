@@ -19,6 +19,7 @@ class SetupBiayaController extends Controller
         $dataSetupBiaya = SetupBiaya::leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
             ->leftJoin('periodes','periodes.id','=','setup_biayas.id_periode')
             ->select('setup_biayas.id AS id','setup_biayas.*','prodis.nama_id','periodes.kode','periodes.nama_periode')
+            ->where('periodes.is_active','=',1)
             ->get();
                 
         if($request->ajax()){
@@ -34,7 +35,7 @@ class SetupBiayaController extends Controller
                 ->make(true);
         }
         $getProdi = Prodi::where('is_archived','=',0)->get();
-        $getYearPeriod = Periode::all();
+        $getYearPeriod = Periode::where('is_active',1)->get();
         return view('keuangan.setup-biaya.index', compact('getProdi','getYearPeriod'));
     }
 

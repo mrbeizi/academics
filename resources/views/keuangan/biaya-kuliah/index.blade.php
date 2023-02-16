@@ -38,11 +38,11 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="form-inline">
-                                                <label class="control-label" for="nim">NIM or Registration Number</label>
+                                                <label class="control-label" for="nim">Student Name or Department</label>
                                                 <select class="form-select" id="nim" name="nim" aria-label="Default select example" style="cursor:pointer;">
                                                     <option value="">- Choose -</option>
                                                     @foreach($getMahasiswa as $mahasiswa)
-                                                        <option value="{{$mahasiswa->nim}}">{{$mahasiswa->nama_prodi}} - {{$mahasiswa->nama_mahasiswa}}</option>
+                                                        <option value="{{$mahasiswa->nim}}">{{$mahasiswa->nama_mahasiswa}} - {{$mahasiswa->nama_prodi}}</option>
                                                     @endforeach
                                                 </select>
                                                 <span class="text-danger" id="nimErrorMsg"></span>
@@ -50,11 +50,11 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-inline">
-                                                <label class="control-label" for="id_periode">Period</label>
+                                                <label class="control-label" for="id_periode">Time or Period</label>
                                                 <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
                                                     <option value="">- Choose -</option>
                                                     @foreach($getPeriode as $period)
-                                                        <option value="{{$period->id}}">{{$period->nama_periode}}</option>
+                                                        <option value="{{$period->id}}">{{$period->kode}} - {{$period->nama_periode}}</option>
                                                     @endforeach
                                                 </select>
                                                 <span class="text-danger" id="idPeriodeErrorMsg"></span>
@@ -65,14 +65,23 @@
                                                 <label class="control-label" for="biaya">Amount</label>
                                                 <select class="form-select" id="biaya" name="biaya" aria-label="Default select example" style="cursor:pointer;">
                                                     <option value="">- Choose -</option>
+                                                    @php $biayakuliah = 0; @endphp 
                                                     @foreach($getPaymentList as $data)
-                                                        @if($data->id_lingkup_biaya != 0)
-                                                            <option value="{{$data->nilai}}">{{$data->nama_id}} > {{$data->nama_biaya}} > Rp{{number_format($data->nilai,0,',','.')}}</option>
+                                                    {{-- Count total if have discounts --}}
+                                                        @if($data->is_percentage == 1)
+                                                            {{ $biayakuliah = $data->nilai - ($data->discount * $data->nilai/100) }}
                                                         @else
-                                                            <option value="{{$data->nilai}}">Universitas > {{$data->nama_biaya}} > Rp{{number_format($data->nilai,0,',','.')}}</option>
+                                                            {{ $biayakuliah = $data->nilai - $data->discount }}
+                                                        @endif
+                                                    {{-- To show cost of each faculty, including university --}}
+                                                        @if($data->id_lingkup_biaya != 0)
+                                                            <option value="{{$biayakuliah}}">{{$data->nama_id}} > {{$data->nama_biaya}} > Rp{{number_format($biayakuliah,0,',','.')}}</option>
+                                                        @else
+                                                            <option value="{{$biayakuliah}}">Universitas > {{$data->nama_biaya}} > Rp{{number_format($biayakuliah,0,',','.')}}</option>
                                                         @endif
                                                     @endforeach
                                                 </select>
+                                                <div class="form-text">*Cost after discount</div>
                                                 <span class="text-danger" id="biayaErrorMsg"></span>
                                             </div>
                                         </div>                              

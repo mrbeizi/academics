@@ -26,7 +26,7 @@ class ViewRincianPaymentController extends Controller
             ->leftJoin('periodes','periodes.id','=','payments.id_periode')
             ->leftJoin('payment_discounts','payment_discounts.id_data_payment','=','payments.id')
             ->select('payments.id AS id','payments.*','mahasiswas.nim','mahasiswas.nama_mahasiswa','mahasiswas.id_status_mahasiswa','prodis.nama_id','payment_lists.nama_pembayaran','payment_discounts.jumlah_potongan','periodes.nama_periode','periodes.kode')
-            ->where('payments.nim_mahasiswa',$id)
+            ->where([['payments.nim_mahasiswa',$id],['periodes.is_active','=',1]])
             ->orderBy('payments.created_at','DESC')
             ->get();
                 
@@ -48,17 +48,13 @@ class ViewRincianPaymentController extends Controller
                 ->addIndexColumn(true)
                 ->make(true);
         }
-        // $getBiaya = SetupBiaya::leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
-        //     ->leftJoin('mahasiswas','mahasiswas.id_prodi','=','prodis.id')
-        //     ->leftJoin('status_mahasiswas','status_mahasiswas.id','=','mahasiswas.id_status_mahasiswa')
-        //     ->select('setup_biayas.nama_biaya','setup_biayas.nilai','status_mahasiswas.id AS ism','status_mahasiswas.nama_status')
-        //     ->where('mahasiswas.nim',$id)
-        //     ->get();
         $getBiaya = BiayaKuliah::leftJoin('mahasiswas','mahasiswas.nim','=','biaya_kuliahs.nim')
             ->leftJoin('status_mahasiswas','status_mahasiswas.id','=','mahasiswas.id_status_mahasiswa')
+            ->leftJoin('periodes','periodes.id','=','biaya_kuliahs.id_periode')
             ->select('biaya_kuliahs.id AS id','biaya_kuliahs.*','status_mahasiswas.id AS ism','status_mahasiswas.nama_status')
-            ->where('mahasiswas.nim',$id)
+            ->where([['mahasiswas.nim','=',$id],['periodes.is_active','=',1]])
             ->get();
+        $sumBiaya = BiayaKuliah::leftJoin('periodes','periodes.id','=','biaya_kuliahs.id_periode')->where([['nim','=',$id],['periodes.is_active','=',1]])->sum('biaya_kuliahs.biaya');
         $grandTotal = Payment::where('nim_mahasiswa',$id)->sum('jumlah_bayar');
 
         // Check State of students
@@ -68,8 +64,8 @@ class ViewRincianPaymentController extends Controller
             $getPaymentList = PaymentList::select('id','nama_pembayaran')->where('id','!=', 3)->get();
         }
 
-        $getPeriode = Periode::select('id','kode','nama_periode')->get();
-        return view('keuangan.view-rincian.v-rincian-payment', ['id' => $id,'getPaymentList' => $getPaymentList,'getPeriode'=>$getPeriode,'getBiaya' => $getBiaya,'grandTotal'=>$grandTotal,'studentState' => $this->studentState($id)]);
+        $getPeriode = Periode::select('id','kode','nama_periode')->where('is_active',1)->get();
+        return view('keuangan.view-rincian.v-rincian-payment', ['id' => $id,'getPaymentList' => $getPaymentList,'getPeriode'=>$getPeriode,'getBiaya' => $getBiaya,'grandTotal'=>$grandTotal,'studentState' => $this->studentState($id),'sumBiaya' => $sumBiaya]);
     }
 
     protected function studentState($nim)

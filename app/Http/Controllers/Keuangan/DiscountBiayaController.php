@@ -22,12 +22,16 @@ class DiscountBiayaController extends Controller
             ->leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
             ->select('discount_biayas.id AS id','discount_biayas.*','setup_biayas.id_lingkup_biaya','setup_biayas.nama_biaya','setup_biayas.nilai','periodes.nama_periode','prodis.nama_id AS nama_prodi','custom_biayas.nama_custom_biaya')  
             ->where('setup_biayas.id','=',$id)
-            ->get();     
+            ->get(); 
+            
+        $getA = DiscountBiaya::select('id_setup_biaya')->where('id_custom_biaya','=',$id)->get();
+        $getB = CustomBiaya::where('id',$id)->get();
         $getPaymentList = SetupBiaya::leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
-            ->leftJoin('periodes','periodes.id','=','setup_biayas.id_periode')
-            ->select('setup_biayas.id AS id_biaya','setup_biayas.*','prodis.nama_id','periodes.kode','periodes.nama_periode')
-            ->where('periodes.is_active','=',1)
-            ->get();
+        ->leftJoin('periodes','periodes.id','=','setup_biayas.id_periode')
+        ->select('setup_biayas.id AS id_biaya','setup_biayas.*','prodis.nama_id','periodes.kode','periodes.nama_periode')
+        ->whereNotIn('setup_biayas.id',$getA)
+        ->where('periodes.is_active','=',1)
+        ->get();
         $getCustomName = CustomBiaya::where('id',$id)->select('id','nama_custom_biaya')->get();
         return view('keuangan.discount-biaya.index',['id'=>$id,'getPaymentList' => $getPaymentList,'getCustomName' => $getCustomName]);
     }

@@ -183,6 +183,7 @@
                         $('#tambah-edit-modal').modal('hide');
                         $('#tombol-simpan').html('Save');
                         $('#table_discount_biaya').DataTable().ajax.reload(null, true);
+                        location.reload();
                         Swal.fire({
                             title: 'Good job!',
                             text: 'Data saved successfully!',
