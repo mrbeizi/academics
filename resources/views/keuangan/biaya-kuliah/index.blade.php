@@ -22,82 +22,122 @@
 <div class="container flex-grow-1">
     <section id="basic-datatable">
         <div class="row">
-            <div class="col-12">                  
-                <!-- MULAI TOMBOL TAMBAH -->
-                <div class="mb-3">
-                    <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bx bx-xs bx-plus-circle bx-tada-hover"></i> Add Data </button>
-                    <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" id="import-Payment"><button type="button" class="btn btn-primary mr-5"><i class="bx bx-xs bx-import bx-tada-hover"></i> Import</button></a>
-                </div>
+            <div class="col-12"> 
+                <div class="mb-2" id="myGroup">                 
+                    <!-- MULAI TOMBOL TAMBAH -->
+                    <div class="mb-3">
+                        <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bx bx-xs bx-plus-circle bx-tada-hover"></i> Add Data </button>
+                        <button type="button" id="count-fine" data-bs-toggle="collapse" data-bs-target="#collapseImportData" aria-expanded="false" aria-controls="collapseImportData" class="btn btn-primary me-1"><i class="bx bx-xs bx-import bx-tada-hover"></i> Import Data</button>
+                    </div>
 
-                <div class="collapse indent mb-3" id="collapseExample">
-                    <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
-                        <div class="border p-3 rounded">
-                            <input type="hidden" name="id" id="id">    
-                            <div class="row">
-                                <div class="col-sm-12">
+                    <div class="accordion-group">
+                        <div class="collapse indent mb-3" id="collapseExample" data-bs-parent="#myGroup">
+                            <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
+                                <div class="border p-3 rounded">
+                                    <input type="hidden" name="id" id="id">    
                                     <div class="row">
-                                        <div class="col-sm-3">
-                                            <div class="form-inline">
-                                                <label class="control-label" for="nim">Student Name or Department</label>
-                                                <select class="form-select" id="nim" name="nim" aria-label="Default select example" style="cursor:pointer;">
-                                                    <option value="">- Choose -</option>
-                                                    @foreach($getMahasiswa as $mahasiswa)
-                                                        <option value="{{$mahasiswa->nim}}">{{$mahasiswa->nama_mahasiswa}} - {{$mahasiswa->nama_prodi}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="text-danger" id="nimErrorMsg"></span>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="form-inline">
+                                                        <label class="control-label" for="nim">Student Name or Department</label>
+                                                        <select class="form-select" id="nim" name="nim" aria-label="Default select example" style="cursor:pointer;">
+                                                            <option value="">- Choose -</option>
+                                                            @foreach($getMahasiswa as $mahasiswa)
+                                                                <option value="{{$mahasiswa->nim}}">{{$mahasiswa->nama_mahasiswa}} - {{$mahasiswa->nama_prodi}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span class="text-danger" id="nimErrorMsg"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-inline">
+                                                        <label class="control-label" for="id_periode">Time or Period</label>
+                                                        <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
+                                                            <option value="">- Choose -</option>
+                                                            @foreach($getPeriode as $period)
+                                                                <option value="{{$period->id}}">{{$period->kode}} - {{$period->nama_periode}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span class="text-danger" id="idPeriodeErrorMsg"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-inline">
+                                                        <label class="control-label" for="biaya">Amount</label>
+                                                        <select class="form-select" id="biaya" name="biaya" aria-label="Default select example" style="cursor:pointer;">
+                                                            <option value="">- Choose -</option>
+                                                            @php $biayakuliah = 0; @endphp 
+                                                            @foreach($getPaymentList as $data)
+                                                            {{-- Count total if have discounts --}}
+                                                                @if($data->is_percentage == 1)
+                                                                    {{ $biayakuliah = $data->nilai - ($data->discount * $data->nilai/100) }}
+                                                                @else
+                                                                    {{ $biayakuliah = $data->nilai - $data->discount }}
+                                                                @endif
+                                                            {{-- To show cost of each faculty, including university --}}
+                                                                @if($data->id_lingkup_biaya != 0)
+                                                                    <option value="{{$biayakuliah}}">{{$data->nama_id}} > {{$data->nama_biaya}} > Rp{{number_format($biayakuliah,0,',','.')}}</option>
+                                                                @else
+                                                                    <option value="{{$biayakuliah}}">Universitas > {{$data->nama_biaya}} > Rp{{number_format($biayakuliah,0,',','.')}}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                        <div class="form-text">*Cost after discount</div>
+                                                        <span class="text-danger" id="biayaErrorMsg"></span>
+                                                    </div>
+                                                </div>                              
+                                                <div class="col-sm-3">
+                                                    <div class="mb-3">
+                                                        <label for="btn" class="form-label"></label>
+                                                        <button type="submit" class="form-control btn btn-success btn-block tombol-simpan" id="tombol-simpan" name="submit">Save</button>
+                                                    </div>
+                                                </div>
+                                                
                                             </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-inline">
-                                                <label class="control-label" for="id_periode">Time or Period</label>
-                                                <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
-                                                    <option value="">- Choose -</option>
-                                                    @foreach($getPeriode as $period)
-                                                        <option value="{{$period->id}}">{{$period->kode}} - {{$period->nama_periode}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="text-danger" id="idPeriodeErrorMsg"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-inline">
-                                                <label class="control-label" for="biaya">Amount</label>
-                                                <select class="form-select" id="biaya" name="biaya" aria-label="Default select example" style="cursor:pointer;">
-                                                    <option value="">- Choose -</option>
-                                                    @php $biayakuliah = 0; @endphp 
-                                                    @foreach($getPaymentList as $data)
-                                                    {{-- Count total if have discounts --}}
-                                                        @if($data->is_percentage == 1)
-                                                            {{ $biayakuliah = $data->nilai - ($data->discount * $data->nilai/100) }}
-                                                        @else
-                                                            {{ $biayakuliah = $data->nilai - $data->discount }}
-                                                        @endif
-                                                    {{-- To show cost of each faculty, including university --}}
-                                                        @if($data->id_lingkup_biaya != 0)
-                                                            <option value="{{$biayakuliah}}">{{$data->nama_id}} > {{$data->nama_biaya}} > Rp{{number_format($biayakuliah,0,',','.')}}</option>
-                                                        @else
-                                                            <option value="{{$biayakuliah}}">Universitas > {{$data->nama_biaya}} > Rp{{number_format($biayakuliah,0,',','.')}}</option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                                <div class="form-text">*Cost after discount</div>
-                                                <span class="text-danger" id="biayaErrorMsg"></span>
-                                            </div>
-                                        </div>                              
-                                        <div class="col-sm-3">
-                                            <div class="mb-3">
-                                                <label for="btn" class="form-label"></label>
-                                                <button type="submit" class="form-control btn btn-success btn-block tombol-simpan" id="tombol-simpan" name="submit">Save</button>
-                                            </div>
-                                        </div>
-                                        
+                                        </div>                                        
                                     </div>
-                                </div>                                        
-                            </div>
+                                </div>
+    
+                            </form>
                         </div>
 
-                    </form>
+                        <div class="collapse indent mb-3" id="collapseImportData" data-bs-parent="#myGroup">
+                            <form id="form-import-data" name="form-import-data" class="form-horizontal">
+                                <div class="border p-3 rounded">
+                                    <input type="hidden" name="id" id="id">    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="row justify-content-center">
+                                                
+                                                <div class="col-sm-3">
+                                                    <div class="form-inline">
+                                                        <label class="control-label" for="custom_name">Time or Period</label>
+                                                        <select class="form-select" id="custom_name" name="custom_name" aria-label="Default select example" style="cursor:pointer;">
+                                                            <option value="">- Choose -</option>
+                                                            @foreach($getPeriode as $period)
+                                                                <option value="{{$period->id}}">{{$period->kode}} - {{$period->nama_periode}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span class="text-danger" id="customNameErrorMsg"></span>
+                                                    </div>
+                                                </div>
+                                                                             
+                                                <div class="col-sm-3">
+                                                    <div class="mb-3">
+                                                        <label for="btn" class="form-label"></label>
+                                                        <button type="submit" class="form-control btn btn-primary btn-block tombol-import" id="tombol-import" name="submit"><i class="bx bx-xs bx-import bx-tada-hover"></i> Import</button>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                </div>
+    
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- AKHIR TOMBOL -->
@@ -189,7 +229,6 @@
                     dataType: 'json',
                     success: function (data) {
                         $('#form-tambah-edit').trigger("reset");
-                        $('#tambah-edit-modal').modal('hide');
                         $('#tombol-simpan').html('Save');
                         $('#table_biaya_kuliah').DataTable().ajax.reload(null, true);
                         Swal.fire({
@@ -208,6 +247,57 @@
                         $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
                         $('#biayaErrorMsg').text(response.responseJSON.errors.biaya);
                         $('#tombol-simpan').html('Save');
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Data failed to save!',
+                            type: 'error',
+                            customClass: {
+                            confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false,
+                            timer: 2000
+                        })
+                    }
+                });
+            }
+        })
+    }
+
+    var $myGroup = $('#myGroup');
+        $myGroup.on('show.bs.collapse','.collapse', function() {
+            $myGroup.find('.collapse.in').collapse('hide');
+    });
+
+    // TOMBOL IMPORT
+    if ($("#form-import-data").length > 0) {
+        $("#form-import-data").validate({
+            submitHandler: function (form) {
+                var actionType = $('#tombol-import').val();
+                $('#tombol-import').html('Importing..');
+
+                $.ajax({
+                    data: $('#form-import-data').serialize(), 
+                    url: "{{ route('import-biaya-kuliah') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#form-import-data').trigger("reset");
+                        $('#tombol-import').html('Import');
+                        $('#table_biaya_kuliah').DataTable().ajax.reload(null, true);
+                        Swal.fire({
+                            title: 'Good job!',
+                            text: 'Data saved successfully!',
+                            type: 'success',
+                            customClass: {
+                            confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false,
+                            timer: 2000
+                        })
+                    },
+                    error: function(response) {
+                        $('#customNameErrorMsg').text(response.responseJSON.errors.custom_name);
+                        $('#tombol-import').html('Import');
                         Swal.fire({
                             title: 'Error!',
                             text: 'Data failed to save!',

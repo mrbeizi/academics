@@ -33,7 +33,7 @@ class CustomBiayaController extends Controller
                     <span class="switch-toggle-slider"><span class="switch-on"><i class="bx bx-check"></i></span><span class="switch-off"><i class="bx bx-x"></i></span></span></label></div>';
                 })->addColumn('setting', function($data){
                     if($data->is_active != 0){
-                        return '<a href="'.Route('potongan-biaya',['id' => $data->id]).'" name="potongan" class="dropdown-shortcuts-add text-body potongan" data-id="'.$data->id.'" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Set Disc."><span class="badge bg-label-warning me-1"><i class="bx bx-xs bx-plus-circle bx-tada"></i> Atur Potongan</span></a>';
+                        return '<a href="'.Route('potongan-biaya',['id' => $data->id]).'" name="potongan" class="dropdown-shortcuts-add text-body potongan" data-id="'.$data->id.'" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Set Disc."><span class="badge bg-label-warning me-1"><i class="bx bx-xs bx-plus-circle bx-tada"></i> Set Discount</span></a>';
                     }else{
                         return '<span class="badge bg-label-secondary me-1"><i class="bx bx-xs"></i> Inactive</span>';
                     }

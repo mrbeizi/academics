@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Keuangan\PaymentList;
 use App\Model\Keuangan\Payment;
+use App\Model\Keuangan\BiayaKuliah;
 use App\Model\Mahasiswa;
 use Carbon\Carbon;
 use PDF;
@@ -23,9 +24,12 @@ class PaymentController extends Controller
 {
     public function index(Request $request)
     {
-        $dataMahasiswa = Mahasiswa::leftJoin('prodis','prodis.id','=','mahasiswas.id_prodi')
+        $dataMahasiswa = BiayaKuliah::leftJoin('mahasiswas','mahasiswas.nim','=','biaya_kuliahs.nim')
+            ->leftJoin('prodis','prodis.id','=','mahasiswas.id_prodi')
             ->leftJoin('status_mahasiswas','status_mahasiswas.id','=','mahasiswas.id_status_mahasiswa')
-            ->select('mahasiswas.id AS id','mahasiswas.*','prodis.nama_id AS nama_prodi','status_mahasiswas.id AS ism','status_mahasiswas.nama_status')
+            ->leftJoin('periodes','periodes.id','=','biaya_kuliahs.id_periode')
+            ->select('mahasiswas.id AS id','mahasiswas.*','prodis.nama_id AS nama_prodi','status_mahasiswas.id AS ism','status_mahasiswas.nama_status','biaya_kuliahs.biaya AS nominal_biaya')
+            ->where('periodes.is_active','=',1)
             ->get();
                 
         if($request->ajax()){
@@ -95,7 +99,8 @@ class PaymentController extends Controller
             $dataPayment = Payment::leftJoin('mahasiswas','mahasiswas.nim','=','payments.nim_mahasiswa')
                 ->leftJoin('prodis','prodis.id','=','mahasiswas.id_prodi')
                 ->leftJoin('payment_lists','payment_lists.id','=','payments.id_payment_list')
-                ->select('payments.id AS id','payments.*','mahasiswas.nim','mahasiswas.nama_mahasiswa','prodis.kode_prodi','payment_lists.id AS id_pembayaran','payment_lists.nama_pembayaran')
+                ->leftJoin('periodes','periodes.id','=','payments.id_periode')
+                ->select('payments.id AS id','payments.*','mahasiswas.nim','mahasiswas.nama_mahasiswa','prodis.kode_prodi','payment_lists.id AS id_pembayaran','payment_lists.nama_pembayaran','periodes.kode','periodes.nama_periode')
                 ->where('mahasiswas.tanggal_masuk','LIKE','%'.$request->tanggal_masuk.'%')
                 ->whereBetween('payments.tgl_pembayaran',[$start_date,$end_date])
                 ->orderBy('payments.nim_mahasiswa','ASC')
@@ -103,6 +108,7 @@ class PaymentController extends Controller
 
             $query = DB::table('payments')->leftJoin('mahasiswas','mahasiswas.nim','=','payments.nim_mahasiswa')
                 ->leftJoin('prodis','prodis.id','=','mahasiswas.id_prodi')
+                ->leftJoin('periodes','periodes.id','=','payments.id_periode')
                 ->select('prodis.kode_prodi',DB::raw('SUM(payments.jumlah_bayar) AS total_denda'))
                 ->where([['payments.id_payment_list', '=', 7],['mahasiswas.tanggal_masuk','LIKE','%'.$request->tanggal_masuk.'%']])
                 ->whereBetween('payments.tgl_pembayaran',[$start_date,$end_date])

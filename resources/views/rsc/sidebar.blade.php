@@ -189,13 +189,13 @@
     <li class="menu-item">
         <a href="{{route('biaya-kuliah.index')}}" class="menu-link {{set_active('biaya-kuliah.index')}}">
         <i class="menu-icon tf-icons bx bx-wallet bx-tada-hover"></i>
-        <div data-i18n="Biaya Kuliah">Biaya Kuliah</div>
+        <div data-i18n="Tuition Fees">Tuition Fees</div>
         </a>
     </li>
     <li class="menu-item">
         <a href="{{route('custom-biaya.index')}}" class="menu-link {{set_active('custom-biaya.index')}}">
         <i class="menu-icon tf-icons bx bx-wallet-alt bx-tada-hover"></i>
-        <div data-i18n="Custom Biaya">Custom Biaya</div>
+        <div data-i18n="Customize Cost">Customize Cost</div>
         </a>
     </li>    
     <li class="menu-item">
@@ -206,7 +206,7 @@
         <ul class="menu-sub">
         <li class="menu-item">
             <a href="{{route('setup-biaya.index')}}" class="menu-link {{set_active('setup-biaya.index')}}">
-            <div data-i18n="Setup Biaya">Setup Biaya</div>
+            <div data-i18n="Setup Cost">Setup Cost</div>
             </a>
         </li>
         <li class="menu-item">

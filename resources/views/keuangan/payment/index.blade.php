@@ -153,6 +153,7 @@
                                     <th>NIM</th>
                                     <th>Student Name</th>
                                     <th>Major</th>
+                                    <th>Amount</th>
                                     <th>State</th>
                                     <th>Actions</th>
                                 </tr>
@@ -163,6 +164,7 @@
                                 <th>NIM</th>
                                 <th>Student Name</th>
                                 <th>Major</th>
+                                <th>Amount</th>
                                 <th>State</th>
                                 <th>Actions</th>
                             </tr>
@@ -257,6 +259,7 @@
                 {data: 'nim',name: 'nim'},
                 {data: 'nama_mahasiswa',name: 'nama_mahasiswa'},
                 {data: 'nama_prodi',name: 'nama_prodi'},
+                {data: 'nominal_biaya',name: 'nominal_biaya',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')},
                 {data: 'nama_status',name: 'nama_status', 
                     render: function(type,data,row){ 
                         return (row.ism == 1) ? row.nama_status+' <div class="spinner-grow spinner-grow-sm text-success" role="nama_status">' : (row.ism == 3) ? row.nama_status+' <div class="spinner-grow spinner-grow-sm text-warning" role="nama_status">' : row.nama_status;  

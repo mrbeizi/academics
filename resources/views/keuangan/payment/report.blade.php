@@ -56,7 +56,7 @@
 				<td align="center">{{$payment->nim_mahasiswa}}</td>
 				<td>{{$payment->nama_mahasiswa}}</td>
 				<td align="center">{{$payment->kode_prodi}}</td>
-				<td align="center">{{$payment->semester}}</td>
+				<td align="center">{{$payment->kode}}- {{$payment->nama_periode}}</td>
 				<td align="right">Rp. {{ number_format($payment->jumlah_bayar,0,',','.') }}</td>
 				<td>{{$payment->keterangan}}</td>
 			</tr>

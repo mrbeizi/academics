@@ -65,4 +65,40 @@ class BiayaKuliahController extends Controller
 
         return response()->json($post);
     }
+
+    public function importBiayaKuliah(Request $request)
+    {
+        $request->validate([
+            'custom_name' => 'required',
+        ],[
+            'custom_name.required' => 'Anda belum memilih periode'
+        ]);
+
+        $collection = DiscountBiaya::leftJoin('setup_biayas','setup_biayas.id','=','discount_biayas.id_setup_biaya')
+            ->leftJoin('custom_biayas','custom_biayas.id','=','discount_biayas.id_custom_biaya')
+            ->leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
+            ->leftJoin('mahasiswas','mahasiswas.id_prodi','=','prodis.id')
+            ->leftJoin('periodes','periodes.id','=','setup_biayas.id_periode')
+            ->select('discount_biayas.discount','discount_biayas.is_percentage','setup_biayas.nilai','setup_biayas.id_lingkup_biaya','prodis.nama_id','mahasiswas.nim','mahasiswas.nama_mahasiswa')
+            ->where([['custom_biayas.id','=',$request->custom_name],['setup_biayas.id_lingkup_biaya','!=',0]])
+            ->get();
+
+        foreach($collection as $datas) {
+            if($datas->is_percentage == 1){
+                $cost = $datas->nilai - ($datas->discount * $datas->nilai/100);
+            } else {
+                $cost = $datas->nilai - $datas->discount;
+            }
+
+            $post = BiayaKuliah::updateOrCreate(['id' => $request->id],
+            [
+                'id_periode' => $request->custom_name,
+                'nim'        => $datas->nim,
+                'biaya'      => $cost,
+            ]);
+        }
+
+        return response()->json($post);
+
+    }
 }
