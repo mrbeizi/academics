@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Keuangan;
 
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use App\Model\Keuangan\BiayaKuliah;
 use App\Model\Keuangan\CustomBiaya;
@@ -40,8 +41,9 @@ class BiayaKuliahController extends Controller
             ->leftJoin('discount_biayas','discount_biayas.id_setup_biaya','=','setup_biayas.id')
             ->select('setup_biayas.id AS id_biaya','setup_biayas.nilai','setup_biayas.*','prodis.nama_id','periodes.kode','periodes.nama_periode','discount_biayas.id AS id_discount','discount_biayas.*')
             ->where('periodes.is_active','=',1)
+            ->orderBy('prodis.id','ASC')
             ->get();
-        return view('keuangan.biaya-kuliah.index', compact('getMahasiswa','getPeriode','getPaymentList'));
+        return view('keuangan.biaya-kuliah.index',compact('getMahasiswa','getPeriode','getPaymentList'));
     }
 
     public function store(Request $request)
@@ -69,36 +71,47 @@ class BiayaKuliahController extends Controller
     public function importBiayaKuliah(Request $request)
     {
         $request->validate([
+            'year_level'  => 'required',
             'custom_name' => 'required',
         ],[
+            'year_level.required'  => 'Anda belum memilih angkatan',
             'custom_name.required' => 'Anda belum memilih periode'
         ]);
 
-        $collection = DiscountBiaya::leftJoin('setup_biayas','setup_biayas.id','=','discount_biayas.id_setup_biaya')
-            ->leftJoin('custom_biayas','custom_biayas.id','=','discount_biayas.id_custom_biaya')
-            ->leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
-            ->leftJoin('mahasiswas','mahasiswas.id_prodi','=','prodis.id')
-            ->leftJoin('periodes','periodes.id','=','setup_biayas.id_periode')
-            ->select('discount_biayas.discount','discount_biayas.is_percentage','setup_biayas.nilai','setup_biayas.id_lingkup_biaya','prodis.nama_id','mahasiswas.nim','mahasiswas.nama_mahasiswa')
-            ->where([['custom_biayas.id','=',$request->custom_name],['setup_biayas.id_lingkup_biaya','!=',0]])
-            ->get();
-
-        foreach($collection as $datas) {
-            if($datas->is_percentage == 1){
-                $cost = $datas->nilai - ($datas->discount * $datas->nilai/100);
+        // Check if data exists
+        $isExist = BiayaKuliah::where([['nim','LIKE',''.$request->year_level.'%'],['id_periode','=',$request->custom_name]])->count();
+        if($isExist < 1) {
+            $collection = DiscountBiaya::leftJoin('setup_biayas','setup_biayas.id','=','discount_biayas.id_setup_biaya')
+                ->leftJoin('custom_biayas','custom_biayas.id','=','discount_biayas.id_custom_biaya')
+                ->leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
+                ->leftJoin('mahasiswas','mahasiswas.id_prodi','=','prodis.id')
+                ->leftJoin('periodes','periodes.id','=','setup_biayas.id_periode')
+                ->select('discount_biayas.discount','discount_biayas.is_percentage','setup_biayas.nilai','setup_biayas.id_lingkup_biaya','prodis.nama_id','mahasiswas.nim','mahasiswas.nama_mahasiswa','mahasiswas.id_periode')
+                ->where([['custom_biayas.id','=',$request->custom_name],['mahasiswas.nim','LIKE',$request->year_level.'%'],['setup_biayas.id_lingkup_biaya','!=',0]])
+                ->get();
+    
+            // Check if data available in table mahasiswa
+            if($collection->count() > 0){
+                foreach($collection as $datas) {
+                    if($datas->is_percentage == 1){
+                        $cost = $datas->nilai - ($datas->discount * $datas->nilai/100);
+                    } else {
+                        $cost = $datas->nilai - $datas->discount;
+                    }
+        
+                    $post = BiayaKuliah::updateOrCreate(['id' => $request->id],
+                    [
+                        'id_periode' => $request->custom_name,
+                        'nim'        => $datas->nim,
+                        'biaya'      => $cost,
+                    ]);
+                }
+                return response()->json($post);
             } else {
-                $cost = $datas->nilai - $datas->discount;
+                return Response::json(array('check' => 'not_available'), 200);
             }
-
-            $post = BiayaKuliah::updateOrCreate(['id' => $request->id],
-            [
-                'id_periode' => $request->custom_name,
-                'nim'        => $datas->nim,
-                'biaya'      => $cost,
-            ]);
+        } else {
+            return Response::json(array('check' => 'not_exist'), 200);
         }
-
-        return response()->json($post);
-
     }
 }

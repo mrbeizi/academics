@@ -30,6 +30,7 @@ class PaymentController extends Controller
             ->leftJoin('periodes','periodes.id','=','biaya_kuliahs.id_periode')
             ->select('mahasiswas.id AS id','mahasiswas.*','prodis.nama_id AS nama_prodi','status_mahasiswas.id AS ism','status_mahasiswas.nama_status','biaya_kuliahs.biaya AS nominal_biaya')
             ->where('periodes.is_active','=',1)
+            ->orderBy('prodis.id','ASC')
             ->get();
                 
         if($request->ajax()){

@@ -112,6 +112,18 @@
                                                 
                                                 <div class="col-sm-3">
                                                     <div class="form-inline">
+                                                        <label class="form-label" for="datepicker">Year Level</label>
+                                                        <select class="form-select" id="year_level" name="year_level" aria-label="Default select example" style="cursor:pointer;">
+                                                            <option value="">- Choose -</option>
+                                                            @for($i=date('Y');$i>=date('Y')-5;$i-=1)
+                                                            <option value="{{$i}}">{{$i}}</option>
+                                                            @endfor
+                                                        </select>
+                                                        <span class="text-danger" id="yearLevelErrorMsg"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-inline">
                                                         <label class="control-label" for="custom_name">Time or Period</label>
                                                         <select class="form-select" id="custom_name" name="custom_name" aria-label="Default select example" style="cursor:pointer;">
                                                             <option value="">- Choose -</option>
@@ -286,7 +298,7 @@
                         $('#table_biaya_kuliah').DataTable().ajax.reload(null, true);
                         Swal.fire({
                             title: 'Good job!',
-                            text: 'Data saved successfully!',
+                            text: 'Data imported successfully!',
                             type: 'success',
                             customClass: {
                             confirmButton: 'btn btn-primary'
@@ -294,8 +306,35 @@
                             buttonsStyling: false,
                             timer: 2000
                         })
+                        switch (data.check) {
+                            case "not_available":
+                                Swal.fire({
+                                title: 'Failed!',
+                                text: 'No data is available in table!',
+                                type: 'error',
+                                customClass: {
+                                confirmButton: 'btn btn-danger'
+                                },
+                                buttonsStyling: false,
+                                timer: 2000
+                            })
+                                break;
+                            case "not_exist":
+                                Swal.fire({
+                                title: 'Failed!',
+                                text: 'Data is already exist in table!',
+                                type: 'error',
+                                customClass: {
+                                confirmButton: 'btn btn-danger'
+                                },
+                                buttonsStyling: false,
+                                timer: 2000
+                            })
+                                break;
+                        }
                     },
                     error: function(response) {
+                        $('#yearLevelErrorMsg').text(response.responseJSON.errors.year_level);
                         $('#customNameErrorMsg').text(response.responseJSON.errors.custom_name);
                         $('#tombol-import').html('Import');
                         Swal.fire({
