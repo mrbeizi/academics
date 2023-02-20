@@ -37,8 +37,13 @@ class PaymentController extends Controller
             return datatables()->of($dataMahasiswa)
                 ->addColumn('action', function($data){
                     return '<a href="'.Route('view-rincian-payment',['id' => $data->nim]).'"><button type="button" name="view_form" id="'.$data->nim_mahasiswa.'" class="view_form btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="View Detail Payments"><i class="bx bx-xs bx-detail"></i> Payment</button></a>';
+                })->addColumn('pay', function($data){
+                    $sumBiaya = BiayaKuliah::leftJoin('periodes','periodes.id','=','biaya_kuliahs.id_periode')->where([['biaya_kuliahs.nim','=',$data->nim],['periodes.is_active','=',1]])->sum('biaya_kuliahs.biaya');
+                    $grandTotal = Payment::leftJoin('periodes','periodes.id','=','payments.id_periode')->where([['payments.nim_mahasiswa','=',$data->nim],['periodes.is_active','=',1]])->sum('payments.jumlah_bayar');
+
+                    return ($grandTotal != 0) ? '<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: '.ceil(100/($sumBiaya/$grandTotal)).'%;" aria-valuenow="'.$grandTotal.'" aria-valuemin="0" aria-valuemax="'.$sumBiaya.'">'.ceil(100/($sumBiaya/$grandTotal)).'%</div></div>' : '<div class="progress"><div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 0%;" aria-valuenow="'.$grandTotal.'" aria-valuemin="0" aria-valuemax="'.$sumBiaya.'">0%</div></div>';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action','pay'])
                 ->addIndexColumn(true)
                 ->make(true);
         }

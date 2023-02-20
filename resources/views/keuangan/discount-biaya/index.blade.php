@@ -257,6 +257,7 @@
                         data: {id:dataId},
                         dataType: 'json'
                     }).done(function(response) {
+                        location.reload();
                         Swal.fire({
                             title: 'Deleted!',
                             text: 'Your data has been deleted.',

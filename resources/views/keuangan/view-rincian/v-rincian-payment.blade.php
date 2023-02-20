@@ -111,9 +111,9 @@
                             <div class="progress mb-3">
                                 
                                 @if($grandTotal != 0)
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: {{ceil(100/($sumBiaya/$grandTotal))}}%;" aria-valuenow="{{$grandTotal}}" aria-valuemin="0" aria-valuemax="{{$sumBiaya}}">{{ceil(100/($sumBiaya/$grandTotal))}}%</div>
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{ceil(100/($sumBiaya/$grandTotal))}}%;" aria-valuenow="{{$grandTotal}}" aria-valuemin="0" aria-valuemax="{{$sumBiaya}}">{{ceil(100/($sumBiaya/$grandTotal))}}%</div>
                                 @else
-                                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 0%;" aria-valuenow="{{$grandTotal}}" aria-valuemin="0" aria-valuemax="{{$sumBiaya}}">0%</div>
+                                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 0%;" aria-valuenow="{{$grandTotal}}" aria-valuemin="0" aria-valuemax="{{$sumBiaya}}">0%</div>
                                 @endif
                             </div>
                             {{-- @endforeach --}}

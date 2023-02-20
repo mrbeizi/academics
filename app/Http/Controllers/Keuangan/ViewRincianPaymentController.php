@@ -54,8 +54,8 @@ class ViewRincianPaymentController extends Controller
             ->select('biaya_kuliahs.id AS id','biaya_kuliahs.*','status_mahasiswas.id AS ism','status_mahasiswas.nama_status')
             ->where([['mahasiswas.nim','=',$id],['periodes.is_active','=',1]])
             ->get();
-        $sumBiaya = BiayaKuliah::leftJoin('periodes','periodes.id','=','biaya_kuliahs.id_periode')->where([['nim','=',$id],['periodes.is_active','=',1]])->sum('biaya_kuliahs.biaya');
-        $grandTotal = Payment::where('nim_mahasiswa',$id)->sum('jumlah_bayar');
+        $sumBiaya = BiayaKuliah::leftJoin('periodes','periodes.id','=','biaya_kuliahs.id_periode')->where([['biaya_kuliahs.nim','=',$id],['periodes.is_active','=',1]])->sum('biaya_kuliahs.biaya');
+        $grandTotal = Payment::leftJoin('periodes','periodes.id','=','payments.id_periode')->where([['payments.nim_mahasiswa','=',$id],['periodes.is_active','=',1]])->sum('payments.jumlah_bayar');
 
         // Check State of students
         if($this->studentState($id)->id_status_mahasiswa == 3){
