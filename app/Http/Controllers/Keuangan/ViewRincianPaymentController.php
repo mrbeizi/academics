@@ -65,7 +65,8 @@ class ViewRincianPaymentController extends Controller
         }
 
         $getPeriode = Periode::select('id','kode','nama_periode')->where('is_active',1)->get();
-        return view('keuangan.view-rincian.v-rincian-payment', ['id' => $id,'getPaymentList' => $getPaymentList,'getPeriode'=>$getPeriode,'getBiaya' => $getBiaya,'grandTotal'=>$grandTotal,'studentState' => $this->studentState($id),'sumBiaya' => $sumBiaya]);
+        $searchPeriode = Periode::select('id','kode','nama_periode')->get();
+        return view('keuangan.view-rincian.v-rincian-payment', ['id' => $id,'getPaymentList' => $getPaymentList,'getPeriode'=>$getPeriode,'getBiaya' => $getBiaya,'grandTotal'=>$grandTotal,'studentState' => $this->studentState($id),'sumBiaya' => $sumBiaya,'searchPeriode' => $searchPeriode]);
     }
 
     protected function studentState($nim)
@@ -139,5 +140,84 @@ class ViewRincianPaymentController extends Controller
                         'keterangan'        => $request->keterangan,
                     ]); 
         return response()->json($post);
+    }
+
+    public function searchPaymentHistory(Request $request)
+    {
+        if($request->custom_name == 'all'){
+            $collection = Payment::where('nim_mahasiswa',$request->nim_mahasiswa)->orderBy('created_at','DESC')->get();  
+            $content = '<div class="card">
+                            <div class="card-body">
+                                <div class="col-md">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>NIM</th>
+                                                <th>Amount</th>
+                                                <th>Payment Date</th>
+                                                <th>Note</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>';
+                                        if(count($collection) > 0){
+                                        foreach($collection as $no => $result){
+            $content .= '
+                                            <tr>
+                                                <td>'.++$no.'</td>
+                                                <td>'.$result->nim_mahasiswa.'</td>
+                                                <td>'.currency_IDR($result->jumlah_bayar).'</td>
+                                                <td>'.tanggal_indonesia($result->tgl_pembayaran).'</td>
+                                                <td>'.$result->keterangan.'</td>
+                                            </tr>'; }} else {
+            $content .= '
+                                            <tr>
+                                                <td colspan="12" align="center">No data available in table</td>
+                                            </tr>';}
+            $content .= '
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>';
+            return response()->json(['content' => $content]);
+        } else {
+            $collection = Payment::where([['id_periode',$request->custom_name],['nim_mahasiswa',$request->nim_mahasiswa]])->orderBy('created_at','DESC')->get();
+            $content = '<div class="card">
+                            <div class="card-body">
+                                <div class="col-md">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>NIM</th>
+                                                <th>Amount</th>
+                                                <th>Payment Date</th>
+                                                <th>Note</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>';
+                                        if(count($collection) > 0){
+                                        foreach($collection as $no => $result){
+            $content .= '
+                                            <tr>
+                                                <td>'.++$no.'</td>
+                                                <td>'.$result->nim_mahasiswa.'</td>
+                                                <td>'.currency_IDR($result->jumlah_bayar).'</td>
+                                                <td>'.tanggal_indonesia($result->tgl_pembayaran).'</td>
+                                                <td>'.$result->keterangan.'</td>
+                                            </tr>'; }} else {
+            $content .= '
+                                            <tr>
+                                                <td colspan="12" align="center">No data available in table</td>
+                                            </tr>';}
+            $content .= '
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>';
+            return response()->json(['content' => $content]);
+        }
     }
 }

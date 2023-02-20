@@ -118,6 +118,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::delete('/del-list-discount/{id}','Keuangan\DiscountBiayaController@destroy')->name('del-discount');
     Route::post('import-biaya-kuliah', 'Keuangan\BiayaKuliahController@importBiayaKuliah')->name('import-biaya-kuliah');
 
+    Route::post('search-payment-history', 'Keuangan\ViewRincianPaymentController@searchPaymentHistory')->name('search-payment-history');
+
     // Perkuliahan
     Route::resource('gol-kelas','Perkuliahan\GolKelasController');
     Route::resource('in-kelas','Perkuliahan\InKelasController');

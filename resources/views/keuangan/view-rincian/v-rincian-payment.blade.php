@@ -24,6 +24,52 @@
         <div class="row">
             <h3>Payment History</h3>
             <div class="col-12">
+                <div class="mb-2" id="myGroup">                 
+                    <!-- MULAI TOMBOL TAMBAH -->
+                    <div class="mb-3">
+                        <button type="button" id="search-data" data-bs-toggle="collapse" data-bs-target="#collapseSearchData" aria-expanded="false" aria-controls="collapseSearchData" class="btn btn-outline-primary me-1"><i class="bx bx-xs bx-search bx-tada-hover"></i> Search Payment</button>
+                    </div>
+
+                    <div class="accordion-group">
+                        <div class="collapse indent mb-3" id="collapseSearchData" data-bs-parent="#myGroup">
+                            <form id="form-search-data" name="form-search-data" class="form-horizontal">
+                                <div class="border p-3 rounded">
+                                    <input type="hidden" name="nim_mahasiswa" id="nim_mahasiswa" value="{{$id}}">   
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="row justify-content-center">
+                                                
+                                                <div class="col-sm-3">
+                                                    <div class="form-inline">
+                                                        <label class="control-label" for="custom_name">Time or Period</label>
+                                                        <select class="form-select" id="custom_name" name="custom_name" aria-label="Default select example" style="cursor:pointer;">
+                                                            <option value="">- Choose -</option>
+                                                            <option value="all">All payments</option>
+                                                            @foreach($searchPeriode as $search)
+                                                                <option value="{{$search->id}}">{{$search->kode}} - {{$search->nama_periode}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span class="text-danger" id="customNameErrorMsg"></span>
+                                                    </div>
+                                                </div>
+                                                                             
+                                                <div class="col-sm-3">
+                                                    <div class="mb-3">
+                                                        <label for="btn" class="form-label"></label>
+                                                        <button type="submit" class="form-control btn btn-primary btn-block tombol-search" id="tombol-search" name="submit"><i class="bx bx-xs bx-search bx-tada-hover"></i> Search</button>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                </div>
+    
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-3 mb-3" id="result-page"></div>
                 <div class="card">
                     <div class="card-body">
                         <!-- MULAI TOMBOL TAMBAH -->
@@ -480,6 +526,35 @@
                             buttonsStyling: false,
                             timer: 2000
                         })
+                    }
+                });
+            }
+        })
+    }
+
+    var $myGroup = $('#myGroup');
+        $myGroup.on('show.bs.collapse','.collapse', function() {
+            $myGroup.find('.collapse.in').collapse('hide');
+    });
+
+    // Button Search History
+    if ($("#form-search-data").length > 0) {
+        $("#form-search-data").validate({
+            submitHandler: function (form) {
+                var actionType = $('#tombol-search').val();
+                $('#tombol-search').html('Searching..');
+
+                $.ajax({
+                    data: $('#form-search-data').serialize(), 
+                    url: "{{ route('search-payment-history') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (response,data) {
+                        $("#result-page").html(response.content);
+                        $('#tombol-search').html('Search');
+                    },
+                    error: function(response) {
+                        $('#tombol-search').html('Search');
                     }
                 });
             }

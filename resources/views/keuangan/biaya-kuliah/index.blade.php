@@ -26,8 +26,9 @@
                 <div class="mb-2" id="myGroup">                 
                     <!-- MULAI TOMBOL TAMBAH -->
                     <div class="mb-3">
-                        <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bx bx-xs bx-plus-circle bx-tada-hover"></i> Add Data </button>
+                        {{-- <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bx bx-xs bx-plus-circle bx-tada-hover"></i> Manual Insert</button> --}}
                         <button type="button" id="count-fine" data-bs-toggle="collapse" data-bs-target="#collapseImportData" aria-expanded="false" aria-controls="collapseImportData" class="btn btn-primary me-1"><i class="bx bx-xs bx-import bx-tada-hover"></i> Import Data</button>
+                        {{-- <div class="form-text">*Import data first</div> --}}
                     </div>
 
                     <div class="accordion-group">
@@ -310,7 +311,7 @@
                             case "not_available":
                                 Swal.fire({
                                 title: 'Failed!',
-                                text: 'No data is available in table!',
+                                text: 'No data imported to the table!',
                                 type: 'error',
                                 customClass: {
                                 confirmButton: 'btn btn-danger'
