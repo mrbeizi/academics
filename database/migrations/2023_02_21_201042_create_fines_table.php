@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBiayaKuliahsTable extends Migration
+class CreateFinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateBiayaKuliahsTable extends Migration
      */
     public function up()
     {
-        Schema::create('biaya_kuliahs', function (Blueprint $table) {
+        Schema::create('fines', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_periode');
-            $table->string('nim');
-            $table->bigInteger('biaya');
-            $table->string('semester',50);
+            $table->date('tgl_deadline');
+            $table->bigInteger('nilai');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateBiayaKuliahsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('biaya_kuliahs');
+        Schema::dropIfExists('fines');
     }
 }

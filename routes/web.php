@@ -117,8 +117,19 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/list-discounts/{id}','Keuangan\DiscountBiayaController@listDiscount')->name('list-discount');
     Route::delete('/del-list-discount/{id}','Keuangan\DiscountBiayaController@destroy')->name('del-discount');
     Route::post('import-biaya-kuliah', 'Keuangan\BiayaKuliahController@importBiayaKuliah')->name('import-biaya-kuliah');
-
+    
     Route::post('search-payment-history', 'Keuangan\ViewRincianPaymentController@searchPaymentHistory')->name('search-payment-history');
+    
+    Route::resource('fines','Keuangan\FineController');
+    Route::resource('invoice','Keuangan\InvoiceController');
+    Route::post('import-invoice', 'Keuangan\InvoiceController@importInvoice')->name('import-invoice');
+
+    Route::resource('g-biaya-kuliah','Keuangan\GroupBiayaKuliahController');
+    
+    Route::resource('detail-biaya-kuliah','Keuangan\DetailBiayaKuliahController');
+    Route::get('/set-detail-biaya/{id}','Keuangan\DetailBiayaKuliahController@index')->name('set-detail-biaya');
+    Route::get('/list-details/{id}','Keuangan\DetailBiayaKuliahController@listDetail')->name('list-detail');
+    Route::delete('/del-list-detail/{id}','Keuangan\DetailBiayaKuliahController@destroy')->name('del-detail');
 
     // Perkuliahan
     Route::resource('gol-kelas','Perkuliahan\GolKelasController');

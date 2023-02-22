@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Keuangan;
 
 use App\Http\Controllers\Controller;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use App\Model\Keuangan\BiayaKuliah;
 use App\Model\Keuangan\CustomBiaya;
@@ -16,7 +15,7 @@ use Session;
 use Validator;
 use Auth;
 
-class BiayaKuliahController extends Controller
+class InvoiceController extends Controller
 {
     public function index(Request $request)
     {
@@ -48,40 +47,19 @@ class BiayaKuliahController extends Controller
             ->where('periodes.is_active','=',1)
             ->orderBy('prodis.id','ASC')
             ->get();
-        return view('keuangan.biaya-kuliah.index',compact('getMahasiswa','getPeriode','getPaymentList'));
+        return view('keuangan.invoice.index', compact('getMahasiswa','getPeriode','getPaymentList'));
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nim'           => 'required',
-            'id_periode'    => 'required',
-            'biaya'         => 'required',
-        ],[
-            'nim.required'         => 'Anda belum menginputkan nim',
-            'id_periode.required'  => 'Anda belum memilih periode',
-            'biaya.required'       => 'Anda belum memilih biaya'
-        ]);
-
-        $post = BiayaKuliah::updateOrCreate(['id' => $request->id],
-                [
-                    'nim'           => $request->nim,
-                    'id_periode'    => $request->id_periode,
-                    'biaya'         => $request->biaya,
-                    'semester'      => 'Semester 1',
-                ]); 
-
-        return response()->json($post);
-    }
-
-    public function importBiayaKuliah(Request $request)
+    public function importInvoice(Request $request)
     {
         $request->validate([
             'year_level'  => 'required',
             'custom_name' => 'required',
+            'semester'    => 'required',
         ],[
             'year_level.required'  => 'Anda belum memilih angkatan',
-            'custom_name.required' => 'Anda belum memilih periode'
+            'custom_name.required' => 'Anda belum memilih periode',
+            'semester.required'    => 'Anda belum menginputkan semester'
         ]);
 
         // Check if data exists
@@ -152,6 +130,29 @@ class BiayaKuliahController extends Controller
         } else {
             return Response::json(array('check' => 'not_exist'), 200);
         }
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nim'           => 'required',
+            'id_periode'    => 'required',
+            'biaya'         => 'required',
+        ],[
+            'nim.required'         => 'Anda belum menginputkan nim',
+            'id_periode.required'  => 'Anda belum memilih periode',
+            'biaya.required'       => 'Anda belum memilih biaya'
+        ]);
+
+        $post = BiayaKuliah::updateOrCreate(['id' => $request->id],
+                [
+                    'nim'           => $request->nim,
+                    'id_periode'    => $request->id_periode,
+                    'biaya'         => $request->biaya,
+                    'semester'      => 'Semester 1',
+                ]); 
+
+        return response()->json($post);
     }
 
     public function destroy($id)

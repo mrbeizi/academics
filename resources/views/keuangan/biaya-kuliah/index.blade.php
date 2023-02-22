@@ -26,9 +26,9 @@
                 <div class="mb-2" id="myGroup">                 
                     <!-- MULAI TOMBOL TAMBAH -->
                     <div class="mb-3">
-                        {{-- <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bx bx-xs bx-plus-circle bx-tada-hover"></i> Manual Insert</button> --}}
+                        <button class="btn btn-success me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bx bx-xs bx-plus-circle bx-tada-hover"></i> Manual Insert</button>
                         <button type="button" id="count-fine" data-bs-toggle="collapse" data-bs-target="#collapseImportData" aria-expanded="false" aria-controls="collapseImportData" class="btn btn-primary me-1"><i class="bx bx-xs bx-import bx-tada-hover"></i> Import Data</button>
-                        {{-- <div class="form-text">*Import data first</div> --}}
+                        <div class="form-text">*Import data first</div>
                     </div>
 
                     <div class="accordion-group">
@@ -125,7 +125,7 @@
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <div class="form-inline">
-                                                        <label class="control-label" for="custom_name">Time or Period</label>
+                                                        <label class="form-label" for="custom_name">Time or Period</label>
                                                         <select class="form-select" id="custom_name" name="custom_name" aria-label="Default select example" style="cursor:pointer;">
                                                             <option value="">- Choose -</option>
                                                             @foreach($getPeriode as $period)
@@ -165,6 +165,7 @@
                                 <th>Period</th>
                                 <th>Major</th>
                                 <th>Amount</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -206,6 +207,7 @@
                         });
                     });
             },
+            searching: false,
             processing: true,
             serverSide: true,
             ajax: "{{ route('biaya-kuliah.index') }}",
@@ -224,6 +226,7 @@
                 },
                 {data: 'nama_id',name: 'nama_id'},
                 {data: 'biaya',name: 'biaya',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')},
+                {data: 'action',name: 'action'},
             ]
         });
     });
@@ -353,6 +356,45 @@
             }
         })
     }
-    
+
+    // TOMBOL DELETE
+    $(document).on('click', '.delete', function () {
+        dataId = $(this).attr('id');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "It will be deleted permanently!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+                return new Promise(function(resolve) {
+                    $.ajax({
+                        url: "biaya-kuliah/" + dataId,
+                        type: 'DELETE',
+                        data: {id:dataId},
+                        dataType: 'json'
+                    }).done(function(response) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Your data has been deleted.',
+                            type: 'success',
+                            timer: 2000
+                        })
+                        $('#table_biaya_kuliah').DataTable().ajax.reload(null, true);
+                    }).fail(function() {
+                        Swal.fire({
+                            title: 'Oops!',
+                            text: 'Something went wrong with ajax!',
+                            type: 'error',
+                            timer: 2000
+                        })
+                    });
+                });
+            },
+        });
+    });
   </script>
 @endsection
