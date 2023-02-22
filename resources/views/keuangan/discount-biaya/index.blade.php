@@ -215,28 +215,6 @@
         })
     }
 
-    /* UNTUK TOGGLE STATUS */
-    function MatakuliahStatus(id,is_active){
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "{{ Route('change-matakuliah-status') }}",
-            id: $('.matakuliah-status'+id+'').val(),
-            data:{'is_active':is_active,'id':id},
-        }).done(function(data, response) {
-            Swal.fire({
-                title: 'Success!',
-                text: 'State changed successfully!',
-                type: 'success',
-                customClass: {
-                confirmButton: 'btn btn-primary'
-                },
-                buttonsStyling: false,
-                timer: 2000
-            })
-        })
-    }
-
     // TOMBOL DELETE
     $(document).on('click', '.delete', function () {
         dataId = $(this).attr('id');
