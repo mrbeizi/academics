@@ -38,7 +38,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             @foreach($getGroupName as $item)
-                                            <h3 style="text-align: center;">{{$item->group_name}}</h3>
+                                            <h3 style="text-align: center;">Biaya {{$item->group_name}} Angkatan {{$item->year_level}}</h3>
                                             <input type="hidden" name="id_group_biaya_kuliah" id="id_group_biaya_kuliah" value="{{$item->id}}">
                                             @endforeach
                                         </div> 
@@ -60,7 +60,7 @@
                                     </div>  
     
                                     <div class="col-sm-3">                                
-                                        <div class="mb-3">
+                                        <div class="mb-3 mt-1">
                                             <label for="btn" class="form-label"></label>
                                             <button type="submit" class="form-control btn btn-warning btn-block tombol-simpan" id="tombol-simpan" name="submit">Save</button>
                                         </div>
@@ -151,6 +151,7 @@
                         $('#form-tambah-edit').trigger("reset");
                         $('#tambah-edit-modal').modal('hide');
                         $('#tombol-simpan').html('Save');
+                        location.reload();
                         $('#table_detail').DataTable().ajax.reload(null, true);
                         Swal.fire({
                             title: 'Good job!',

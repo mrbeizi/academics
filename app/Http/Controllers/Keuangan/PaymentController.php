@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Model\Keuangan\PaymentList;
 use App\Model\Keuangan\Payment;
 use App\Model\Keuangan\BiayaKuliah;
+use App\Model\Keuangan\Fine;
 use App\Model\Mahasiswa;
 use Carbon\Carbon;
 use PDF;
@@ -171,13 +172,18 @@ class PaymentController extends Controller
             $interval = Carbon::parse($tanggal_akhir)->diffInDays(Carbon::parse($tanggal_awal)) + 1;
             $total = 0;
 
+            $fine = Fine::select('nilai')->get();
+            foreach($fine as $data){
+                $dataFine = $data->nilai;
+            }
+
             for($i=1; $i<=$interval; $i++){
-                // $fine = ceil($i/7)*5000;
-                // $total = $total + $fine;
-                // New Calculation -- total equals to interval multiply to fine amount (5000) plus flat amount from the first week!
-                $flatAmount = 5000;
-                $finePerDay = 5000;
-                $total = $flatAmount + ($interval*$finePerDay);
+                # $fine = ceil($i/7)*5000;
+                # $total = $total + $fine;
+                # New Calculation -- total equals to interval multiply to fine amount (5000) plus flat amount from the first week!
+                # $flatAmount = 5000;
+                # $finePerDay = 5000;
+                $total = $dataFine + ($interval*$dataFine);
             }
 
             $content = '<div class="col-md">

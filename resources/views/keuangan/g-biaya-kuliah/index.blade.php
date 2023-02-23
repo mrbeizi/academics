@@ -64,7 +64,7 @@
                                                     <label class="form-label" for="datepicker">Year Level</label>
                                                         <select class="form-select" id="year_level" name="year_level" aria-label="Default select example" style="cursor:pointer;">
                                                             <option value="">- Choose -</option>
-                                                            @for($i=date('Y');$i>=date('Y')-5;$i-=1)
+                                                            @for($i=date('Y')+3;$i>=date('Y')-3;$i-=1)
                                                             <option value="{{$i}}">{{$i}}</option>
                                                             @endfor
                                                         </select>

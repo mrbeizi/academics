@@ -8,6 +8,7 @@ use App\Model\Keuangan\BiayaKuliah;
 use App\Model\Keuangan\CustomBiaya;
 use App\Model\Keuangan\SetupBiaya;
 use App\Model\Keuangan\DiscountBiaya;
+use App\Model\Keuangan\DetailBiayaKuliah;
 use App\Model\Mahasiswa;
 use App\Model\Periode;
 use Response;
@@ -65,62 +66,37 @@ class InvoiceController extends Controller
         // Check if data exists
         $isExist = BiayaKuliah::where([['nim','LIKE',''.$request->year_level.'%'],['id_periode','=',$request->custom_name]])->count();
         if($isExist < 1) {
-            $collection = DiscountBiaya::leftJoin('setup_biayas','setup_biayas.id','=','discount_biayas.id_setup_biaya')
-                ->leftJoin('custom_biayas','custom_biayas.id','=','discount_biayas.id_custom_biaya')
-                ->leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
+            $collectionSPP = DetailBiayaKuliah::leftJoin('group_biaya_kuliahs','group_biaya_kuliahs.id','=','detail_biaya_kuliahs.id_group_biaya_kuliah')
+                ->leftJoin('prodis','prodis.id','=','detail_biaya_kuliahs.id_lingkup_biaya')
                 ->leftJoin('mahasiswas','mahasiswas.id_prodi','=','prodis.id')
-                ->leftJoin('periodes','periodes.id','=','setup_biayas.id_periode')
-                ->select('discount_biayas.discount','discount_biayas.is_percentage','setup_biayas.nilai','setup_biayas.id_lingkup_biaya','prodis.nama_id','mahasiswas.nim','mahasiswas.nama_mahasiswa','mahasiswas.id_periode')
-                ->where([['custom_biayas.id','=',$request->custom_name],['mahasiswas.nim','LIKE',$request->year_level.'%']])
+                ->where([['mahasiswas.nim','LIKE',$request->year_level.'%'],['group_biaya_kuliahs.year_level','LIKE',$request->year_level.'%'],['group_biaya_kuliahs.group_name','LIKE','%'."SPP".'%']])
                 ->get();
 
-            // Collect tuition fees from University group
-            $collectionUniversity = DiscountBiaya::leftJoin('setup_biayas','setup_biayas.id','=','discount_biayas.id_setup_biaya')
-                ->leftJoin('custom_biayas','custom_biayas.id','=','discount_biayas.id_custom_biaya')
-                ->leftJoin('prodis','prodis.id','=','setup_biayas.id_lingkup_biaya')
+            $collectionSKS = DetailBiayaKuliah::leftJoin('group_biaya_kuliahs','group_biaya_kuliahs.id','=','detail_biaya_kuliahs.id_group_biaya_kuliah')
+                ->leftJoin('prodis','prodis.id','=','detail_biaya_kuliahs.id_lingkup_biaya')
                 ->leftJoin('mahasiswas','mahasiswas.id_prodi','=','prodis.id')
-                ->leftJoin('periodes','periodes.id','=','setup_biayas.id_periode')
-                ->select('discount_biayas.discount','discount_biayas.is_percentage','setup_biayas.nilai','setup_biayas.id_lingkup_biaya','prodis.nama_id','mahasiswas.nim','mahasiswas.nama_mahasiswa','mahasiswas.id_periode')
-                ->where([['custom_biayas.id','=',$request->custom_name],['setup_biayas.id_lingkup_biaya','=',0]])
+                ->where([['mahasiswas.nim','LIKE',$request->year_level.'%'],['group_biaya_kuliahs.year_level','LIKE',$request->year_level.'%'],['group_biaya_kuliahs.group_name','LIKE','%'."SKS".'%']])
                 ->get();
-            
-            if($collectionUniversity->count() > 0){
-                foreach($collectionUniversity as $costUniversity){
-                    if($costUniversity->is_percentage == 1){
-                        $univCost[] = $costUniversity->nilai - ($costUniversity->discount * $costUniversity->nilai/100);
-                    } else {
-                        $univCost[] = $costUniversity->nilai - $costUniversity->discount;
-                    }
-                    $totalCostUniversity = array_sum($univCost);
+
+            if($collectionSKS->count() > 0){
+                foreach($collectionSKS as $costSKS){
+                    $totalCostSKS = $costSKS->nilai * 24; 
+                    # 24 is temporary value, it should be a total of University Credit Unit (SKS)
+                    # from each student according to the course selection sheet (KRS) which has been inputed
                 }
             } else {
-                $totalCostUniversity = 0;
-            }
-            // End of collect tuition fees from University group
-
-            // Check if input semester is null
-            if($request->semester == ''){
-                $semester = 'Semester 1';
-            } else {
-                $semester = $request->semester;
+                $totalCostSKS = 0;
             }
 
-    
             // Check if data available in table mahasiswa
-            if($collection->count() > 0){
-                foreach($collection as $datas) {
-                    if($datas->is_percentage == 1){
-                        $cost = $datas->nilai - ($datas->discount * $datas->nilai/100);
-                    } else {
-                        $cost = $datas->nilai - $datas->discount;
-                    }
-        
+            if($collectionSPP->count() > 0){
+                foreach($collectionSPP as $datas) {
                     $post = BiayaKuliah::updateOrCreate(['id' => $request->id],
                     [
                         'id_periode' => $request->custom_name,
                         'nim'        => $datas->nim,
-                        'biaya'      => $cost + $totalCostUniversity,
-                        'semester'   => $semester,
+                        'biaya'      => $datas->nilai + $totalCostSKS,
+                        'semester'   => $request->semester,
                     ]);
                 }
                 return response()->json($post);
