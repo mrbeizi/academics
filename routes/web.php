@@ -138,4 +138,5 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/add-kelas-mhs/{id}','Perkuliahan\InKelasController@listMahasiswa')->name('list.mahasiswa');
     Route::delete('/del-kelas-mhs/{id}','Perkuliahan\InKelasController@destroy')->name('del.mahasiswa');
 
+    Route::resource('status-kelas-kuliah','Perkuliahan\StatusKelasKuliahController');
 });

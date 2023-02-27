@@ -15,15 +15,12 @@ class DetailBiayaKuliahController extends Controller
 {
     public function index(Request $request, $id)
     {
-        // $getProdi = DB::table('prodis')->select('id','nama_id')->where('is_archived',0)->get();
+        # $getProdi = DB::table('prodis')->select('id','nama_id')->where('is_archived',0)->get();
         $getGroupName = DB::table('group_biaya_kuliahs')->where('id',$id)->get();
 
         # Selection: get id department where not in the table
-        $getA = DetailBiayaKuliah::select('id_lingkup_biaya')->where('id_group_biaya_kuliah',$id)->get();
-        $getProdi = DB::table('prodis')->leftJoin('detail_biaya_kuliahs','detail_biaya_kuliahs.id_lingkup_biaya','=','prodis.id')
-            ->select('prodis.id AS id','prodis.nama_id')
-            ->whereNotIn('prodis.id',$getA)
-            ->get();
+         $getA = DetailBiayaKuliah::select('id_lingkup_biaya')->where('id_group_biaya_kuliah',$id)->get();
+         $getProdi = DB::table('prodis')->select('id','nama_id')->whereNotIn('id',$getA)->get();
         return view('keuangan.detail-biaya-kuliah.index',['id' => $id,'getGroupName' => $getGroupName,'getProdi' => $getProdi]);
     }
 
