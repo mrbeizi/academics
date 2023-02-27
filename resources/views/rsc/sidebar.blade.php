@@ -154,7 +154,7 @@
     
     
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('fakultas.index')}} OR {{set_active('prodi.index')}} OR {{set_active('data-formulir.index')}} OR {{set_active('status-kelas-kuliah.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('fakultas.index')}} OR {{set_active('prodi.index')}} OR {{set_active('data-formulir.index')}} OR {{set_active('status-kelas-kuliah.index')}} OR {{set_active('karakter-matakuliah.index')}}">
         <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
         <div data-i18n="Data Master">Data Master</div>
         </a>
@@ -177,6 +177,11 @@
             <li class="menu-item">
                 <a href="{{route('status-kelas-kuliah.index')}}" class="menu-link {{set_active('status-kelas-kuliah.index')}}">
                 <div data-i18n="Status Kelas Kuliah">Status Kelas Kuliah</div>
+                </a>
+            </li>      
+            <li class="menu-item">
+                <a href="{{route('karakter-matakuliah.index')}}" class="menu-link {{set_active('karakter-matakuliah.index')}}">
+                <div data-i18n="Karakter Matakuliah">Karakter Matakuliah</div>
                 </a>
             </li>      
         </ul>

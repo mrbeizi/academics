@@ -139,4 +139,5 @@ Route::group(['middleware' => 'auth'], function(){
     Route::delete('/del-kelas-mhs/{id}','Perkuliahan\InKelasController@destroy')->name('del.mahasiswa');
 
     Route::resource('status-kelas-kuliah','Perkuliahan\StatusKelasKuliahController');
+    Route::resource('karakter-matakuliah','Perkuliahan\KarakterMatakuliahController');
 });
