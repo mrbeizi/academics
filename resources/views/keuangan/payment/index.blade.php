@@ -381,7 +381,6 @@
     });
 
     // Import Payment
-    //TOMBOL TAMBAH DATA
     $('#import-Payment').click(function () {
         $('#button-import').val("import-data");
         $('#id').val('');

@@ -140,4 +140,5 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::resource('status-kelas-kuliah','Perkuliahan\StatusKelasKuliahController');
     Route::resource('karakter-matakuliah','Perkuliahan\KarakterMatakuliahController');
+    Route::resource('buka-kelas','Perkuliahan\BukaKelasController');
 });

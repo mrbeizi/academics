@@ -44,6 +44,11 @@
             <div data-i18n="Kelompok Mahasiswa">Kelompok Mahasiswa</div>
             </a>
         </li>
+        <li class="menu-item">
+            <a href="{{route('buka-kelas.index')}}" class="menu-link {{set_active('buka-kelas.index')}}">
+            <div data-i18n="Buka Kelas (Satu)">Buka Kelas (Satu)</div>
+            </a>
+        </li>
         </ul>
     </li>
     <li class="menu-item">

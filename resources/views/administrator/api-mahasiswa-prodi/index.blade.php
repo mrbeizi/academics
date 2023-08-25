@@ -114,7 +114,7 @@
     $(document).on('click', '.view_detail', function () {
         dataId = $(this).attr('id');
         $.ajax({
-			url: "{{route('view-detail-mahasiswa')}}",
+			url: "{{route('view-detail-va')}}",
 			method: "GET",
 			data: {dataId: dataId},
 			success: function(response, data){
